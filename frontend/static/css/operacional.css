@@ -1,0 +1,31 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { font-family: sans-serif; padding: 24px; }
+
+#op-header { padding: 16px 0; border-bottom: 2px solid #000; margin-bottom: 24px; }
+
+section { margin-bottom: 32px; }
+
+h2 { margin-bottom: 16px; }
+
+.campo { margin-bottom: 12px; }
+
+.campo label { display: block; font-weight: bold; margin-bottom: 4px; }
+
+.campo input { width: 100%; padding: 8px; border: 1px solid #ccc; }
+
+#botoes-upload { margin-top: 16px; display: flex; gap: 12px; }
+
+button { padding: 10px 20px; cursor: pointer; border: 1px solid #000; background: #fff; }
+
+button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+#pipeline { list-style: none; padding: 0; }
+
+#pipeline li { padding: 8px 12px; border-left: 3px solid #ccc; margin-bottom: 6px; }
+
+#pipeline li.concluido { border-left-color: green; }
+
+#pipeline li.ativo { border-left-color: orange; font-weight: bold; }
+
+.oculto { display: none; }

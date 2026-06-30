@@ -1,0 +1,3081 @@
+{
+  "versao_catalogo": "1.1",
+  "total_entradas": 91,
+  "entradas": [
+    {
+      "codigo": "ATEND-001",
+      "tipo": "D",
+      "familia": "ATENDIMENTO",
+      "subcategoria": "Demora no atendimento",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "demora",
+        "espera prolongada",
+        "lentidão no atendimento"
+      ],
+      "girias": [
+        "ficou no vácuo",
+        "demorou um tempão",
+        "travou no atendimento"
+      ],
+      "regionalismos": [
+        {
+          "termo": "vaqueta",
+          "regiao": "Nordeste",
+          "significado": "ficar esperando à toa"
+        },
+        {
+          "termo": "ficou no balaio",
+          "regiao": "interior de SP/MG",
+          "significado": "espera indefinida"
+        }
+      ],
+      "emojis": [
+        "⏳",
+        "😴",
+        "🙄"
+      ],
+      "evidencias_exemplo": [
+        "Esperei mais de vinte minutos para ser atendido.",
+        "Demorou um tempão pra alguém me responder, viu."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ATEND-002",
+      "tipo": "D",
+      "familia": "ATENDIMENTO",
+      "subcategoria": "Falta de retorno",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "ausência de resposta",
+        "sem retorno",
+        "não retornaram contato"
+      ],
+      "girias": [
+        "deixaram no vácuo",
+        "sumiram",
+        "ninguém me chamou de volta"
+      ],
+      "regionalismos": [
+        {
+          "termo": "ficou no leu-leu",
+          "regiao": "RJ",
+          "significado": "ficar sem retorno"
+        },
+        {
+          "termo": "deu bolo",
+          "regiao": "uso nacional informal",
+          "significado": "combinado e não cumprido"
+        }
+      ],
+      "emojis": [
+        "📵",
+        "🤷",
+        "😕"
+      ],
+      "evidencias_exemplo": [
+        "Pedi retorno e até hoje não recebi resposta.",
+        "Me deixaram no vácuo, ninguém voltou a falar comigo."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ATEND-003",
+      "tipo": "D",
+      "familia": "ATENDIMENTO",
+      "subcategoria": "Grosseria/má educação",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "rispidez",
+        "falta de educação",
+        "tratamento desrespeitoso"
+      ],
+      "girias": [
+        "foi grosso",
+        "tratou mal",
+        "veio com má vontade"
+      ],
+      "regionalismos": [
+        {
+          "termo": "veio com bastante topete",
+          "regiao": "Nordeste",
+          "significado": "atitude arrogante"
+        },
+        {
+          "termo": "tratou na esculhambação",
+          "regiao": "uso popular nacional",
+          "significado": "tratamento desleixado/rude"
+        }
+      ],
+      "emojis": [
+        "😡",
+        "👎",
+        "🙅"
+      ],
+      "evidencias_exemplo": [
+        "O atendente foi extremamente rude comigo.",
+        "Veio com topete logo de cara, nem deixou eu explicar."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ATEND-004",
+      "tipo": "D",
+      "familia": "ATENDIMENTO",
+      "subcategoria": "Falta de atenção",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "desatenção",
+        "distração do atendente",
+        "falta de cuidado"
+      ],
+      "girias": [
+        "nem prestou atenção",
+        "tava no mundo da lua",
+        "ignorou completamente"
+      ],
+      "regionalismos": [
+        {
+          "termo": "tava de bobeira",
+          "regiao": "uso nacional informal",
+          "significado": "desatento"
+        },
+        {
+          "termo": "no chove não molha",
+          "regiao": "Nordeste",
+          "significado": "sem comprometimento real"
+        }
+      ],
+      "emojis": [
+        "🙄",
+        "😑",
+        "🤦"
+      ],
+      "evidencias_exemplo": [
+        "Senti que o atendente não estava prestando atenção no meu problema.",
+        "Tava ali só de bobeira, nem me ouviu direito."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ATEND-005",
+      "tipo": "D",
+      "familia": "ATENDIMENTO",
+      "subcategoria": "Despreparo do atendente",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "falta de conhecimento técnico",
+        "atendente não soube responder",
+        "despreparo"
+      ],
+      "girias": [
+        "não sabia de nada",
+        "ficou perdido",
+        "enrolou"
+      ],
+      "regionalismos": [
+        {
+          "termo": "ficou boiando",
+          "regiao": "uso nacional informal",
+          "significado": "sem saber responder"
+        },
+        {
+          "termo": "tava no chute",
+          "regiao": "interior",
+          "significado": "respondendo sem certeza"
+        }
+      ],
+      "emojis": [
+        "😬",
+        "❓",
+        "🤷"
+      ],
+      "evidencias_exemplo": [
+        "O funcionário não sabia explicar como funciona o produto.",
+        "Ele ficou boiando, não sabia me dizer nada com certeza."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ATEND-006",
+      "tipo": "F",
+      "familia": "ATENDIMENTO",
+      "subcategoria": "Cordialidade",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "educação",
+        "simpatia",
+        "gentileza no trato"
+      ],
+      "girias": [
+        "gente boa",
+        "super gente fina",
+        "atendeu super bem"
+      ],
+      "regionalismos": [
+        {
+          "termo": "é gente como a gente",
+          "regiao": "uso nacional informal",
+          "significado": "próximo e acessível"
+        },
+        {
+          "termo": "tratou com toda a estima",
+          "regiao": "Nordeste",
+          "significado": "tratamento caloroso"
+        }
+      ],
+      "emojis": [
+        "😊",
+        "🙏",
+        "❤️"
+      ],
+      "evidencias_exemplo": [
+        "Fui atendido com muita educação e simpatia.",
+        "O moço é gente fina, tratou super bem."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ATEND-007",
+      "tipo": "F",
+      "familia": "ATENDIMENTO",
+      "subcategoria": "Agilidade",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "rapidez",
+        "prontidão",
+        "resposta imediata"
+      ],
+      "girias": [
+        "resolveu na hora",
+        "foi rapidão",
+        "nem deu tempo de reclamar"
+      ],
+      "regionalismos": [
+        {
+          "termo": "num instantinho",
+          "regiao": "uso nacional informal",
+          "significado": "intensificador de rapidez"
+        },
+        {
+          "termo": "ligeirinho",
+          "regiao": "Norte/Nordeste",
+          "significado": "rápido"
+        }
+      ],
+      "emojis": [
+        "⚡",
+        "🚀",
+        "👏"
+      ],
+      "evidencias_exemplo": [
+        "Fui atendido rapidamente, sem demora.",
+        "Resolveu num instantinho, nem deu tempo de eu me sentar."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ATEND-008",
+      "tipo": "F",
+      "familia": "ATENDIMENTO",
+      "subcategoria": "Atenção personalizada",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "cuidado individual",
+        "atenção dedicada",
+        "escuta atenta"
+      ],
+      "girias": [
+        "me deu atenção total",
+        "cuidou de mim direitinho",
+        "tratou como gente"
+      ],
+      "regionalismos": [
+        {
+          "termo": "cuidou com carinho",
+          "regiao": "uso nacional informal",
+          "significado": "atenção afetiva"
+        },
+        {
+          "termo": "olhou pra mim com jeito",
+          "regiao": "interior",
+          "significado": "cuidado pessoal"
+        }
+      ],
+      "emojis": [
+        "🤝",
+        "💛",
+        "🙌"
+      ],
+      "evidencias_exemplo": [
+        "Recebi atenção individual durante todo o atendimento.",
+        "Cuidou de mim direitinho, perguntou tudo com calma."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROD-001",
+      "tipo": "D",
+      "familia": "PRODUTO",
+      "subcategoria": "Defeito",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "mau funcionamento",
+        "peça quebrada",
+        "falha de fabricação"
+      ],
+      "girias": [
+        "veio com defeito",
+        "não pegou",
+        "deu zica"
+      ],
+      "regionalismos": [
+        {
+          "termo": "veio com biruta",
+          "regiao": "Nordeste",
+          "significado": "com problema/defeito"
+        }
+      ],
+      "emojis": [
+        "🔧",
+        "❌",
+        "😤"
+      ],
+      "evidencias_exemplo": [
+        "O produto apresentou defeito no primeiro uso.",
+        "Já veio com zica, nem ligou direito."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROD-002",
+      "tipo": "D",
+      "familia": "PRODUTO",
+      "subcategoria": "Baixa qualidade",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "qualidade inferior",
+        "material fraco",
+        "acabamento ruim"
+      ],
+      "girias": [
+        "é fraquinho",
+        "parece de plástico ruim",
+        "não tem nada a ver"
+      ],
+      "regionalismos": [
+        {
+          "termo": "é tipo perna de pau",
+          "regiao": "uso nacional informal",
+          "significado": "qualidade muito baixa"
+        },
+        {
+          "termo": "é de meia-tigela",
+          "regiao": "Sul/Sudeste",
+          "significado": "produto inferior"
+        }
+      ],
+      "emojis": [
+        "👎",
+        "😞",
+        "🗑️"
+      ],
+      "evidencias_exemplo": [
+        "A qualidade do material deixou muito a desejar.",
+        "É bem fraquinho, parece coisa de meia-tigela."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROD-003",
+      "tipo": "D",
+      "familia": "PRODUTO",
+      "subcategoria": "Tamanho incorreto",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Atendimento"
+      },
+      "sinonimos": [
+        "numeração errada",
+        "dimensão incompatível",
+        "não serviu"
+      ],
+      "girias": [
+        "veio errado",
+        "ficou apertado",
+        "não coube"
+      ],
+      "regionalismos": [
+        {
+          "termo": "veio tortinho",
+          "regiao": "interior",
+          "significado": "fora do padrão"
+        },
+        {
+          "termo": "tava na conta errada",
+          "regiao": "uso popular nacional",
+          "significado": "medida errada"
+        }
+      ],
+      "emojis": [
+        "📏",
+        "😣",
+        "🚫"
+      ],
+      "evidencias_exemplo": [
+        "O tamanho enviado não correspondeu ao solicitado.",
+        "Veio errado, ficou super apertado, não deu pra usar."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROD-004",
+      "tipo": "D",
+      "familia": "PRODUTO",
+      "subcategoria": "Diferente do anunciado",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "divergência do anúncio",
+        "produto não corresponde à descrição"
+      ],
+      "girias": [
+        "não é igual à foto",
+        "veio bem diferente",
+        "me enganaram"
+      ],
+      "regionalismos": [
+        {
+          "termo": "veio tudo trocado",
+          "regiao": "uso nacional informal",
+          "significado": "nada a ver com o esperado"
+        },
+        {
+          "termo": "foi outra coisa",
+          "regiao": "interior",
+          "significado": "completamente diferente"
+        }
+      ],
+      "emojis": [
+        "📷",
+        "😠",
+        "🙅"
+      ],
+      "evidencias_exemplo": [
+        "O item recebido é diferente do que estava na descrição.",
+        "Não é igual à foto, veio bem diferente do que eu esperava."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROD-005",
+      "tipo": "F",
+      "familia": "PRODUTO",
+      "subcategoria": "Qualidade percebida",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "boa qualidade",
+        "material resistente",
+        "bem acabado"
+      ],
+      "girias": [
+        "é top",
+        "muito bom mesmo",
+        "qualidade nota dez"
+      ],
+      "regionalismos": [
+        {
+          "termo": "é da boa",
+          "regiao": "uso nacional informal",
+          "significado": "qualidade reconhecida"
+        },
+        {
+          "termo": "é cabuloso de bom",
+          "regiao": "Nordeste",
+          "significado": "intensificador positivo"
+        }
+      ],
+      "emojis": [
+        "⭐",
+        "👌",
+        "🔥"
+      ],
+      "evidencias_exemplo": [
+        "O produto tem ótima qualidade de material.",
+        "É da boa mesmo, qualidade nota dez."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROD-006",
+      "tipo": "F",
+      "familia": "PRODUTO",
+      "subcategoria": "Durabilidade",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "resistência ao uso",
+        "longa vida útil",
+        "não desgasta fácil"
+      ],
+      "girias": [
+        "dura muito",
+        "não estraga nunca",
+        "aguenta tranco"
+      ],
+      "regionalismos": [
+        {
+          "termo": "é casca-grossa",
+          "regiao": "uso nacional informal",
+          "significado": "resistente"
+        },
+        {
+          "termo": "dura uma vida",
+          "regiao": "interior",
+          "significado": "durabilidade alta"
+        }
+      ],
+      "emojis": [
+        "💪",
+        "🛡️",
+        "✅"
+      ],
+      "evidencias_exemplo": [
+        "O produto se mostrou muito durável ao longo do tempo.",
+        "Dura muito, aguenta tranco que é uma beleza."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROD-007",
+      "tipo": "F",
+      "familia": "PRODUTO",
+      "subcategoria": "Design/estética",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "aparência agradável",
+        "visual bonito",
+        "design moderno"
+      ],
+      "girias": [
+        "é lindo",
+        "ficou maneiro",
+        "design dos bons"
+      ],
+      "regionalismos": [
+        {
+          "termo": "é um arraso",
+          "regiao": "uso nacional informal",
+          "significado": "muito bonito"
+        },
+        {
+          "termo": "tá na régua",
+          "regiao": "Nordeste/jovem",
+          "significado": "esteticamente bem feito"
+        }
+      ],
+      "emojis": [
+        "😍",
+        "🎨",
+        "✨"
+      ],
+      "evidencias_exemplo": [
+        "Achei o design do produto muito bonito e moderno.",
+        "É um arraso, ficou maneiro demais."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ENTR-001",
+      "tipo": "D",
+      "familia": "ENTREGA",
+      "subcategoria": "Atraso",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "entrega fora do prazo",
+        "demora na chegada",
+        "atraso na logística"
+      ],
+      "girias": [
+        "atrasou",
+        "demorou demais pra chegar",
+        "ficou enrolando"
+      ],
+      "regionalismos": [
+        {
+          "termo": "ficou no mato sem cachorro",
+          "regiao": "uso nacional informal",
+          "significado": "sem previsão"
+        },
+        {
+          "termo": "tava capengando",
+          "regiao": "interior",
+          "significado": "andando devagar/atrasado"
+        }
+      ],
+      "emojis": [
+        "🐢",
+        "⏰",
+        "😩"
+      ],
+      "evidencias_exemplo": [
+        "A entrega chegou vários dias depois do prazo prometido.",
+        "Atrasou demais, ficou enrolando umas duas semanas."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ENTR-002",
+      "tipo": "D",
+      "familia": "ENTREGA",
+      "subcategoria": "Produto danificado no transporte",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "avaria no transporte",
+        "dano por mau manuseio",
+        "produto amassado"
+      ],
+      "girias": [
+        "chegou tudo quebrado",
+        "veio amassado",
+        "chegou estragado"
+      ],
+      "regionalismos": [
+        {
+          "termo": "chegou no toco",
+          "regiao": "uso nacional informal",
+          "significado": "malcuidado"
+        },
+        {
+          "termo": "veio escangalhado",
+          "regiao": "interior",
+          "significado": "muito danificado"
+        }
+      ],
+      "emojis": [
+        "📦💔",
+        "😖"
+      ],
+      "evidencias_exemplo": [
+        "A caixa chegou danificada e o produto estava amassado.",
+        "Chegou tudo escangalhado, parece que jogaram a caixa."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ENTR-003",
+      "tipo": "D",
+      "familia": "ENTREGA",
+      "subcategoria": "Extravio",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "perda de mercadoria",
+        "item não localizado",
+        "sumiço da encomenda"
+      ],
+      "girias": [
+        "nunca chegou",
+        "se perdeu no caminho",
+        "desapareceu"
+      ],
+      "regionalismos": [
+        {
+          "termo": "ficou pro santo",
+          "regiao": "uso popular nacional",
+          "significado": "irônico, sumiu sem explicação"
+        },
+        {
+          "termo": "foi pra lua",
+          "regiao": "interior",
+          "significado": "sumiu completamente"
+        }
+      ],
+      "emojis": [
+        "❓📦",
+        "😢"
+      ],
+      "evidencias_exemplo": [
+        "Meu pedido nunca chegou e a transportadora não localiza.",
+        "Se perdeu no caminho, sei lá pra onde foi parar."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ENTR-004",
+      "tipo": "D",
+      "familia": "ENTREGA",
+      "subcategoria": "Embalagem ruim",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "embalagem inadequada",
+        "proteção insuficiente",
+        "embalagem frágil"
+      ],
+      "girias": [
+        "veio mal embalado",
+        "não tinha proteção nenhuma",
+        "embalagem de qualquer jeito"
+      ],
+      "regionalismos": [
+        {
+          "termo": "veio no improviso",
+          "regiao": "uso nacional informal",
+          "significado": "malfeito"
+        }
+      ],
+      "emojis": [
+        "📦⚠️",
+        "😕"
+      ],
+      "evidencias_exemplo": [
+        "A embalagem não oferecia proteção adequada ao produto.",
+        "Veio mal embalado, no improviso mesmo."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ENTR-005",
+      "tipo": "F",
+      "familia": "ENTREGA",
+      "subcategoria": "Entrega rápida",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "entrega antecipada",
+        "prazo cumprido com antecedência",
+        "chegada veloz"
+      ],
+      "girias": [
+        "chegou rapidinho",
+        "veio voando",
+        "antes do prazo"
+      ],
+      "regionalismos": [
+        {
+          "termo": "chegou num pulo",
+          "regiao": "uso nacional informal",
+          "significado": "muito rápido"
+        },
+        {
+          "termo": "veio ligeiro",
+          "regiao": "Norte/Nordeste",
+          "significado": "rápido"
+        }
+      ],
+      "emojis": [
+        "🚀📦",
+        "😄"
+      ],
+      "evidencias_exemplo": [
+        "O produto chegou antes do prazo estimado.",
+        "Chegou rapidinho, veio voando mesmo."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ENTR-006",
+      "tipo": "F",
+      "familia": "ENTREGA",
+      "subcategoria": "Embalagem cuidadosa",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "embalagem reforçada",
+        "proteção adequada",
+        "cuidado no envio"
+      ],
+      "girias": [
+        "veio super bem embalado",
+        "protegido direitinho",
+        "chegou intacto"
+      ],
+      "regionalismos": [
+        {
+          "termo": "veio caprichado",
+          "regiao": "uso nacional informal",
+          "significado": "com cuidado"
+        }
+      ],
+      "emojis": [
+        "📦✅",
+        "👍"
+      ],
+      "evidencias_exemplo": [
+        "A embalagem garantiu que o produto chegasse intacto.",
+        "Veio super caprichado, protegido direitinho."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRECO-001",
+      "tipo": "D",
+      "familia": "PREÇO",
+      "subcategoria": "Caro",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "valor elevado",
+        "preço alto",
+        "custo excessivo"
+      ],
+      "girias": [
+        "tá salgado",
+        "é um abuso",
+        "cobra os olhos da cara"
+      ],
+      "regionalismos": [
+        {
+          "termo": "tá um Cristo",
+          "regiao": "uso nacional informal",
+          "significado": "muito caro"
+        }
+      ],
+      "emojis": [
+        "💸",
+        "😱",
+        "📈"
+      ],
+      "evidencias_exemplo": [
+        "Considero o preço cobrado bastante elevado.",
+        "Tá salgado demais, cobra os olhos da cara."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRECO-002",
+      "tipo": "D",
+      "familia": "PREÇO",
+      "subcategoria": "Custo elevado para o benefício",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "relação custo-benefício ruim",
+        "não compensa o valor pago",
+        "caro pelo que oferece"
+      ],
+      "girias": [
+        "não vale o preço",
+        "carote pelo que é",
+        "não compensa"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "⚖️",
+        "👎",
+        "😒"
+      ],
+      "evidencias_exemplo": [
+        "Não acredito que o valor pago corresponda ao que foi entregue.",
+        "Não vale o preço, é carote pelo que é."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRECO-003",
+      "tipo": "D",
+      "familia": "PREÇO",
+      "subcategoria": "Falta de transparência no preço",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "cobrança não informada",
+        "taxa oculta",
+        "valor surpresa na cobrança"
+      ],
+      "girias": [
+        "cobraram escondido",
+        "veio uma taxa do nada",
+        "enganaram no preço"
+      ],
+      "regionalismos": [
+        {
+          "termo": "deram um Zé Ruela no preço",
+          "regiao": "uso popular nacional",
+          "significado": "enganaram"
+        }
+      ],
+      "emojis": [
+        "🕵️",
+        "😡",
+        "💰"
+      ],
+      "evidencias_exemplo": [
+        "Fui cobrado por uma taxa que não estava informada antes da compra.",
+        "Cobraram escondido, veio uma taxa do nada na fatura."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRECO-004",
+      "tipo": "F",
+      "familia": "PREÇO",
+      "subcategoria": "Preço justo",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "valor adequado",
+        "preço coerente",
+        "cobrança correta"
+      ],
+      "girias": [
+        "tá no preço certo",
+        "valeu o investimento",
+        "preço honesto"
+      ],
+      "regionalismos": [
+        {
+          "termo": "tá no ponto",
+          "regiao": "uso nacional informal",
+          "significado": "preço adequado"
+        },
+        {
+          "termo": "cobra na régua",
+          "regiao": "interior",
+          "significado": "cobra o justo"
+        }
+      ],
+      "emojis": [
+        "✅💲",
+        "🙂"
+      ],
+      "evidencias_exemplo": [
+        "O preço cobrado é justo pelo que foi oferecido.",
+        "Tá no preço certo, valeu o investimento."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRECO-005",
+      "tipo": "F",
+      "familia": "PREÇO",
+      "subcategoria": "Custo-benefício",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "bom custo-benefício",
+        "vale o que custa",
+        "preço compatível com qualidade"
+      ],
+      "girias": [
+        "vale muito a pena",
+        "é barato pela qualidade",
+        "custo-benefício show"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "💯",
+        "👍",
+        "🤑"
+      ],
+      "evidencias_exemplo": [
+        "O produto apresenta excelente relação entre custo e qualidade.",
+        "Vale muito a pena, é barato pela qualidade que tem."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "QUAL-001",
+      "tipo": "D",
+      "familia": "QUALIDADE",
+      "subcategoria": "Inconsistência de qualidade",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "variação de qualidade",
+        "falta de padronização",
+        "qualidade irregular"
+      ],
+      "girias": [
+        "varia muito",
+        "uma vez vem bom outra vem ruim",
+        "é osso comprar"
+      ],
+      "regionalismos": [
+        {
+          "termo": "é uma loteria",
+          "regiao": "uso nacional informal",
+          "significado": "resultado incerto"
+        }
+      ],
+      "emojis": [
+        "🎲",
+        "😬",
+        "⚠️"
+      ],
+      "evidencias_exemplo": [
+        "A qualidade do produto varia bastante entre as compras.",
+        "É uma loteria, uma vez vem bom outra vem ruim."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "QUAL-002",
+      "tipo": "D",
+      "familia": "QUALIDADE",
+      "subcategoria": "Abaixo do esperado",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "qualidade insuficiente",
+        "não atendeu à expectativa",
+        "ficou devendo"
+      ],
+      "girias": [
+        "esperava mais",
+        "deixou a desejar",
+        "fiquei na vontade"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "😕",
+        "📉",
+        "🤏"
+      ],
+      "evidencias_exemplo": [
+        "A qualidade ficou abaixo do que eu esperava.",
+        "Esperava mais, ficou devendo no final das contas."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "QUAL-003",
+      "tipo": "F",
+      "familia": "QUALIDADE",
+      "subcategoria": "Acima do esperado",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "superou a expectativa",
+        "melhor do que o previsto",
+        "surpreendeu positivamente"
+      ],
+      "girias": [
+        "superou",
+        "me surpreendeu",
+        "veio melhor que eu pensava"
+      ],
+      "regionalismos": [
+        {
+          "termo": "veio com tudo",
+          "regiao": "interior",
+          "significado": "surpresa positiva"
+        }
+      ],
+      "emojis": [
+        "🤩",
+        "📈",
+        "🎉"
+      ],
+      "evidencias_exemplo": [
+        "A qualidade superou completamente minhas expectativas.",
+        "Me surpreendeu, veio bem melhor do que eu pensava."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "QUAL-004",
+      "tipo": "F",
+      "familia": "QUALIDADE",
+      "subcategoria": "Padrão consistente",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "qualidade padronizada",
+        "sempre igual",
+        "constância no resultado"
+      ],
+      "girias": [
+        "é sempre a mesma coisa boa",
+        "nunca decepciona",
+        "pode confiar que vem bom"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🔁✅",
+        "💪"
+      ],
+      "evidencias_exemplo": [
+        "A qualidade se mantém constante em todas as compras que fiz.",
+        "É sempre na régua, nunca decepciona."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "EXP-001",
+      "tipo": "D",
+      "familia": "EXPERIÊNCIA",
+      "subcategoria": "Processo confuso",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "falta de clareza no processo",
+        "etapas confusas",
+        "difícil de entender"
+      ],
+      "girias": [
+        "não entendi nada",
+        "ficou tudo confuso",
+        "virou um labirinto"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🌀",
+        "😵",
+        "❓"
+      ],
+      "evidencias_exemplo": [
+        "O processo de compra estava confuso e pouco intuitivo.",
+        "Não entendi nada, ficou tudo emaranhado."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "EXP-002",
+      "tipo": "D",
+      "familia": "EXPERIÊNCIA",
+      "subcategoria": "Frustração geral",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "decepção",
+        "insatisfação geral",
+        "sensação de chateação"
+      ],
+      "girias": [
+        "fiquei muito chateado",
+        "decepcionou",
+        "não foi como eu queria"
+      ],
+      "regionalismos": [
+        {
+          "termo": "fiquei arrasado",
+          "regiao": "uso nacional informal",
+          "significado": "intensificador"
+        }
+      ],
+      "emojis": [
+        "😞",
+        "💔",
+        "😔"
+      ],
+      "evidencias_exemplo": [
+        "Fiquei bastante decepcionado com toda a experiência.",
+        "Fiquei muito chateado, não foi nada do que eu esperava."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "EXP-003",
+      "tipo": "F",
+      "familia": "EXPERIÊNCIA",
+      "subcategoria": "Facilidade",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "processo simples",
+        "sem complicação",
+        "fácil de usar"
+      ],
+      "girias": [
+        "é mole",
+        "super fácil",
+        "não tem erro"
+      ],
+      "regionalismos": [
+        {
+          "termo": "é sopa",
+          "regiao": "uso nacional informal",
+          "significado": "muito fácil"
+        }
+      ],
+      "emojis": [
+        "😌",
+        "✅",
+        "🙌"
+      ],
+      "evidencias_exemplo": [
+        "Achei o processo muito simples e fácil de seguir.",
+        "É sopa, super fácil de usar."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "EXP-004",
+      "tipo": "F",
+      "familia": "EXPERIÊNCIA",
+      "subcategoria": "Satisfação geral",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "contentamento",
+        "experiência positiva geral",
+        "gostei de tudo"
+      ],
+      "girias": [
+        "adorei",
+        "foi ótimo",
+        "não tenho nada a reclamar"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "😍",
+        "👏",
+        "🎊"
+      ],
+      "evidencias_exemplo": [
+        "Estou muito satisfeito com toda a experiência.",
+        "Adorei, foi show de bola do início ao fim."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "EXP-005",
+      "tipo": "F",
+      "familia": "EXPERIÊNCIA",
+      "subcategoria": "Praticidade",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "comodidade",
+        "agilidade no uso",
+        "sem burocracia"
+      ],
+      "girias": [
+        "é bem prático",
+        "resolve rapidinho",
+        "não enche o saco"
+      ],
+      "regionalismos": [
+        {
+          "termo": "é na lata",
+          "regiao": "uso nacional informal",
+          "significado": "direto e fácil"
+        }
+      ],
+      "emojis": [
+        "⚡",
+        "👌",
+        "🟢"
+      ],
+      "evidencias_exemplo": [
+        "O processo é muito prático e direto.",
+        "É bem prático, resolve rapidinho sem enrolação."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "CONF-001",
+      "tipo": "D",
+      "familia": "CONFIANÇA",
+      "subcategoria": "Insegurança na marca",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "desconfiança",
+        "receio em relação à empresa",
+        "dúvida sobre seriedade"
+      ],
+      "girias": [
+        "não confio muito",
+        "fiquei com o pé atrás",
+        "tá estranho"
+      ],
+      "regionalismos": [
+        {
+          "termo": "fiquei naquela",
+          "regiao": "uso nacional informal",
+          "significado": "em dúvida"
+        }
+      ],
+      "emojis": [
+        "🤨",
+        "⚠️",
+        "😬"
+      ],
+      "evidencias_exemplo": [
+        "Fiquei inseguro em relação à seriedade da empresa.",
+        "Fiquei com o pé atrás, deu uma pulga atrás da orelha."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "CONF-002",
+      "tipo": "D",
+      "familia": "CONFIANÇA",
+      "subcategoria": "Promessa não cumprida",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Atendimento"
+      },
+      "sinonimos": [
+        "quebra de promessa",
+        "combinado não cumprido",
+        "descumprimento de acordo"
+      ],
+      "girias": [
+        "não cumpriu o prometido",
+        "mentiu pra mim",
+        "ficou só na promessa"
+      ],
+      "regionalismos": [
+        {
+          "termo": "deu com os burros n'água",
+          "regiao": "uso nacional informal",
+          "significado": "decepcionou"
+        }
+      ],
+      "emojis": [
+        "🤥",
+        "😤",
+        "❌"
+      ],
+      "evidencias_exemplo": [
+        "A empresa não cumpriu o que havia sido prometido.",
+        "Ficou só na promessa, no blá-blá-blá."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "CONF-003",
+      "tipo": "F",
+      "familia": "CONFIANÇA",
+      "subcategoria": "Recomendação espontânea",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "indicação voluntária",
+        "recomendação a terceiros",
+        "propensão a indicar"
+      ],
+      "girias": [
+        "já indiquei",
+        "recomendo demais",
+        "vou falar pra todo mundo"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📣",
+        "👍",
+        "💬"
+      ],
+      "evidencias_exemplo": [
+        "Já recomendei a empresa para amigos e familiares.",
+        "Recomendo demais, vou falar pra todo mundo que conheço."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "CONF-004",
+      "tipo": "F",
+      "familia": "CONFIANÇA",
+      "subcategoria": "Segurança na marca",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "confiança na empresa",
+        "sensação de seriedade",
+        "transparência percebida"
+      ],
+      "girias": [
+        "confio de olhos fechados",
+        "é sério mesmo",
+        "dá pra confiar"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🛡️",
+        "✅",
+        "🤝"
+      ],
+      "evidencias_exemplo": [
+        "Sinto total confiança e segurança em relação à marca.",
+        "Confio de olhos fechados, é gente séria."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "CONF-005",
+      "tipo": "F",
+      "familia": "CONFIANÇA",
+      "subcategoria": "Fidelização",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "fidelidade ao serviço",
+        "cliente recorrente",
+        "não troca de fornecedor"
+      ],
+      "girias": [
+        "sempre compro aqui",
+        "sou cliente fiel",
+        "não troco por nada"
+      ],
+      "regionalismos": [
+        {
+          "termo": "sou cria daqui",
+          "regiao": "uso nacional informal",
+          "significado": "cliente antigo e fiel"
+        }
+      ],
+      "emojis": [
+        "💛",
+        "🔁",
+        "🏆"
+      ],
+      "evidencias_exemplo": [
+        "Sou cliente fiel e sempre volto a comprar aqui.",
+        "Sempre compro aqui, sou cria desse lugar."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "POSV-001",
+      "tipo": "D",
+      "familia": "PÓS-VENDA",
+      "subcategoria": "Dificuldade em trocas/devoluções",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "processo de troca complicado",
+        "devolução burocrática",
+        "dificuldade de reembolso"
+      ],
+      "girias": [
+        "foi um parto pra trocar",
+        "não consegui devolver",
+        "enrolaram pra trocar"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🔄❌",
+        "😩"
+      ],
+      "evidencias_exemplo": [
+        "Tive muita dificuldade para conseguir realizar a troca.",
+        "Foi um parto pra trocar, enrolaram um monte."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "POSV-002",
+      "tipo": "D",
+      "familia": "PÓS-VENDA",
+      "subcategoria": "Falta de suporte após compra",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "ausência de suporte pós-venda",
+        "abandono após a venda",
+        "falta de assistência"
+      ],
+      "girias": [
+        "depois que comprei, ninguém mais apareceu",
+        "fiquei na mão",
+        "abandonaram"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🙅",
+        "📵",
+        "😞"
+      ],
+      "evidencias_exemplo": [
+        "Após a compra, não recebi nenhum suporte da empresa.",
+        "Fiquei na mão, depois que comprei ninguém mais apareceu."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "POSV-003",
+      "tipo": "F",
+      "familia": "PÓS-VENDA",
+      "subcategoria": "Suporte eficiente pós-venda",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "assistência pós-compra eficaz",
+        "resolução rápida de problemas",
+        "acompanhamento posterior"
+      ],
+      "girias": [
+        "resolveram rapidinho depois",
+        "me ajudaram até o final",
+        "suporte nota dez"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🛟",
+        "👏",
+        "✅"
+      ],
+      "evidencias_exemplo": [
+        "O suporte pós-venda foi rápido e eficiente.",
+        "Resolveram rapidinho, não me deixaram na mão."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "POSV-004",
+      "tipo": "F",
+      "familia": "PÓS-VENDA",
+      "subcategoria": "Facilidade de troca/devolução",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "troca sem burocracia",
+        "devolução simples",
+        "reembolso facilitado"
+      ],
+      "girias": [
+        "trocou na hora",
+        "foi de boa pra devolver",
+        "sem complicação nenhuma"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🔄✅",
+        "😊"
+      ],
+      "evidencias_exemplo": [
+        "A troca foi realizada de forma rápida e sem burocracia.",
+        "Trocou na hora, foi de boa, sem complicação."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ESTR-001",
+      "tipo": "D",
+      "familia": "ESTRUTURA",
+      "subcategoria": "Estrutura física precária",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "instalações ruins",
+        "local malcuidado",
+        "infraestrutura deficiente"
+      ],
+      "girias": [
+        "tá tudo caindo aos pedaços",
+        "lugar largado",
+        "tá precisando de reforma"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🏗️",
+        "😕",
+        "⚠️"
+      ],
+      "evidencias_exemplo": [
+        "A estrutura do local estava bastante precária.",
+        "Tá tudo largado, precisando de reforma."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ESTR-002",
+      "tipo": "D",
+      "familia": "ESTRUTURA",
+      "subcategoria": "Falta de organização",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "desorganização",
+        "bagunça operacional",
+        "ausência de ordem"
+      ],
+      "girias": [
+        "é uma bagunça",
+        "tá tudo desorganizado",
+        "não tem ordem nenhuma"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🌀",
+        "📦",
+        "😖"
+      ],
+      "evidencias_exemplo": [
+        "Notei muita desorganização no funcionamento do local.",
+        "É uma bagunça, tá tudo misturado lá."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ESTR-003",
+      "tipo": "F",
+      "familia": "ESTRUTURA",
+      "subcategoria": "Estrutura adequada",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "instalações boas",
+        "ambiente bem estruturado",
+        "infraestrutura adequada"
+      ],
+      "girias": [
+        "tá tudo em ordem",
+        "lugar bem montado",
+        "estrutura boa"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🏢✅",
+        "👍"
+      ],
+      "evidencias_exemplo": [
+        "A estrutura do estabelecimento é bem organizada e adequada.",
+        "Tá tudo na régua, lugar bem montado."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "ESTR-004",
+      "tipo": "F",
+      "familia": "ESTRUTURA",
+      "subcategoria": "Ambiente agradável",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "espaço aconchegante",
+        "lugar confortável",
+        "ambiente convidativo"
+      ],
+      "girias": [
+        "lugar gostoso de ficar",
+        "ambiente top",
+        "dá vontade de ficar"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🛋️",
+        "😌",
+        "❤️"
+      ],
+      "evidencias_exemplo": [
+        "Gostei muito do ambiente, é bastante agradável.",
+        "Lugar gostoso de ficar, dá vontade de voltar."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "AMB-001",
+      "tipo": "D",
+      "familia": "AMBIENTE",
+      "subcategoria": "Ambiente desconfortável",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "desconforto físico",
+        "ambiente inadequado",
+        "sensação de incômodo"
+      ],
+      "girias": [
+        "fiquei incomodado",
+        "lugar apertado",
+        "não tava nada bom"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "😣",
+        "🪑",
+        "⚠️"
+      ],
+      "evidencias_exemplo": [
+        "Senti bastante desconforto durante minha permanência no local.",
+        "Fiquei incomodado, lugar apertado demais."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "AMB-002",
+      "tipo": "D",
+      "familia": "AMBIENTE",
+      "subcategoria": "Ruído/poluição sonora",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "excesso de ruído",
+        "ambiente barulhento",
+        "poluição sonora"
+      ],
+      "girias": [
+        "tava um zoeira",
+        "muito barulho",
+        "não dava pra ouvir nada"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🔊",
+        "😖",
+        "🙉"
+      ],
+      "evidencias_exemplo": [
+        "O ambiente estava extremamente ruidoso.",
+        "Tava um zoeira, não dava pra ouvir nada."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "AMB-003",
+      "tipo": "F",
+      "familia": "AMBIENTE",
+      "subcategoria": "Ambiente acolhedor",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "ambiente caloroso",
+        "recepção agradável",
+        "espaço convidativo"
+      ],
+      "girias": [
+        "lugar acolhedor",
+        "fiquei super à vontade",
+        "ambiente gostoso"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🏡",
+        "😊",
+        "💛"
+      ],
+      "evidencias_exemplo": [
+        "O ambiente é muito acolhedor e agradável.",
+        "Fiquei super à vontade, é tipo casa da gente."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "AMB-004",
+      "tipo": "F",
+      "familia": "AMBIENTE",
+      "subcategoria": "Limpeza",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "higiene do local",
+        "ambiente limpo",
+        "cuidado com a limpeza"
+      ],
+      "girias": [
+        "tá tudo limpinho",
+        "impecável",
+        "brilhando de limpo"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "✨🧼",
+        "👌"
+      ],
+      "evidencias_exemplo": [
+        "O local estava muito limpo e bem cuidado.",
+        "Tá tudo limpinho, um brinco de tão organizado."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "COMU-001",
+      "tipo": "D",
+      "familia": "COMUNICAÇÃO",
+      "subcategoria": "Falta de informação",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "informação insuficiente",
+        "ausência de esclarecimento",
+        "dados incompletos"
+      ],
+      "girias": [
+        "não me explicaram nada",
+        "faltou aviso",
+        "fiquei boiando"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "❓",
+        "📵",
+        "😕"
+      ],
+      "evidencias_exemplo": [
+        "Faltou informação clara sobre o processo.",
+        "Não me explicaram nada, fiquei boiando."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "COMU-002",
+      "tipo": "D",
+      "familia": "COMUNICAÇÃO",
+      "subcategoria": "Dificuldade de contato",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "difícil acesso ao atendimento",
+        "contato complicado",
+        "linha ocupada"
+      ],
+      "girias": [
+        "não consigo falar com ninguém",
+        "fica caindo a ligação",
+        "não atende nunca"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "☎️🚫",
+        "😤"
+      ],
+      "evidencias_exemplo": [
+        "Tive muita dificuldade em conseguir contato com a empresa.",
+        "É osso conseguir falar, não atende nunca."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "COMU-003",
+      "tipo": "D",
+      "familia": "COMUNICAÇÃO",
+      "subcategoria": "Linguagem confusa",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "explicação pouco clara",
+        "comunicação confusa",
+        "termos técnicos não explicados"
+      ],
+      "girias": [
+        "falou difícil",
+        "não entendi nada",
+        "ficou tudo em português de Marte"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🗯️",
+        "❓",
+        "😵"
+      ],
+      "evidencias_exemplo": [
+        "A explicação dada foi confusa e pouco clara.",
+        "Falou grego, não entendi nada do que disse."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "COMU-004",
+      "tipo": "F",
+      "familia": "COMUNICAÇÃO",
+      "subcategoria": "Clareza na comunicação",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "explicação objetiva",
+        "comunicação transparente",
+        "linguagem acessível"
+      ],
+      "girias": [
+        "explicou direitinho",
+        "ficou tudo claro",
+        "falou numa boa"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "💬✅",
+        "👍"
+      ],
+      "evidencias_exemplo": [
+        "A explicação foi clara e de fácil entendimento.",
+        "Explicou direitinho, ficou tudo bem claro."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "COMU-005",
+      "tipo": "F",
+      "familia": "COMUNICAÇÃO",
+      "subcategoria": "Facilidade de contato",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "acesso fácil ao atendimento",
+        "contato rápido",
+        "canal de comunicação eficiente"
+      ],
+      "girias": [
+        "é fácil falar com eles",
+        "atende rapidinho",
+        "sempre consigo contato"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📞✅",
+        "😊"
+      ],
+      "evidencias_exemplo": [
+        "É fácil entrar em contato com a empresa quando preciso.",
+        "É na moleza falar com eles, atende rapidinho."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "MKT-001",
+      "tipo": "D",
+      "familia": "MARKETING",
+      "subcategoria": "Propaganda enganosa",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "publicidade não fiel",
+        "anúncio falso",
+        "descrição exagerada"
+      ],
+      "girias": [
+        "me enganaram no anúncio",
+        "não é nada do que prometeram",
+        "é tudo mentira"
+      ],
+      "regionalismos": [
+        {
+          "termo": "venderam o peixe",
+          "regiao": "uso nacional informal",
+          "significado": "enganaram na venda"
+        }
+      ],
+      "emojis": [
+        "📢❌",
+        "😠"
+      ],
+      "evidencias_exemplo": [
+        "O anúncio não correspondia à realidade do produto.",
+        "Me enganaram no anúncio, venderam o peixe direitinho."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "MKT-002",
+      "tipo": "D",
+      "familia": "MARKETING",
+      "subcategoria": "Expectativa mal alinhada",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "expectativa desencontrada",
+        "anúncio impreciso",
+        "promessa exagerada"
+      ],
+      "girias": [
+        "esperava outra coisa",
+        "achei que seria diferente",
+        "não bateu com o que vi"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🎯❌",
+        "😕"
+      ],
+      "evidencias_exemplo": [
+        "Minha expectativa, criada pelo anúncio, não correspondeu à realidade.",
+        "Esperava outra coisa, não bateu com o que vi."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "MKT-003",
+      "tipo": "F",
+      "familia": "MARKETING",
+      "subcategoria": "Anúncio fiel ao produto",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "publicidade verdadeira",
+        "descrição precisa",
+        "anúncio condizente"
+      ],
+      "girias": [
+        "é igualzinho ao anúncio",
+        "veio como prometido",
+        "bateu com a propaganda"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "✅📢",
+        "👍"
+      ],
+      "evidencias_exemplo": [
+        "O produto corresponde exatamente ao que foi anunciado.",
+        "É igualzinho ao anúncio, veio como prometido."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "MKT-004",
+      "tipo": "F",
+      "familia": "MARKETING",
+      "subcategoria": "Atratividade da proposta",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "proposta chamativa",
+        "oferta interessante",
+        "apelo comercial positivo"
+      ],
+      "girias": [
+        "a oferta chamou atenção",
+        "proposta irresistível",
+        "valeu pegar"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "✨💡",
+        "😍"
+      ],
+      "evidencias_exemplo": [
+        "A proposta apresentada foi bastante atrativa.",
+        "A oferta pegou meu olho, valeu demais pegar."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "TECH-001",
+      "tipo": "D",
+      "familia": "TECNOLOGIA",
+      "subcategoria": "Sistema/app com falha",
+      "areas": {
+        "primaria": "Tecnologia",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "bug no aplicativo",
+        "falha de sistema",
+        "erro técnico recorrente"
+      ],
+      "girias": [
+        "o app trava direto",
+        "dá erro toda hora",
+        "fica bugado"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🐛",
+        "📱❌",
+        "😤"
+      ],
+      "evidencias_exemplo": [
+        "O aplicativo apresenta falhas constantes durante o uso.",
+        "O app trava direto, fica bugado toda hora."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "TECH-002",
+      "tipo": "D",
+      "familia": "TECNOLOGIA",
+      "subcategoria": "Dificuldade de uso da plataforma",
+      "areas": {
+        "primaria": "Tecnologia",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "interface confusa",
+        "navegação difícil",
+        "usabilidade ruim"
+      ],
+      "girias": [
+        "não entendo nada do site",
+        "é osso de usar",
+        "me perco direto"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🧭❌",
+        "😵"
+      ],
+      "evidencias_exemplo": [
+        "Tive dificuldade em navegar pelo site da empresa.",
+        "É osso de usar, me perco direto lá dentro."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "TECH-003",
+      "tipo": "F",
+      "familia": "TECNOLOGIA",
+      "subcategoria": "Sistema estável",
+      "areas": {
+        "primaria": "Tecnologia",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "plataforma estável",
+        "app sem falhas",
+        "sistema confiável"
+      ],
+      "girias": [
+        "funciona liso",
+        "nunca trava",
+        "sem bug nenhum"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "✅📱",
+        "💪"
+      ],
+      "evidencias_exemplo": [
+        "O sistema funciona de forma estável, sem apresentar falhas.",
+        "Funciona liso, nunca trava nem dá bug."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "TECH-004",
+      "tipo": "F",
+      "familia": "TECNOLOGIA",
+      "subcategoria": "Facilidade de uso digital",
+      "areas": {
+        "primaria": "Tecnologia",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "interface intuitiva",
+        "navegação simples",
+        "usabilidade boa"
+      ],
+      "girias": [
+        "é fácil de usar",
+        "intuitivo demais",
+        "achei tudo rapidinho"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📱✅",
+        "😊"
+      ],
+      "evidencias_exemplo": [
+        "A plataforma é intuitiva e fácil de utilizar.",
+        "É na lata de usar, achei tudo rapidinho."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROC-001",
+      "tipo": "D",
+      "familia": "PROCESSOS",
+      "subcategoria": "Burocracia excessiva",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Atendimento"
+      },
+      "sinonimos": [
+        "excesso de etapas",
+        "processo demorado por burocracia",
+        "papelada em excesso"
+      ],
+      "girias": [
+        "é muita burocracia",
+        "enche o saco de papel",
+        "tem que assinar mil coisas"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📑😩",
+        "⏳"
+      ],
+      "evidencias_exemplo": [
+        "O processo envolveu uma burocracia desnecessária.",
+        "É muita burocracia, tem que assinar mil coisas."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROC-002",
+      "tipo": "D",
+      "familia": "PROCESSOS",
+      "subcategoria": "Etapas redundantes",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "repetição de etapas",
+        "processo retrabalhado",
+        "redundância operacional"
+      ],
+      "girias": [
+        "tem que repetir tudo de novo",
+        "fica voltando atrás",
+        "pediram a mesma coisa duas vezes"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🔁😤",
+        "📋"
+      ],
+      "evidencias_exemplo": [
+        "Precisei repetir a mesma informação em etapas diferentes.",
+        "Fica dando voltas, pediram a mesma coisa duas vezes."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROC-003",
+      "tipo": "F",
+      "familia": "PROCESSOS",
+      "subcategoria": "Processo simplificado",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "poucas etapas",
+        "processo direto",
+        "simplicidade operacional"
+      ],
+      "girias": [
+        "é rapidinho de fazer",
+        "não tem enrolação",
+        "resolve numa tacada"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "✅⚡",
+        "👌"
+      ],
+      "evidencias_exemplo": [
+        "O processo é simples e envolve poucas etapas.",
+        "É rapidinho de fazer, não tem enrolação."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PROC-004",
+      "tipo": "F",
+      "familia": "PROCESSOS",
+      "subcategoria": "Eficiência operacional",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "processo eficiente",
+        "resolução rápida",
+        "fluxo bem organizado"
+      ],
+      "girias": [
+        "resolve rápido",
+        "anda liso",
+        "não enrosca em nada"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "⚙️✅",
+        "🚀"
+      ],
+      "evidencias_exemplo": [
+        "O processo se mostrou eficiente e rápido de concluir.",
+        "Anda liso, resolve rápido sem enroscar em nada."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRZ-001",
+      "tipo": "D",
+      "familia": "PRAZO",
+      "subcategoria": "Prazo não cumprido",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "atraso no compromisso",
+        "prazo descumprido",
+        "entrega fora da data"
+      ],
+      "girias": [
+        "não cumpriu o prazo",
+        "passou da data",
+        "ficou devendo no prazo"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📅❌",
+        "😤"
+      ],
+      "evidencias_exemplo": [
+        "O prazo combinado não foi cumprido pela empresa.",
+        "Furou o prazo, passou da data sem aviso."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRZ-002",
+      "tipo": "D",
+      "familia": "PRAZO",
+      "subcategoria": "Prazo longo demais",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "tempo de espera excessivo",
+        "prazo dilatado",
+        "demora exagerada"
+      ],
+      "girias": [
+        "demora demais",
+        "prazo é enorme",
+        "leva uma eternidade"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "⏳😩",
+        "📆"
+      ],
+      "evidencias_exemplo": [
+        "O prazo estabelecido é excessivamente longo.",
+        "Demora demais, leva uma eternidade pra ficar pronto."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRZ-003",
+      "tipo": "F",
+      "familia": "PRAZO",
+      "subcategoria": "Prazo cumprido",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "entrega na data",
+        "compromisso honrado",
+        "prazo respeitado"
+      ],
+      "girias": [
+        "chegou no dia certinho",
+        "cumpriu na hora",
+        "veio no prazo combinado"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📅✅",
+        "👍"
+      ],
+      "evidencias_exemplo": [
+        "O prazo estabelecido foi cumprido integralmente.",
+        "Chegou no dia certinho, cumpriu na hora combinada."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "PRZ-004",
+      "tipo": "F",
+      "familia": "PRAZO",
+      "subcategoria": "Prazo curto/ágil",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "tempo de entrega reduzido",
+        "rapidez no cumprimento",
+        "prazo enxuto"
+      ],
+      "girias": [
+        "foi rapidinho",
+        "antes do esperado",
+        "nem deu tempo de esperar"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "⚡📅",
+        "🎉"
+      ],
+      "evidencias_exemplo": [
+        "O prazo foi cumprido em tempo menor do que o esperado.",
+        "Foi rapidinho, nem deu tempo de eu esperar de verdade."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "LOG-001",
+      "tipo": "D",
+      "familia": "LOGÍSTICA",
+      "subcategoria": "Rastreio falho",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "rastreamento sem atualização",
+        "código de rastreio inativo",
+        "falta de informação de status"
+      ],
+      "girias": [
+        "o rastreio não atualiza nunca",
+        "fica parado no mesmo lugar",
+        "não sei onde tá minha encomenda"
+      ],
+      "regionalismos": [
+        {
+          "termo": "tá no escurinho",
+          "regiao": "uso nacional informal",
+          "significado": "sem informação"
+        }
+      ],
+      "emojis": [
+        "📍❌",
+        "😕"
+      ],
+      "evidencias_exemplo": [
+        "O sistema de rastreamento não apresenta atualizações.",
+        "Fica parado no mesmo lugar, não sei onde tá minha encomenda."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "LOG-002",
+      "tipo": "D",
+      "familia": "LOGÍSTICA",
+      "subcategoria": "Transportadora ruim",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "serviço de transporte inadequado",
+        "motorista mal-educado",
+        "entrega malfeita"
+      ],
+      "girias": [
+        "a transportadora é horrível",
+        "o entregador foi grosso",
+        "deixaram qualquer jeito"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🚚❌",
+        "😠"
+      ],
+      "evidencias_exemplo": [
+        "O serviço prestado pela transportadora foi insatisfatório.",
+        "O entregador foi grosso, deixou largado na porta."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "LOG-003",
+      "tipo": "F",
+      "familia": "LOGÍSTICA",
+      "subcategoria": "Rastreio eficiente",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": "Tecnologia"
+      },
+      "sinonimos": [
+        "rastreamento atualizado",
+        "status sempre disponível",
+        "acompanhamento transparente"
+      ],
+      "girias": [
+        "o rastreio sempre atualiza",
+        "consigo ver tudinho",
+        "tá sempre na linha"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📍✅",
+        "👍"
+      ],
+      "evidencias_exemplo": [
+        "O rastreamento se mantém atualizado durante todo o trajeto.",
+        "O rastreio sempre atualiza, consigo ver tudinho."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "LOG-004",
+      "tipo": "F",
+      "familia": "LOGÍSTICA",
+      "subcategoria": "Transportadora confiável",
+      "areas": {
+        "primaria": "Logística",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "serviço de entrega de qualidade",
+        "entregador educado",
+        "transporte cuidadoso"
+      ],
+      "girias": [
+        "a transportadora é nota dez",
+        "o entregador foi super educado",
+        "entregou com cuidado"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🚚✅",
+        "😊"
+      ],
+      "evidencias_exemplo": [
+        "A transportadora prestou um serviço de qualidade.",
+        "O entregador foi super educado, entregou com cuidado."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "REL-001",
+      "tipo": "D",
+      "familia": "RELACIONAMENTO",
+      "subcategoria": "Sensação de descaso",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "sentimento de desvalorização",
+        "falta de cuidado percebida",
+        "sensação de ser apenas um número"
+      ],
+      "girias": [
+        "me sinto só mais um",
+        "não se importam comigo",
+        "trataram como qualquer um"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "😶",
+        "🚶",
+        "😕"
+      ],
+      "evidencias_exemplo": [
+        "Sinto que sou tratado apenas como mais um número.",
+        "Me sinto só mais um, não se importam comigo de verdade."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "REL-002",
+      "tipo": "D",
+      "familia": "RELACIONAMENTO",
+      "subcategoria": "Falta de proximidade",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "distanciamento",
+        "relação impessoal",
+        "ausência de vínculo"
+      ],
+      "girias": [
+        "é tudo muito frio",
+        "não tem aquele clima",
+        "fica tudo distante"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🧊",
+        "😐",
+        "📏"
+      ],
+      "evidencias_exemplo": [
+        "Percebo uma relação distante e pouco pessoal com a empresa.",
+        "É tudo muito frio, não tem aquele clima de proximidade."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "REL-003",
+      "tipo": "F",
+      "familia": "RELACIONAMENTO",
+      "subcategoria": "Proximidade com o cliente",
+      "areas": {
+        "primaria": "Atendimento",
+        "secundaria": "Comercial"
+      },
+      "sinonimos": [
+        "relação pessoal",
+        "atenção individualizada percebida",
+        "vínculo genuíno"
+      ],
+      "girias": [
+        "eles se importam comigo",
+        "é tipo amigo da gente",
+        "trata com carinho de verdade"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🤗",
+        "💛",
+        "🙌"
+      ],
+      "evidencias_exemplo": [
+        "Sinto que a empresa realmente se importa comigo como cliente.",
+        "Eles se importam comigo, é tipo amigo da gente."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "REL-004",
+      "tipo": "F",
+      "familia": "RELACIONAMENTO",
+      "subcategoria": "Vínculo de longo prazo",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Atendimento"
+      },
+      "sinonimos": [
+        "relação contínua",
+        "histórico de confiança",
+        "acompanhamento ao longo do tempo"
+      ],
+      "girias": [
+        "acompanham desde sempre",
+        "já é uma relação antiga",
+        "é parceria de longa data"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🤝⏳",
+        "❤️"
+      ],
+      "evidencias_exemplo": [
+        "Mantenho uma relação de confiança com a empresa há bastante tempo.",
+        "Acompanham desde sempre, é parceria de longa data mesmo."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "EXPC-001",
+      "tipo": "D",
+      "familia": "EXPECTATIVA",
+      "subcategoria": "Abaixo do esperado",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "expectativa não correspondida",
+        "ficou devendo frente ao esperado",
+        "decepção de expectativa"
+      ],
+      "girias": [
+        "não correspondeu",
+        "esperava mais",
+        "ficou bem por baixo"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📉😕",
+        "🤏"
+      ],
+      "evidencias_exemplo": [
+        "O resultado ficou abaixo do que eu esperava inicialmente.",
+        "Não correspondeu, ficou bem por baixo do esperado."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "EXPC-002",
+      "tipo": "F",
+      "familia": "EXPECTATIVA",
+      "subcategoria": "Dentro do esperado",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "conforme prometido",
+        "atendeu à expectativa",
+        "como esperado"
+      ],
+      "girias": [
+        "foi como eu esperava",
+        "veio conforme prometido",
+        "bateu com o esperado"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "✅🎯",
+        "🙂"
+      ],
+      "evidencias_exemplo": [
+        "O resultado correspondeu exatamente à minha expectativa.",
+        "Foi como eu esperava, veio conforme prometido."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "EXPC-003",
+      "tipo": "F",
+      "familia": "EXPECTATIVA",
+      "subcategoria": "Superou expectativa",
+      "areas": {
+        "primaria": "Marketing",
+        "secundaria": "Operações"
+      },
+      "sinonimos": [
+        "além do esperado",
+        "surpresa positiva",
+        "expectativa superada"
+      ],
+      "girias": [
+        "superou",
+        "me surpreendeu de verdade",
+        "foi muito além"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🤩📈",
+        "🎉"
+      ],
+      "evidencias_exemplo": [
+        "O resultado superou completamente minha expectativa inicial.",
+        "Superou, me surpreendeu de verdade, foi muito além."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "RES-001",
+      "tipo": "D",
+      "familia": "RESULTADO",
+      "subcategoria": "Resultado não alcançado",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Atendimento"
+      },
+      "sinonimos": [
+        "problema não resolvido",
+        "objetivo não atingido",
+        "sem efeito prático"
+      ],
+      "girias": [
+        "não resolveu nada",
+        "não funcionou pra mim",
+        "continuei com o mesmo problema"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "❌🎯",
+        "😞"
+      ],
+      "evidencias_exemplo": [
+        "O resultado obtido não resolveu o problema apresentado.",
+        "Não resolveu nada, continuei com o mesmo problema."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "RES-002",
+      "tipo": "F",
+      "familia": "RESULTADO",
+      "subcategoria": "Resultado alcançado",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "problema resolvido",
+        "objetivo atingido",
+        "efeito prático positivo"
+      ],
+      "girias": [
+        "resolveu meu problema",
+        "funcionou direitinho",
+        "deu super certo"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "✅🎯",
+        "👍"
+      ],
+      "evidencias_exemplo": [
+        "O resultado obtido resolveu completamente o meu problema.",
+        "Resolveu meu problema, funcionou direitinho."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "RES-003",
+      "tipo": "F",
+      "familia": "RESULTADO",
+      "subcategoria": "Resultado além do esperado",
+      "areas": {
+        "primaria": "Operações",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "resultado surpreendente",
+        "efeito superior ao previsto",
+        "resultado excepcional"
+      ],
+      "girias": [
+        "o resultado foi surpreendente",
+        "foi além do que eu pensava",
+        "ficou show de bola"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🤩🏆",
+        "🎉"
+      ],
+      "evidencias_exemplo": [
+        "O resultado alcançado foi surpreendentemente positivo.",
+        "Foi além do que eu pensava, ficou show de bola."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "RCMP-001",
+      "tipo": "D",
+      "familia": "RECOMPRA",
+      "subcategoria": "Intenção de não recomprar",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "ausência de intenção de retorno",
+        "decisão de não comprar novamente",
+        "abandono futuro"
+      ],
+      "girias": [
+        "não compro mais aqui",
+        "não volto nunca",
+        "tô fora dessa"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🚫🔁",
+        "😤"
+      ],
+      "evidencias_exemplo": [
+        "Não pretendo realizar novas compras nesta empresa.",
+        "Não compro mais aqui, não volto nunca."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "RCMP-002",
+      "tipo": "D",
+      "familia": "RECOMPRA",
+      "subcategoria": "Migração para concorrente",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "troca de fornecedor",
+        "mudança para a concorrência",
+        "abandono em favor de outra marca"
+      ],
+      "girias": [
+        "vou procurar outra empresa",
+        "tem concorrente melhor",
+        "vou mudar de fornecedor"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "➡️🏢",
+        "😐"
+      ],
+      "evidencias_exemplo": [
+        "Estou considerando buscar outra empresa para minhas próximas compras.",
+        "Vou procurar outra empresa, tem concorrente melhor."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "RCMP-003",
+      "tipo": "F",
+      "familia": "RECOMPRA",
+      "subcategoria": "Intenção de recompra",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": null
+      },
+      "sinonimos": [
+        "disposição de comprar novamente",
+        "fidelidade futura",
+        "intenção de retorno"
+      ],
+      "girias": [
+        "vou comprar de novo",
+        "sempre volto",
+        "sou cliente garantido"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "🔁💛",
+        "🛒"
+      ],
+      "evidencias_exemplo": [
+        "Tenho a intenção de realizar novas compras futuramente.",
+        "Vou comprar de novo, sempre volto aqui."
+      ],
+      "nicho": null
+    },
+    {
+      "codigo": "RCMP-004",
+      "tipo": "F",
+      "familia": "RECOMPRA",
+      "subcategoria": "Indicação a terceiros",
+      "areas": {
+        "primaria": "Comercial",
+        "secundaria": "Marketing"
+      },
+      "sinonimos": [
+        "recomendação ativa",
+        "propaganda espontânea",
+        "indicação para conhecidos"
+      ],
+      "girias": [
+        "já indiquei pra todo mundo",
+        "vou indicar com certeza",
+        "falei super bem pros outros"
+      ],
+      "regionalismos": [],
+      "emojis": [
+        "📣💬",
+        "🙌"
+      ],
+      "evidencias_exemplo": [
+        "Já indiquei a empresa para diversas pessoas conhecidas.",
+        "Já indiquei pra todo mundo, vou indicar com certeza de novo."
+      ],
+      "nicho": null
+    }
+  ]
+}

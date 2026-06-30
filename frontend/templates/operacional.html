@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>NSI — Painel Operacional</title>
+  <link rel="stylesheet" href="/static/operacional/css/operacional.css">
+</head>
+<body>
+
+  <header id="op-header">
+    <h1>NSI — Painel Operacional</h1>
+  </header>
+
+  <main id="op-main">
+
+    <section id="secao-upload">
+      <h2>Novo Lote</h2>
+
+      <div id="msg-erro" style="color:red;margin-bottom:12px;"></div>
+
+      <div class="campo">
+        <label>Empresa</label>
+        <input type="text" id="empresa" placeholder="Ex: estilo-canela">
+      </div>
+      <div class="campo">
+        <label>Nome do Lote</label>
+        <input type="text" id="nome-lote" placeholder="Ex: Pós-venda Quinzena 1">
+      </div>
+      <div class="campo">
+        <label>Data Inicial</label>
+        <input type="date" id="data-inicio">
+      </div>
+      <div class="campo">
+        <label>Data Final</label>
+        <input type="date" id="data-fim">
+      </div>
+      <div class="campo">
+        <label>Arquivo CSV</label>
+        <input type="file" id="arquivo-csv" accept=".csv,.xlsx">
+      </div>
+
+      <div id="botoes-upload">
+        <button id="btn-criar" onclick="criarLote()">Criar Lote</button>
+        <button id="btn-processar" onclick="processarLote()" disabled>Processar Lote</button>
+      </div>
+    </section>
+
+    <section id="card-lote" class="oculto">
+      <h2>Lote Criado</h2>
+      <p><strong>Empresa:</strong> <span id="card-empresa"></span></p>
+      <p><strong>Lote:</strong> <span id="card-nome"></span></p>
+      <p><strong>ID:</strong> <span id="card-id"></span></p>
+      <p><strong>Clientes:</strong> <span id="card-total"></span></p>
+    </section>
+
+    <section id="secao-pipeline" class="oculto">
+      <h2>Pipeline</h2>
+      <ul id="pipeline">
+        <li id="step-upload">Upload recebido</li>
+        <li id="step-lote">Lote criado</li>
+        <li id="step-d8">Aguardando D+8</li>
+        <li id="step-disparo">Disparo pendente</li>
+        <li id="step-respostas">Aguardando respostas</li>
+        <li id="step-webhook">Webhook pendente</li>
+        <li id="step-ia">Análise IA pendente</li>
+        <li id="step-dashboard">Dashboard pendente</li>
+        <li id="step-pdf">PDF pendente</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <script src="/static/operacional/js/operacional.js"></script>
+</body>
+</html>

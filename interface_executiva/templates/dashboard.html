@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NSI — Interface Executiva</title>
+  <link rel="stylesheet" href="/static/executiva/css/executive.css">
+</head>
+<body>
+
+  <header id="nsi-header">
+    <div id="header-logo">NSI</div>
+    <div id="header-empresa">{{ empresa }}</div>
+    <div id="header-meta">
+      <span id="header-data">{{ data }}</span>
+      <span id="header-lote">{{ lote }}</span>
+    </div>
+    <div id="header-seletor">
+      <select id="seletor-relatorio" onchange="carregarRelatorio(this.value)">
+        {% for r in relatorios %}
+        <option value="{{ r.id }}">{{ r.label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </header>
+
+  <nav id="nsi-nav">
+    <button class="aba" data-aba="visao-geral">Visão Geral</button>
+    <button class="aba" data-aba="metricas">Métricas</button>
+    <button class="aba" data-aba="semantica">Leitura Semântica</button>
+    <button class="aba" data-aba="historico">Histórico</button>
+    <button class="aba" data-aba="exportar">Exportar PDF</button>
+  </nav>
+
+  <main id="nsi-conteudo">
+    <div id="visao-geral" class="painel"></div>
+    <div id="metricas" class="painel oculto"></div>
+    <div id="semantica" class="painel oculto"></div>
+    <div id="historico" class="painel oculto"></div>
+    <div id="exportar" class="painel oculto"></div>
+  </main>
+
+  <script src="/static/executiva/js/executive.js"></script>
+</body>
+</html>

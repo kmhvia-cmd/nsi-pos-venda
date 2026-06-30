@@ -1,0 +1,44 @@
+/* ===== RESET ESTRUTURAL ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ===== HEADER ===== */
+#nsi-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* ===== NAVEGAÇÃO ABAS ===== */
+#nsi-nav {
+  display: flex;
+  gap: 8px;
+  padding: 8px 24px;
+  border-bottom: 1px solid #ccc;
+}
+
+.aba {
+  padding: 8px 16px;
+  cursor: pointer;
+  background: none;
+  border: 1px solid #ccc;
+}
+
+.aba.ativa {
+  font-weight: bold;
+  border-bottom: 2px solid #000;
+}
+
+/* ===== PAINÉIS ===== */
+#nsi-conteudo {
+  padding: 24px;
+}
+
+.painel {
+  display: block;
+}
+
+.oculto {
+  display: none;
+}

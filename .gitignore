@@ -1,0 +1,52 @@
+# Segredos - nunca versionar
+.env
+*.env
+
+# Ambiente virtual
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Dados de clientes e saídas do Motor - sensíveis, não versionar
+data/
+
+# Logs da aplicação
+logs/*.log
+
+# Arquivos de IDE
+.vscode/
+*.code-workspace
+
+# Arquivos temporários do Windows
+Thumbs.db
+desktop.ini
+
+# Pastas de instalação/duplicadas identificadas na auditoria
+nsi_engine/
+ngrok_new/
+
+# Arquivos compactados - nunca versionar binários grandes
+*.zip
+
+# CSVs de teste - dados fictícios usados durante o desenvolvimento, não fazem parte do código
+teste_20_clientes.csv
+teste_clientes.csv
+
+# Imagens temporárias soltas na raiz
+image.png
+
+# Scripts auxiliares de instalação - não fazem parte do código do NSI
+_instalar.py
+_instalar2.py
+_catalogo.py
+
+# Documentação duplicada (cópias de download com sufixo numérico entre parênteses)
+*\ \(1\).md
+*\ \(2\).md
+*\ \(3\).md
+*\ \(1\).zip
+*\ \(2\).zip
