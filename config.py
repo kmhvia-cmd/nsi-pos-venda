@@ -23,3 +23,4 @@ class Config:
 
     WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN", "")
     WHATSAPP_URL   = os.getenv("WHATSAPP_URL", "")
+    META_APP_SECRET = os.getenv("META_APP_SECRET", "")

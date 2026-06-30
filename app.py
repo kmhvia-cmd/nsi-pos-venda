@@ -111,7 +111,15 @@ def webhook_verificar():
 
 @app.route("/webhook", methods=["POST"])
 def webhook_receber():
-    from services.webhook_handler import processar_webhook
+    from services.webhook_handler import processar_webhook, validar_assinatura_meta
+
+    assinatura = request.headers.get("X-Hub-Signature-256", "")
+    corpo_bruto = request.get_data()
+
+    if not validar_assinatura_meta(corpo_bruto, assinatura):
+        print(f"[WEBHOOK] Requisicao rejeitada - assinatura invalida")
+        return jsonify({"status": "rejeitado", "motivo": "assinatura invalida"}), 403
+
     payload = request.get_json(silent=True) or {}
     resultado = processar_webhook(payload)
     return jsonify(resultado), 200

@@ -1,3 +1,7 @@
+import hashlib
+import hmac
+
+from config import Config
 # -*- coding: utf-8 -*-
 """
 NSI - services/webhook_handler.py
@@ -8,7 +12,25 @@ Recebe resposta do cliente, identifica, salva. NAO responde.
 from datetime import datetime
 from adapters.storage import buscar_lote_por_telefone, salvar_resposta_cliente
 
+def validar_assinatura_meta(corpo_bruto: bytes, assinatura_recebida: str) -> bool:
+    """
+    Valida a assinatura HMAC-SHA256 enviada pela Meta no header
+    X-Hub-Signature-256, garantindo que a requisicao realmente
+    veio da Meta e nao foi forjada por terceiros.
+    """
+    if not Config.META_APP_SECRET:
+        return False
+    if not assinatura_recebida or not assinatura_recebida.startswith("sha256="):
+        return False
 
+    hash_recebido = assinatura_recebida.split("sha256=", 1)[1]
+    hash_calculado = hmac.new(
+        Config.META_APP_SECRET.encode("utf-8"),
+        corpo_bruto,
+        hashlib.sha256,
+    ).hexdigest()
+
+    return hmac.compare_digest(hash_calculado, hash_recebido)
 def processar_webhook(payload: dict) -> dict:
     try:
         entry = payload.get("entry", [{}])[0]
