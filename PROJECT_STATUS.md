@@ -19,6 +19,7 @@
 🟢 Git: Organizado
 🟢 Segurança essencial: Concluída
 🟢 Fonte única de verdade (Webhook → `lote.json` → Motor): Concluída
+🟢 ADR-001 — NSI Operations Console: Aprovada e congelada na arquitetura
 
 ---
 
@@ -68,6 +69,17 @@ Eliminada a duplicidade entre `lote.json` e `data/empresas/<slug>/respostas/` co
 - **Revisão arquitetural final**: `atualizar_status_pipeline`/`atualizar_status_lote` (`core/scheduler.py`) passaram a reutilizar `salvar_lote_atomico`, unificando o mecanismo oficial de escrita de `lote.json`.
 
 Nenhum arquivo de `engine/`, `processors/`, `models/`, `confidence/` ou `outputs/` foi alterado em nenhuma etapa. Suíte de testes: 108 → 121 aprovados (13 novos testes, cobrindo os três blocos e o cenário de risco identificado antes da implementação).
+
+---
+
+## Decisões Arquiteturais (ADRs)
+
+### ADR-001 — NSI Operations Console (2026-07-02)
+**Status: Aprovada e congelada.**
+
+Formaliza a arquitetura das três plataformas do ecossistema NSI — Operations Console (uso interno, torre de controle operacional), Portal Executivo do Cliente (produto comercial) e Motor NSI (invisível, sem alteração) — e estabelece a Operação como unidade principal de exposição da plataforma, substituindo o Lote nesse papel (que permanece como componente técnico interno). Define os princípios de registro permanente de eventos, Timeline completa por Operação, não interferência do Console sobre o Motor, aceite eletrônico obrigatório antes de qualquer processamento e segregação de dados sensíveis (NPS, comentários, diagnósticos e respostas individuais ficam restritos ao Portal do Cliente).
+
+Documento completo: [`docs/architecture/ADR-001-operations-console.md`](docs/architecture/ADR-001-operations-console.md). Decisão exclusivamente documental — nenhum código, API ou lógica do Motor foi alterado.
 
 ---
 
