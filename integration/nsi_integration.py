@@ -58,26 +58,67 @@ def _montar_resposta_cliente(cliente: dict) -> RespostaCliente:
     """
     Adapta um cliente do formato legado (lote.json) para RespostaCliente.
 
-    Princípio "o NSI nunca inventa fatos": status_entrega e
-    data_envio_mensagem permanecem None quando ausentes na fonte —
-    independentemente de existir texto em `resposta`. A Camada
-    Matemática (processors/math_processor.py) já trata esses campos
-    como Optional (exceção controlada aprovada, Implementação 1).
+    REGRA DO CONTRATO (decisão arquitetural aprovada — Bloco 3, Opção A):
+    um cliente só é promovido ao estado "respondido" perante o Motor
+    quando existir o CONJUNTO COMPLETO de três fatos observados na fonte
+    legada: status_entrega == "respondido" e data_resposta (ambos
+    gravados por adapters.storage.salvar_resposta_cliente, acionado pelo
+    webhook) e data_envio_mensagem (gravado por
+    core.scheduler.disparar_lote, no momento da confirmação HTTP 200 do
+    envio). Se qualquer um dos três faltar, o cliente permanece com
+    status_entrega=None e é excluído do cálculo de respondidos pelo
+    Motor — nunca é promovido por aproximação, fallback ou inferência.
+
+    Por que essa regra existe: processors/math_processor.py calcula
+    tempo de resposta como `data_resposta - data_envio_mensagem` para
+    todo cliente com status_entrega == "respondido". Se um cliente
+    responder (via webhook) sem que o lote jamais tenha sido de fato
+    disparado — cenário operacional real, não hipotético: o operador
+    pode esquecer de chamar /api/lote/<lote_id>/disparar antes de uma
+    resposta chegar — data_envio_mensagem ficaria ausente, e essa
+    subtração quebraria com TypeError (datetime - None). Exigir o
+    conjunto completo elimina esse risco sem tocar em processors/.
+
+    Princípio "o NSI nunca inventa fatos" (decisão permanente do
+    projeto): nenhum fallback, nenhuma data aproximada (não usa datas do
+    lote), nenhuma inferência a partir de dado parcial. A ausência de
+    qualquer um dos três fatos é tratada como "ainda não respondido"
+    para o Motor — não é um erro, é um estado real ainda incompleto.
 
     cliente_id usa o telefone como identificador — não é um dado novo,
     é o mesmo identificador já usado em todo o sistema legado
     (adapters.storage.buscar_lote_por_telefone, salvar_resposta_cliente).
     """
     telefone = cliente.get("telefone", "")
+
+    status_entrega_bruto = cliente.get("status_entrega")
+    data_resposta_str = cliente.get("data_resposta")
+    data_envio_str = cliente.get("data_envio_mensagem")
+
+    conjunto_completo = (
+        status_entrega_bruto == "respondido"
+        and data_resposta_str is not None
+        and data_envio_str is not None
+    )
+
+    if conjunto_completo:
+        status_entrega = "respondido"
+        data_resposta = datetime.fromisoformat(data_resposta_str)
+        data_envio_mensagem = datetime.fromisoformat(data_envio_str)
+    else:
+        status_entrega = None
+        data_resposta = None
+        data_envio_mensagem = None
+
     return RespostaCliente(
         cliente_id=telefone,
         telefone=telefone,
         nome=cliente.get("nome", ""),
         produto=cliente.get("produto", ""),
         resposta=cliente.get("resposta", ""),
-        data_envio_mensagem=None,
-        data_resposta=None,
-        status_entrega=None,
+        data_envio_mensagem=data_envio_mensagem,
+        data_resposta=data_resposta,
+        status_entrega=status_entrega,
     )
 
 

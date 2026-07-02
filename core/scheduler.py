@@ -4,7 +4,7 @@ NSI - core/scheduler.py
 Responsabilidade: controle temporal real do D+8
 """
 from datetime import datetime, timedelta
-from adapters.storage import carregar_lote, listar_lotes
+from adapters.storage import carregar_lote, listar_lotes, salvar_lote_atomico
 import json
 from pathlib import Path
 from config import Config
@@ -42,8 +42,7 @@ def atualizar_status_pipeline(lote_id: str, campo: str, valor: bool):
     with open(caminho, encoding="utf-8") as f:
         lote = json.load(f)
     lote["status_pipeline"][campo] = valor
-    with open(caminho, "w", encoding="utf-8") as f:
-        json.dump(lote, f, ensure_ascii=False, indent=2)
+    salvar_lote_atomico(lote_id, lote)
     return True
 
 
@@ -77,8 +76,7 @@ def atualizar_status_lote(lote_id: str, novo_status: str) -> bool:
     with open(caminho, encoding="utf-8") as f:
         lote = json.load(f)
     lote["status"] = novo_status
-    with open(caminho, "w", encoding="utf-8") as f:
-        json.dump(lote, f, ensure_ascii=False, indent=2)
+    salvar_lote_atomico(lote_id, lote)
     return True
 def disparar_lote(lote_id: str) -> dict:
     """
@@ -107,9 +105,15 @@ def disparar_lote(lote_id: str) -> dict:
 
         if resultado["status"] == 200:
             enviados += 1
+            # Fato real: momento em que o envio foi confirmado (HTTP 200)
+            # pela WhatsApp Cloud API. E o dado que integration/nsi_integration.py
+            # precisa para calcular tempo de resposta por cliente.
+            cliente["data_envio_mensagem"] = datetime.now().isoformat()
         else:
             erros += 1
             print(f"[ERRO] {nome} - {resultado}")
+
+    salvar_lote_atomico(lote_id, lote)
 
     atualizar_status_pipeline(lote_id, "disparo_whatsapp", True)
     atualizar_status_lote(lote_id, "disparado")

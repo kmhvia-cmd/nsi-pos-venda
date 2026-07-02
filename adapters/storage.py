@@ -4,6 +4,8 @@ NSI - adapters/storage.py
 Responsabilidade: salvar e carregar lotes e analises em disco
 """
 import json
+import os
+import threading
 import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -117,6 +119,40 @@ def gerar_slug_empresa(nome: str) -> str:
     return nome
 
 
+_locks_por_lote: dict[str, threading.Lock] = {}
+_locks_por_lote_guard = threading.Lock()
+
+
+def _obter_lock_lote(lote_id: str) -> threading.Lock:
+    """
+    Um lock por lote_id, para serializar escritas concorrentes ao mesmo
+    lote.json dentro do mesmo processo. Nao protege contra multiplos
+    processos/workers (ex.: servidor WSGI de producao com varios workers)
+    - essa e uma limitacao conhecida, documentada na auditoria, a ser
+    tratada quando a migracao de servidor for decidida.
+    """
+    with _locks_por_lote_guard:
+        if lote_id not in _locks_por_lote:
+            _locks_por_lote[lote_id] = threading.Lock()
+        return _locks_por_lote[lote_id]
+
+
+def salvar_lote_atomico(lote_id: str, lote: dict) -> None:
+    """
+    Funcao publica e oficial para persistir o dict do lote de volta em
+    lote.json. Escreve em arquivo temporario e substitui via os.replace
+    (atomico no SO), serializada por lote_id via _obter_lock_lote. Todo
+    escritor de lote.json que precisar de escrita segura/atomica deve
+    reutilizar esta funcao, em vez de abrir o arquivo diretamente.
+    """
+    caminho = Path(Config.LOTES_DIR) / lote_id / "lote.json"
+    with _obter_lock_lote(lote_id):
+        caminho_tmp = caminho.with_suffix(".json.tmp")
+        with open(caminho_tmp, "w", encoding="utf-8") as f:
+            json.dump(lote, f, ensure_ascii=False, indent=2)
+        os.replace(caminho_tmp, caminho)
+
+
 def salvar_resposta_cliente(lote_id: str, telefone: str, texto: str) -> dict:
     from datetime import datetime
     lote = carregar_lote(lote_id)
@@ -129,6 +165,21 @@ def salvar_resposta_cliente(lote_id: str, telefone: str, texto: str) -> dict:
     )
     if not cliente:
         return {"erro": f"Cliente nao encontrado para telefone {telefone}"}
+
+    data_resposta_iso = datetime.now().isoformat()
+
+    # Fonte oficial: atualiza o registro do cliente dentro do proprio
+    # lote.json. E o unico dado que integration/nsi_integration.py le
+    # para montar o Motor - "o NSI nunca inventa fatos": este e o
+    # momento exato em que o fato (a resposta chegou) e registrado.
+    cliente["resposta"] = texto
+    cliente["data_resposta"] = data_resposta_iso
+    cliente["status_entrega"] = "respondido"
+    salvar_lote_atomico(lote_id, lote)
+
+    # Log bruto de auditoria - NAO e fonte de verdade, NAO e lido pelo
+    # Motor nem por nenhum outro modulo. Existe apenas como rastro do
+    # payload recebido, por decisao explicita do projeto.
     resposta = {
         "empresa": empresa_nome,
         "lote_id": lote_id,
@@ -137,7 +188,7 @@ def salvar_resposta_cliente(lote_id: str, telefone: str, texto: str) -> dict:
         "telefone": telefone,
         "produto": cliente.get("produto", ""),
         "resposta": texto,
-        "data_resposta": datetime.now().isoformat(),
+        "data_resposta": data_resposta_iso,
         "analisado": False
     }
     pasta = Path(Config.DATA_DIR) / "empresas" / slug / "respostas"
@@ -145,6 +196,7 @@ def salvar_resposta_cliente(lote_id: str, telefone: str, texto: str) -> dict:
     nome_arquivo = f"{lote_id}_{telefone}.json"
     with open(pasta / nome_arquivo, "w", encoding="utf-8") as f:
         json.dump(resposta, f, ensure_ascii=False, indent=2)
+
     return {"salvo": True, "arquivo": nome_arquivo, "cliente": cliente.get("nome")}
 
 
