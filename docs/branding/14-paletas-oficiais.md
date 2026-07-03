@@ -1,7 +1,7 @@
 # Paletas Oficiais do NSI
 
 **Deriva de:** [`09-sistema-editorial-visual.md`](09-sistema-editorial-visual.md), [`11-grid-e-zona-de-seguranca.md`](11-grid-e-zona-de-seguranca.md), [`13-tipografia-oficial.md`](13-tipografia-oficial.md), `docs/architecture/ADR-003-sistema-editorial-visual.md` (Bloco 04 — Paletas Oficiais).
-**Status:** Sprint 2 — Rascunho para revisão. Não congelado. Corresponde ao Bloco 04 da ADR-003, Seção 4.
+**Status:** Sprint 2 — Aprovado. Corresponde ao Bloco 04 da ADR-003, Seção 4.
 **Natureza:** Arquitetura cromática. Nenhuma cor concreta — hex, RGB ou nome — é definida aqui, pela mesma disciplina já aplicada à Tipografia (`13-tipografia-oficial.md`): a lógica vem antes da escolha. Este documento define o papel, a hierarquia, a contenção e o contraste que qualquer paleta futura terá que obedecer.
 
 ---

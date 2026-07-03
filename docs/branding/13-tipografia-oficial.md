@@ -1,7 +1,7 @@
 # Tipografia Oficial do NSI
 
 **Deriva de:** [`09-sistema-editorial-visual.md`](09-sistema-editorial-visual.md), [`11-grid-e-zona-de-seguranca.md`](11-grid-e-zona-de-seguranca.md), [`12-sistema-modular-de-composicao.md`](12-sistema-modular-de-composicao.md), `docs/architecture/ADR-003-sistema-editorial-visual.md` (Bloco 03 — Tipografia).
-**Status:** Sprint 2 — Rascunho para revisão. Não congelado. Corresponde ao Bloco 03 da ADR-003, Seção 4.
+**Status:** Sprint 2 — Aprovado. Corresponde ao Bloco 03 da ADR-003, Seção 4.
 **Natureza:** Arquitetura tipográfica. Nenhuma fonte específica é escolhida aqui — apenas a lógica de hierarquia, ritmo, peso, espaçamento, escala e contraste que qualquer fonte futura terá que obedecer.
 
 ---

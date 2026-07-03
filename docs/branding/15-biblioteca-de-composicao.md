@@ -1,7 +1,7 @@
 # Biblioteca de Composição do NSI
 
 **Deriva de:** [`10-componentes-visuais.md`](10-componentes-visuais.md), [`11-grid-e-zona-de-seguranca.md`](11-grid-e-zona-de-seguranca.md), [`12-sistema-modular-de-composicao.md`](12-sistema-modular-de-composicao.md), `docs/architecture/ADR-003-sistema-editorial-visual.md` (Bloco 06 — renomeado de "Biblioteca Oficial de Layouts" para "Biblioteca de Composição", por coerência com a decisão de não usar templates registrada em `12-sistema-modular-de-composicao.md`).
-**Status:** Sprint 2 — Rascunho para revisão. Não congelado. Corresponde ao Bloco 06 da ADR-003, Seção 4. Último documento estrutural desta etapa da Sprint 2.
+**Status:** Sprint 2 — Aprovado. Corresponde ao Bloco 06 da ADR-003, Seção 4. Último documento estrutural desta etapa da Sprint 2.
 **Natureza:** Arquitetura de catálogo. Nenhum layout, exemplo gráfico, cor ou tipografia concreta é definido aqui — apenas a estrutura que organiza os padrões de composição válidos.
 
 ---

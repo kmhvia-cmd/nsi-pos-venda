@@ -1,7 +1,7 @@
 # Sistema Modular de Composição Visual do NSI
 
 **Deriva de:** [`09-sistema-editorial-visual.md`](09-sistema-editorial-visual.md), [`10-componentes-visuais.md`](10-componentes-visuais.md), [`11-grid-e-zona-de-seguranca.md`](11-grid-e-zona-de-seguranca.md), `docs/architecture/ADR-003-sistema-editorial-visual.md`.
-**Status:** Sprint 2 — Rascunho para revisão. Não congelado.
+**Status:** Sprint 2 — Aprovado.
 **Natureza:** Arquitetura de composição. Nenhum layout, grid visual, tipografia, cor, prompt ou exemplo gráfico é definido aqui — apenas as regras pelas quais componentes e zonas se combinam.
 
 ---

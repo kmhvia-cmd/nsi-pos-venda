@@ -23,7 +23,8 @@
 🟢 ADR-002 — Fundação de Marca NSI: Aprovada e congelada na arquitetura
 🟢 Branding Sprint 1 — Fundação da Marca (`docs/branding/`): CONGELADA
 🟢 ADR-003 — Sistema Editorial Visual do NSI: Aprovada (abertura da Sprint 2)
-🟢 Branding Sprint 2 — Sistema Editorial Visual (etapa documental): CONCLUÍDA
+🟢 Branding Sprint 2 — Sistema Editorial Visual: CONGELADA — arquitetura editorial encerrada
+🟢 Branding Sprint 3 — Prototipação Visual: EM PRODUÇÃO — DT-001 v1 produzido e registrado (`docs/branding/documentos-visuais/DT-001.html`)
 
 ---
 
@@ -50,8 +51,8 @@
 
 ## Pendências
 
-### Branding — Fase de Prototipação Visual
-Sprint 2 (documental) encerrada. Próximo passo: construir `DT-001`, o primeiro Documento Visual Oficial do NSI. Nenhum documento arquitetural novo será criado — a documentação só será ajustada se a prática demonstrar necessidade. Aguardando instruções para iniciar.
+### Branding — Sprint 3 — Prototipação Visual (em produção)
+Arquitetura editorial encerrada (Sprint 2). Produção iniciada: `DT-001` v1 já construído e registrado em `docs/branding/documentos-visuais/DT-001.html`, aplicando integralmente `16-DT001-direcao-de-arte.md` e `17-DT001-prompt-master.md`. Nenhum documento arquitetural novo é criado nesta fase — evolução guiada pela prática dos documentos reais. Próximo passo: refinamento de DT-001 e/ou início de DT-002, aguardando instrução.
 
 ### Sprint 2
 - Dashboard Executivo (`/empresa/<slug>`)

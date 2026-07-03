@@ -60,10 +60,10 @@ A Sprint 2 é dividida em **8 blocos independentes e sequenciais**. Nenhum bloco
 |---|---|---|---|
 | 01 | Arquitetura Visual | `docs/branding/09-sistema-editorial-visual.md` | Concluído |
 | 02 | Grid e Sistema de Margens | `docs/branding/11-grid-e-zona-de-seguranca.md` | Aprovado provisoriamente |
-| 03 | Tipografia | `docs/branding/13-tipografia-oficial.md` | Rascunho para revisão |
-| 04 | Paletas Oficiais | `docs/branding/14-paletas-oficiais.md` | Rascunho para revisão |
+| 03 | Tipografia | `docs/branding/13-tipografia-oficial.md` | Aprovado |
+| 04 | Paletas Oficiais | `docs/branding/14-paletas-oficiais.md` | Aprovado |
 | 05 | Componentes | `docs/branding/10-componentes-visuais.md` | Concluído (antecipado — exceção deliberada, ver observação do Princípio 4) |
-| 06 | Biblioteca de Composição (renomeado de "Biblioteca Oficial de Layouts") | `docs/branding/15-biblioteca-de-composicao.md` | Rascunho para revisão |
+| 06 | Biblioteca de Composição (renomeado de "Biblioteca Oficial de Layouts") | `docs/branding/15-biblioteca-de-composicao.md` | Aprovado |
 | 07 | Prompt Master de Geração | — | Fora do escopo documental desta etapa |
 | 08 | Biblioteca Oficial de Conteúdo | — | Fora do escopo documental desta etapa |
 

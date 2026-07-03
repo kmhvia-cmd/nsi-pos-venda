@@ -1,7 +1,7 @@
 # Sistema Editorial Visual do NSI
 
 **Deriva de:** [`01-filosofia.md`](01-filosofia.md), [`07-tom-de-voz.md`](07-tom-de-voz.md), `docs/architecture/ADR-002-brand-foundation.md` (Seção 5 — Camada 2, Design System).
-**Status:** Sprint 2 — Rascunho para revisão. Não congelado.
+**Status:** Sprint 2 — Aprovado.
 **Natureza:** Fonte única de verdade da identidade visual do NSI. Nenhuma cor, tipografia, grid, componente ou prompt é definido antes deste documento estar aprovado.
 
 ---

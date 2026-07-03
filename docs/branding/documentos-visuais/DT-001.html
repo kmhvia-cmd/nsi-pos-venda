@@ -1,0 +1,204 @@
+<title>DT-001 — Fundamentos · NSI</title>
+<style>
+  :root {
+    --mat: #E2E0D9;
+    --paper: #EEECE5;
+    --ink: #1E1C17;
+    --ink-soft: #5B584D;
+    --ink-faint: #938F7C;
+    --hairline: #C9C5B9;
+    --tick: #A9A48F;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--mat);
+    min-height: 100%;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(20px, 5vw, 56px) clamp(14px, 4vw, 40px);
+    font-family: ui-sans-serif, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .stage {
+    position: relative;
+    width: min(94vw, 620px);
+  }
+
+  .plate {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    background: var(--paper);
+    box-shadow: 0 1px 2px rgba(30, 28, 23, 0.06), 0 18px 40px -22px rgba(30, 28, 23, 0.35);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: clamp(22px, 8.5%, 58px);
+    overflow: hidden;
+  }
+
+  /* registration ticks — corner calibration marks */
+  .tick {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+  }
+  .tick::before, .tick::after {
+    content: "";
+    position: absolute;
+    background: var(--tick);
+  }
+  .tick::before { width: 14px; height: 1px; }
+  .tick::after { width: 1px; height: 14px; }
+  .tick.tl { top: -7px; left: -7px; }
+  .tick.tl::before { top: 7px; left: 0; }
+  .tick.tl::after { left: 7px; top: 0; }
+  .tick.tr { top: -7px; right: -7px; }
+  .tick.tr::before { top: 7px; right: 0; }
+  .tick.tr::after { right: 7px; top: 0; }
+  .tick.bl { bottom: -7px; left: -7px; }
+  .tick.bl::before { bottom: 7px; left: 0; }
+  .tick.bl::after { left: 7px; bottom: 0; }
+  .tick.br { bottom: -7px; right: -7px; }
+  .tick.br::before { bottom: 7px; right: 0; }
+  .tick.br::after { right: 7px; bottom: 0; }
+
+  /* institutional band — top */
+  .institutional {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .wordmark {
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", monospace;
+    font-size: clamp(11px, 2.4vw, 13px);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--ink);
+  }
+
+  .doc-id {
+    text-align: right;
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", monospace;
+    line-height: 1.6;
+  }
+
+  .doc-id .code {
+    display: block;
+    font-size: clamp(11px, 2.4vw, 13px);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+
+  .doc-id .category {
+    display: block;
+    font-size: clamp(8.5px, 1.8vw, 9.5px);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  /* content area — dominant */
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(20px, 5.5vh, 34px);
+    padding: clamp(10px, 2vh, 18px) 0;
+  }
+
+  .stanza-1 {
+    margin: 0;
+    font-size: clamp(26px, 6.4vw, 42px);
+    font-weight: 600;
+    line-height: 1.24;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    text-wrap: balance;
+    max-width: 15ch;
+  }
+
+  .stanza-2 {
+    margin: 0;
+    font-size: clamp(14px, 3.1vw, 18px);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 20ch;
+  }
+
+  .stanza-3 {
+    margin: 0;
+    font-size: clamp(16px, 3.7vw, 22px);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--ink);
+    letter-spacing: -0.006em;
+  }
+
+  /* footer */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid var(--hairline);
+    padding-top: clamp(10px, 2.2vh, 16px);
+  }
+
+  .footer span {
+    font-family: ui-monospace, "Cascadia Code", "SF Mono", "Roboto Mono", monospace;
+    font-size: clamp(7.5px, 1.7vw, 9px);
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .plate { animation: settle 700ms ease-out; }
+  }
+  @keyframes settle {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<div class="stage">
+  <div class="tick tl"></div>
+  <div class="tick tr"></div>
+  <div class="tick bl"></div>
+  <div class="tick br"></div>
+
+  <div class="plate">
+    <div class="institutional">
+      <div class="wordmark">NSI</div>
+      <div class="doc-id">
+        <span class="code">DT&#8211;001</span>
+        <span class="category">Fundamentos</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <p class="stanza-1">Antes de analisar dados,<br>é preciso aprender a ouvir.</p>
+      <p class="stanza-2">A qualidade das decisões<br>depende da qualidade<br>da compreensão.</p>
+      <p class="stanza-3">Compreender começa ouvindo.</p>
+    </div>
+
+    <div class="footer">
+      <span>NSI &middot; N&uacute;cleo de Intelig&ecirc;ncia Sem&acirc;ntica</span>
+    </div>
+  </div>
+</div>
