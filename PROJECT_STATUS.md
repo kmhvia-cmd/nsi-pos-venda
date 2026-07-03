@@ -20,6 +20,8 @@
 🟢 Segurança essencial: Concluída
 🟢 Fonte única de verdade (Webhook → `lote.json` → Motor): Concluída
 🟢 ADR-001 — NSI Operations Console: Aprovada e congelada na arquitetura
+🟢 ADR-002 — Fundação de Marca NSI: Aprovada e congelada na arquitetura
+🟢 Branding Sprint 1 — Documentação fundacional (`docs/branding/`): Concluída
 
 ---
 
@@ -46,6 +48,10 @@
 
 ## Pendências
 
+### Branding — Sprint 2
+- Identidade visual (logotipo, paleta, tipografia) — depende de ADR futura de identidade visual
+- Peças de comunicação e calendário editorial
+
 ### Sprint 2
 - Dashboard Executivo (`/empresa/<slug>`)
 - Interface Operacional
@@ -59,6 +65,13 @@
 ---
 
 ## Sprints concluídas
+
+### Branding Sprint 1 — Fundação documental da marca (2026-07-03)
+Construída e **congelada** a documentação fundacional da marca NSI (o "Livro da Marca"), seguindo a mesma metodologia da arquitetura técnica: arquitetura primeiro, implementação depois, congelamento somente após aprovação. Nenhum layout, imagem ou post foi produzido nesta sprint, por decisão explícita (ADR-002).
+
+Entregue em `docs/branding/`: filosofia, manifesto, propósito, posicionamento, missão/visão/valores, diferenciais, tom de voz e princípios editoriais — todos derivados dos princípios já congelados do Motor (Contrato Seção 0) e da governança da ADR-001, não de uma narrativa de marketing independente. Inclui dois princípios editoriais nomeados (Singularidade e Memorização) e a convenção de sequência `DT-001`, `DT-002`...
+
+A ADR-002 passou por revisão arquitetural formal (`Em Revisão` → `Aprovado`) antes do congelamento, incorporando: Sistema Editorial em três camadas (Fundamentos da Marca, Design System, Sistema de Publicações), separação permanente entre Tipo de Documento e Tema, nomenclatura oficial e fechada dos Tipos de Documento (`DT`, `ART`, `REL`, `MAN`, `EST`, `GUI`, `INS`), e os princípios de Consistência de Longo Prazo, Identidade Única e Unicidade de Sigla Institucional. Durante a revisão, o código `SEM` foi identificado como ambíguo (confundia Tipo com Tema) e eliminado definitivamente da nomenclatura — "Semântica" existe hoje exclusivamente como Tema Editorial. Decisão estrutural registrada em [`docs/architecture/ADR-002-brand-foundation.md`](docs/architecture/ADR-002-brand-foundation.md).
 
 ### Sprint — Fonte única de verdade Webhook → Motor NSI (2026-07-02)
 Eliminada a duplicidade entre `lote.json` e `data/empresas/<slug>/respostas/` como fontes de dado para o Motor. Implementada em 3 blocos incrementais + 1 revisão arquitetural final, cada um validado isoladamente antes do próximo:
@@ -80,6 +93,13 @@ Nenhum arquivo de `engine/`, `processors/`, `models/`, `confidence/` ou `outputs
 Formaliza a arquitetura das três plataformas do ecossistema NSI — Operations Console (uso interno, torre de controle operacional), Portal Executivo do Cliente (produto comercial) e Motor NSI (invisível, sem alteração) — e estabelece a Operação como unidade principal de exposição da plataforma, substituindo o Lote nesse papel (que permanece como componente técnico interno). Define os princípios de registro permanente de eventos, Timeline completa por Operação, não interferência do Console sobre o Motor, aceite eletrônico obrigatório antes de qualquer processamento e segregação de dados sensíveis (NPS, comentários, diagnósticos e respostas individuais ficam restritos ao Portal do Cliente).
 
 Documento completo: [`docs/architecture/ADR-001-operations-console.md`](docs/architecture/ADR-001-operations-console.md). Decisão exclusivamente documental — nenhum código, API ou lógica do Motor foi alterado.
+
+### ADR-002 — Fundação de Marca NSI (2026-07-03)
+**Status: Aprovada e congelada**, após revisão arquitetural linha por linha (`Em Revisão` → `Aprovado`).
+
+Formaliza o módulo de branding do NSI, aplicando a mesma metodologia da arquitetura técnica (arquitetura primeiro, implementação depois, congelamento somente após aprovação). Define `docs/branding/` como fonte única de verdade da marca, estabelece que a filosofia de marca deriva dos princípios já congelados do Motor (Contrato Seção 0), e determina que nenhuma peça de comunicação, layout ou identidade visual seja produzida antes desta fundação documental. O branding é tratado como ativo arquitetural do projeto, com o objetivo de construir um Sistema Editorial Proprietário — não apenas uma identidade visual — em três camadas (Fundamentos da Marca, Design System, Sistema de Publicações), com 8 princípios arquiteturais congelados, incluindo Consistência de Longo Prazo, Identidade Única e Unicidade de Sigla Institucional (nenhuma sigla pode representar mais de um significado — regra que motivou a eliminação do código `SEM`).
+
+Documento completo: [`docs/architecture/ADR-002-brand-foundation.md`](docs/architecture/ADR-002-brand-foundation.md). Decisão exclusivamente documental — nenhum ativo visual, código ou peça de comunicação foi produzido.
 
 ---
 
