@@ -25,6 +25,7 @@
 🟢 ADR-003 — Sistema Editorial Visual do NSI: Aprovada (abertura da Sprint 2)
 🟢 Branding Sprint 2 — Sistema Editorial Visual: CONGELADA — arquitetura editorial encerrada
 🟢 Branding Sprint 3 — Prototipação Visual: EM PRODUÇÃO — DT-001 v1 produzido e registrado (`docs/branding/documentos-visuais/DT-001.html`)
+🟢 Livro dos Princípios do NSI (v1.0): Aprovado e congelado — fundação intelectual permanente do projeto
 
 ---
 
@@ -67,6 +68,13 @@ Arquitetura editorial encerrada (Sprint 2). Produção iniciada: `DT-001` v1 já
 ---
 
 ## Sprints concluídas
+
+### Livro dos Princípios do NSI — Fundação Intelectual (2026-07-03)
+Adicionado o documento fundacional do NSI (`docs/principios/livro-dos-principios.md`), contendo História, Filosofia, Missão, Visão, Valores, Princípios Fundamentais e Vocabulário Oficial. Este documento estabelece a base intelectual permanente do projeto e servirá como referência para toda a produção editorial, institucional e técnica futura.
+
+Não é um documento de arquitetura, de marca ou de produto — é anterior a todos eles. Registra a observação humana que originou o NSI antes de qualquer tecnologia (IA, análise semântica, WhatsApp), e por isso vive fora de `docs/architecture/` e `docs/branding/`, em `docs/principios/`.
+
+**Estado: CONGELADO.** Versão 1.0, aprovada em 03/07/2026. Autor: Kassein Mohamad. Curadoria editorial: ChatGPT + Claude. Commit: `c27735b`.
 
 ### Branding Sprint 2 — Sistema Editorial Visual, etapa documental (2026-07-03)
 Aberta pela ADR-003. Produzidos, nesta ordem: Arquitetura Visual (`09-sistema-editorial-visual.md`), Componentes (`10-componentes-visuais.md`, antecipado por exceção deliberada), Grid e Zona de Segurança (`11-grid-e-zona-de-seguranca.md`, aprovado provisoriamente), Sistema Modular de Composição (`12-sistema-modular-de-composicao.md` — decisão de que o NSI usa composição modular, não templates, registrada sob a governança da ADR-003, sem ADR própria), Tipografia Oficial (`13-tipografia-oficial.md`), Paletas Oficiais (`14-paletas-oficiais.md`) e Biblioteca de Composição (`15-biblioteca-de-composicao.md`, Bloco 06 renomeado de "Biblioteca Oficial de Layouts"). Nenhuma fonte, cor, layout ou prompt concreto foi definido — apenas a arquitetura que cada um vai obedecer. Prompt Master (Bloco 07) e Biblioteca Oficial de Conteúdo (Bloco 08) ficaram fora deste escopo documental.
