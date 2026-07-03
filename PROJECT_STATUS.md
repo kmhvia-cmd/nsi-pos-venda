@@ -21,7 +21,7 @@
 🟢 Fonte única de verdade (Webhook → `lote.json` → Motor): Concluída
 🟢 ADR-001 — NSI Operations Console: Aprovada e congelada na arquitetura
 🟢 ADR-002 — Fundação de Marca NSI: Aprovada e congelada na arquitetura
-🟢 Branding Sprint 1 — Documentação fundacional (`docs/branding/`): Concluída
+🟢 Branding Sprint 1 — Fundação da Marca (`docs/branding/`): CONGELADA
 
 ---
 
@@ -48,9 +48,18 @@
 
 ## Pendências
 
-### Branding — Sprint 2
-- Identidade visual (logotipo, paleta, tipografia) — depende de ADR futura de identidade visual
-- Peças de comunicação e calendário editorial
+### Branding — Sprint 2 — Design System
+- Grid oficial
+- Sistema de margens
+- Zonas de segurança
+- Componentes
+- Paletas
+- Tipografia
+- Biblioteca oficial de layouts
+- Prompt Master de geração de imagens
+- Prompt Master de geração de conteúdo
+
+Depende de ADR própria, aprovada e congelada antes de qualquer peça ser produzida — mesma metodologia da Sprint 1. Ainda não iniciada.
 
 ### Sprint 2
 - Dashboard Executivo (`/empresa/<slug>`)
@@ -72,6 +81,8 @@ Construída e **congelada** a documentação fundacional da marca NSI (o "Livro 
 Entregue em `docs/branding/`: filosofia, manifesto, propósito, posicionamento, missão/visão/valores, diferenciais, tom de voz e princípios editoriais — todos derivados dos princípios já congelados do Motor (Contrato Seção 0) e da governança da ADR-001, não de uma narrativa de marketing independente. Inclui dois princípios editoriais nomeados (Singularidade e Memorização) e a convenção de sequência `DT-001`, `DT-002`...
 
 A ADR-002 passou por revisão arquitetural formal (`Em Revisão` → `Aprovado`) antes do congelamento, incorporando: Sistema Editorial em três camadas (Fundamentos da Marca, Design System, Sistema de Publicações), separação permanente entre Tipo de Documento e Tema, nomenclatura oficial e fechada dos Tipos de Documento (`DT`, `ART`, `REL`, `MAN`, `EST`, `GUI`, `INS`), e os princípios de Consistência de Longo Prazo, Identidade Única e Unicidade de Sigla Institucional. Durante a revisão, o código `SEM` foi identificado como ambíguo (confundia Tipo com Tema) e eliminado definitivamente da nomenclatura — "Semântica" existe hoje exclusivamente como Tema Editorial. Decisão estrutural registrada em [`docs/architecture/ADR-002-brand-foundation.md`](docs/architecture/ADR-002-brand-foundation.md).
+
+**Estado: CONGELADA.** Registro oficial de encerramento: [`docs/branding/SPRINT_01_FREEZE.md`](docs/branding/SPRINT_01_FREEZE.md).
 
 ### Sprint — Fonte única de verdade Webhook → Motor NSI (2026-07-02)
 Eliminada a duplicidade entre `lote.json` e `data/empresas/<slug>/respostas/` como fontes de dado para o Motor. Implementada em 3 blocos incrementais + 1 revisão arquitetural final, cada um validado isoladamente antes do próximo:
