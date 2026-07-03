@@ -22,6 +22,8 @@
 🟢 ADR-001 — NSI Operations Console: Aprovada e congelada na arquitetura
 🟢 ADR-002 — Fundação de Marca NSI: Aprovada e congelada na arquitetura
 🟢 Branding Sprint 1 — Fundação da Marca (`docs/branding/`): CONGELADA
+🟢 ADR-003 — Sistema Editorial Visual do NSI: Aprovada (abertura da Sprint 2)
+🟢 Branding Sprint 2 — Sistema Editorial Visual (etapa documental): CONCLUÍDA
 
 ---
 
@@ -48,18 +50,8 @@
 
 ## Pendências
 
-### Branding — Sprint 2 — Design System
-- Grid oficial
-- Sistema de margens
-- Zonas de segurança
-- Componentes
-- Paletas
-- Tipografia
-- Biblioteca oficial de layouts
-- Prompt Master de geração de imagens
-- Prompt Master de geração de conteúdo
-
-Depende de ADR própria, aprovada e congelada antes de qualquer peça ser produzida — mesma metodologia da Sprint 1. Ainda não iniciada.
+### Branding — Fase de Prototipação Visual
+Sprint 2 (documental) encerrada. Próximo passo: construir `DT-001`, o primeiro Documento Visual Oficial do NSI. Nenhum documento arquitetural novo será criado — a documentação só será ajustada se a prática demonstrar necessidade. Aguardando instruções para iniciar.
 
 ### Sprint 2
 - Dashboard Executivo (`/empresa/<slug>`)
@@ -74,6 +66,11 @@ Depende de ADR própria, aprovada e congelada antes de qualquer peça ser produz
 ---
 
 ## Sprints concluídas
+
+### Branding Sprint 2 — Sistema Editorial Visual, etapa documental (2026-07-03)
+Aberta pela ADR-003. Produzidos, nesta ordem: Arquitetura Visual (`09-sistema-editorial-visual.md`), Componentes (`10-componentes-visuais.md`, antecipado por exceção deliberada), Grid e Zona de Segurança (`11-grid-e-zona-de-seguranca.md`, aprovado provisoriamente), Sistema Modular de Composição (`12-sistema-modular-de-composicao.md` — decisão de que o NSI usa composição modular, não templates, registrada sob a governança da ADR-003, sem ADR própria), Tipografia Oficial (`13-tipografia-oficial.md`), Paletas Oficiais (`14-paletas-oficiais.md`) e Biblioteca de Composição (`15-biblioteca-de-composicao.md`, Bloco 06 renomeado de "Biblioteca Oficial de Layouts"). Nenhuma fonte, cor, layout ou prompt concreto foi definido — apenas a arquitetura que cada um vai obedecer. Prompt Master (Bloco 07) e Biblioteca Oficial de Conteúdo (Bloco 08) ficaram fora deste escopo documental.
+
+**Estado: CONCLUÍDA.** Tag: `v1.1.0-branding-sistema-editorial-visual`. Próxima fase: **Sprint 3 — Prototipação Visual**, começando por `DT-001`, o primeiro Documento Visual Oficial do NSI. Evolução arquitetural a partir daqui é guiada pela prática, não por documentação adicional.
 
 ### Branding Sprint 1 — Fundação documental da marca (2026-07-03)
 Construída e **congelada** a documentação fundacional da marca NSI (o "Livro da Marca"), seguindo a mesma metodologia da arquitetura técnica: arquitetura primeiro, implementação depois, congelamento somente após aprovação. Nenhum layout, imagem ou post foi produzido nesta sprint, por decisão explícita (ADR-002).
@@ -111,6 +108,13 @@ Documento completo: [`docs/architecture/ADR-001-operations-console.md`](docs/arc
 Formaliza o módulo de branding do NSI, aplicando a mesma metodologia da arquitetura técnica (arquitetura primeiro, implementação depois, congelamento somente após aprovação). Define `docs/branding/` como fonte única de verdade da marca, estabelece que a filosofia de marca deriva dos princípios já congelados do Motor (Contrato Seção 0), e determina que nenhuma peça de comunicação, layout ou identidade visual seja produzida antes desta fundação documental. O branding é tratado como ativo arquitetural do projeto, com o objetivo de construir um Sistema Editorial Proprietário — não apenas uma identidade visual — em três camadas (Fundamentos da Marca, Design System, Sistema de Publicações), com 8 princípios arquiteturais congelados, incluindo Consistência de Longo Prazo, Identidade Única e Unicidade de Sigla Institucional (nenhuma sigla pode representar mais de um significado — regra que motivou a eliminação do código `SEM`).
 
 Documento completo: [`docs/architecture/ADR-002-brand-foundation.md`](docs/architecture/ADR-002-brand-foundation.md). Decisão exclusivamente documental — nenhum ativo visual, código ou peça de comunicação foi produzido.
+
+### ADR-003 — Sistema Editorial Visual do NSI (2026-07-03)
+**Status: Aprovada** (aprovação de abertura de sprint, sem revisão linha a linha, por decisão explícita de quem aprova).
+
+Formaliza a abertura da Branding Sprint 2, aplicando a mesma metodologia das sprints anteriores: arquitetura primeiro, implementação depois. Estabelece que o Sistema Editorial Visual deriva integralmente da Fundação da Marca (ADR-002) e não pode contrariar nenhuma decisão nela já congelada; que todo componente visual deriva de um princípio filosófico aprovado; e divide a sprint em 8 blocos independentes e sequenciais. Acrescenta dois princípios: a forma nunca compete com a mensagem, e a identidade visual deve sobreviver ao tempo. Registra explicitamente que a Sprint 2 produzirá um Sistema Editorial Visual Proprietário, não apenas layouts.
+
+Documento completo: [`docs/architecture/ADR-003-sistema-editorial-visual.md`](docs/architecture/ADR-003-sistema-editorial-visual.md). Decisão exclusivamente documental — nenhuma cor, tipografia, grid, componente ou prompt foi definido nesta ADR.
 
 ---
 
