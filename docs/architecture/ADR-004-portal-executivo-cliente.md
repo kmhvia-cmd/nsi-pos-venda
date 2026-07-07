@@ -35,7 +35,7 @@ Esta ADR não implementa nada. Ela define, antes de qualquer código, **como o c
 
 - Qualquer implementação de código, componente de frontend, schema de banco de dados ou API.
 - Definição de stack tecnológica (framework, biblioteca de UI, infraestrutura, provedor de autenticação).
-- Quantidade de cartões, ordem definitiva e conteúdo individual dos cartões (além do Primeiro Cartão), soluções sugeridas, recomendações automáticas, comportamento consultivo ou mecanismo de IA para aconselhamento, layout, posição dos elementos, tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros da Tela 02 — a definir em sessão futura.
+- Quantidade de cartões, ordem definitiva e conteúdo individual dos cartões (além do Primeiro Cartão e da missão conceitual do Segundo Cartão), soluções sugeridas, recomendações automáticas, comportamento consultivo ou mecanismo de IA para aconselhamento, layout, posição dos elementos, tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros da Tela 02 — a definir em sessão futura.
 - Telas além da Tela 01 e da Tela 02 — tratadas em futuras seções desta mesma ADR, mediante aprovação própria.
 - Qualquer alteração ao Motor NSI, ao Operations Console (ADR-001) ou à Fundação de Marca (ADR-002).
 - Definição de layout visual, grid, tipografia ou paleta — regidos pelo Sistema Editorial Visual (ADR-003), quando aplicável ao Portal.
@@ -135,11 +135,11 @@ Ser a porta de entrada do cliente ao Portal Executivo — a primeira impressão 
 
 **Status: EM ARQUITETURA.**
 
-> Congelamento parcial: os princípios abaixo estão aprovados. Quantidade de cartões, ordem definitiva, conteúdo individual (além do Primeiro Cartão), soluções sugeridas, recomendações automáticas, qualquer comportamento consultivo ou mecanismo de IA para aconselhamento, layout, posição dos elementos, tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros **não** fazem parte desta versão — serão tratados em sessão futura.
+> Congelamento parcial: os princípios abaixo estão aprovados. Quantidade de cartões, ordem definitiva, conteúdo individual dos cartões além do Primeiro e da missão conceitual do Segundo, soluções sugeridas, recomendações automáticas, qualquer comportamento consultivo ou mecanismo de IA para aconselhamento, layout, posição dos elementos, tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros **não** fazem parte desta versão — serão tratados em sessão futura.
 
 > **Evolução conceitual:** a Home deixou de ser concebida apenas como um "Resumo Executivo" e passou a ser concebida como um **Painel Executivo do Portal** — mantendo a mesma filosofia de não ser um dashboard completo, agora com uma missão mais precisa (Seção 7.2).
 >
-> **Evolução arquitetural:** o Painel Executivo passa a ser estruturado como uma sequência lógica de cartões, formando uma Jornada de Descoberta (Seções 7.6, 7.13), com o primeiro cartão já definido em conteúdo (Seção 7.14).
+> **Evolução arquitetural:** o Painel Executivo passa a ser estruturado como uma sequência lógica de cartões, formando uma Jornada de Descoberta (Seções 7.6, 7.13), com o primeiro cartão definido em conteúdo (Seção 7.14) e o segundo cartão definido em missão conceitual (Seção 7.15).
 >
 > **Princípio da Jornada do Cliente:** os cartões não seguem os módulos internos do sistema — seguem a jornada vivida pelo cliente da empresa, com um fluxo cognitivo próprio: localizar → compreender → aprofundar → comparar → decidir (Seções 7.7 e 7.8).
 >
@@ -250,20 +250,36 @@ Ser a porta de entrada do cliente ao Portal Executivo — a primeira impressão 
 - **CTA aprovado:** "Começar por aqui →"
 - O CTA não é tratado como botão comercial.
 
-### 7.15 Linguagem
+### 7.15 Segundo Cartão — Missão Conceitual
+
+- O Segundo Cartão **não** existe para sugerir soluções nem induzir ações imediatas.
+- Sua missão é fornecer compreensão suficiente para que o gestor consiga conduzir a empresa internamente.
+- Após compreender a prioridade apresentada no Primeiro Cartão, o gestor deve ser capaz de:
+  - entender por que aquela prioridade existe;
+  - identificar em qual etapa da jornada do cliente ocorreu a fricção;
+  - reconhecer qual setor ou processo interno deve ser investigado;
+  - iniciar uma conversa objetiva com sua equipe baseada em evidências.
+- O Portal Executivo não entrega respostas prontas — organiza informações para que a empresa faça as perguntas corretas internamente.
+
+**Consequência arquitetural:**
+
+- Ao fechar o Portal após o Segundo Cartão, o gestor deve ser capaz de dizer naturalmente: *"Encontramos uma fricção neste setor. Agora preciso reunir os responsáveis para entender por que isso está acontecendo."*
+- O Portal ainda não recomenda soluções — prepara a empresa para tomar decisões fundamentadas.
+
+### 7.16 Linguagem
 
 - Toda linguagem utilizada deverá ser simples, objetiva e compreensível para qualquer empresário, independentemente de formação técnica.
 - O Portal traduz a complexidade do Motor NSI; nunca a expõe ao usuário.
 - Toda navegação do Portal Executivo deverá utilizar convites naturais em vez de comandos tradicionais, como: "Clique aqui", "Saiba mais", "Próximo", "Continuar".
 - O Portal conversa com o gestor como um consultor experiente, nunca como um software.
 
-### 7.16 Unidade de análise do Portal
+### 7.17 Unidade de análise do Portal
 
 - A unidade principal do Portal passa a ser a **Operação NSI**.
 - Toda comparação histórica ocorrerá entre Operações NSI, nunca entre relatórios isolados.
 - O relatório é apenas uma representação visual de uma Operação NSI.
 
-### 7.17 Módulos previstos (inicial)
+### 7.18 Módulos previstos (inicial)
 
 - Resumo Executivo
 - Indicadores
@@ -274,17 +290,17 @@ Ser a porta de entrada do cliente ao Portal Executivo — a primeira impressão 
 - Todas as Respostas
 - Configurações
 
-### 7.18 Governança das decisões futuras
+### 7.19 Governança das decisões futuras
 
-- Toda decisão visual futura da Home deverá respeitar os princípios registrados nesta seção (7.1 a 7.17).
+- Toda decisão visual futura da Home deverá respeitar os princípios registrados nesta seção (7.1 a 7.18).
 
-### 7.19 O que ainda NÃO está definido
+### 7.20 O que ainda NÃO está definido
 
 Fora de escopo nesta etapa — a definir em sessão futura:
 
 - Quantidade de cartões
 - Ordem definitiva dos cartões
-- Conteúdo individual dos cartões (além do Primeiro Cartão, já aprovado em 7.14)
+- Conteúdo individual dos cartões, além do Primeiro Cartão (7.14, texto e CTA aprovados) e da missão conceitual do Segundo Cartão (7.15)
 - Soluções sugeridas ao gestor
 - Recomendações automáticas
 - Qualquer comportamento consultivo
@@ -337,7 +353,7 @@ As seguintes decisões são consideradas aprovadas e estáveis a partir desta AD
 - Definição de stack tecnológica de autenticação (provedor de identidade, biblioteca, protocolo).
 - Fluxo de recuperação de senha e demais fluxos de autoatendimento não convidado.
 - Schema de dados de usuário, empresa ou sessão.
-- Quantidade de cartões, ordem definitiva e conteúdo individual dos cartões (além do Primeiro Cartão), soluções sugeridas, recomendações automáticas, comportamento consultivo ou mecanismo de IA para aconselhamento, layout, posição dos elementos, tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros da Tela 02 — a definir em sessão futura.
+- Quantidade de cartões, ordem definitiva e conteúdo individual dos cartões (além do Primeiro Cartão e da missão conceitual do Segundo Cartão), soluções sugeridas, recomendações automáticas, comportamento consultivo ou mecanismo de IA para aconselhamento, layout, posição dos elementos, tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros da Tela 02 — a definir em sessão futura.
 - Qualquer tela do Portal além da Tela 01 (congelada) e da Tela 02 (princípios aprovados).
 - Qualquer alteração à ADR-001, à ADR-002 ou à ADR-003.
 
