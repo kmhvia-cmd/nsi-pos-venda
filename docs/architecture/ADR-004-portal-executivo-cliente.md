@@ -29,13 +29,13 @@ Esta ADR não implementa nada. Ela define, antes de qualquer código, **como o c
 
 - Toda a arquitetura do Portal Executivo do Cliente, tela por tela, ao longo do tempo — cada tela congelada nesta mesma ADR, em versões subsequentes.
 - **Tela 01 — Acesso ao Portal Executivo** (Seção 6): fluxo de acesso, cadastro, autenticação, isolamento de dados por empresa e boas-vindas ao primeiro acesso.
-- **Tela 02 — Home (Resumo Executivo)** (Seção 7): princípios arquiteturais aprovados nesta versão — status EM ARQUITETURA, ainda não congelada.
+- **Tela 02 — Home (Painel Executivo do Portal)** (Seção 7): princípios arquiteturais aprovados nesta versão — status EM ARQUITETURA, ainda não congelada.
 
 ### 2.2 Fora do escopo desta decisão
 
 - Qualquer implementação de código, componente de frontend, schema de banco de dados ou API.
 - Definição de stack tecnológica (framework, biblioteca de UI, infraestrutura, provedor de autenticação).
-- Layout, cabeçalho, cards, KPIs, gráficos, filtros e arquitetura visual da Tela 02 — a definir em sessão futura.
+- Layout, posição dos elementos (incluindo a do primeiro cartão), tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros da Tela 02 — a definir em sessão futura.
 - Telas além da Tela 01 e da Tela 02 — tratadas em futuras seções desta mesma ADR, mediante aprovação própria.
 - Qualquer alteração ao Motor NSI, ao Operations Console (ADR-001) ou à Fundação de Marca (ADR-002).
 - Definição de layout visual, grid, tipografia ou paleta — regidos pelo Sistema Editorial Visual (ADR-003), quando aplicável ao Portal.
@@ -131,38 +131,88 @@ Ser a porta de entrada do cliente ao Portal Executivo — a primeira impressão 
 
 ---
 
-## 7. Tela 02 — Home (Resumo Executivo)
+## 7. Tela 02 — Home (Painel Executivo do Portal)
 
 **Status: EM ARQUITETURA.**
 
-> Congelamento parcial: os princípios abaixo estão aprovados. Layout, cabeçalho, cards, KPIs, gráficos, filtros e arquitetura visual **não** fazem parte desta versão — serão tratados em sessão futura.
+> Congelamento parcial: os princípios abaixo estão aprovados. Layout, posição dos elementos (incluindo a do primeiro cartão), tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros **não** fazem parte desta versão — serão tratados em sessão futura.
+
+> **Evolução conceitual:** a Home deixou de ser concebida apenas como um "Resumo Executivo" e passou a ser concebida como um **Painel Executivo do Portal** — mantendo a mesma filosofia de não ser um dashboard completo, agora com uma missão mais precisa (Seção 7.2).
+>
+> **Evolução arquitetural:** o Painel Executivo passa a ser estruturado como uma sequência lógica de cartões, formando uma Jornada de Descoberta (Seções 7.6 a 7.8), com o primeiro cartão já definido em conteúdo (Seção 7.8).
 
 ### 7.1 Natureza da tela
 
 - A Home **não** é um dashboard completo.
-- A Home é o **Resumo Executivo** do Portal Executivo.
+- A Home é o **Painel Executivo** do Portal — evolução do conceito inicial de Resumo Executivo.
+- O objetivo principal da Home **não** é mostrar todos os dados da operação.
 - Sua missão é apresentar uma visão geral da última Operação NSI e despertar o interesse do gestor em aprofundar a análise.
 
-### 7.2 Relação com os módulos
+### 7.2 Missão da Home
+
+- A Home existe para responder imediatamente ao gestor: **"Vale a pena continuar explorando este relatório."**
+- A Home desperta curiosidade — ela não entrega toda a análise.
+
+### 7.3 Sentimentos transmitidos
+
+- A Home deve transmitir dois sentimentos: **valor percebido** ("valeu a pena contratar o NSI") e **urgência controlada** (existem oportunidades importantes que merecem atenção).
+- A Home **não** deve transmitir sensação de desastre.
+- O Portal jamais exagera problemas. O NSI apresenta apenas aquilo que os dados realmente sustentam.
+
+### 7.4 O que o empresário compra
+
+- O empresário compra **clareza para decidir** — não compra gráficos, não compra indicadores, não compra textos longos.
+- O Portal entrega **direção para tomada de decisão**.
+
+### 7.5 Relação com os módulos
 
 - O Portal Executivo será composto por módulos especializados, independentes entre si.
 - A Home não substitui nenhum módulo.
+- Cada bloco apresentado na Home deverá convidar naturalmente o usuário a aprofundar aquele assunto nos módulos específicos.
 - O usuário possui liberdade total de navegação.
 - Não existe fluxo guiado obrigatório.
-- A Home deve despertar curiosidade para que o usuário explore os módulos especializados.
 
-### 7.3 Linguagem
+### 7.6 Arquitetura em Cartões
+
+- A Home passa a ser composta por uma sequência lógica de cartões.
+- Cada cartão possui uma única responsabilidade.
+- Nenhum cartão deve tentar explicar toda a operação.
+- Cada cartão prepara naturalmente o usuário para o cartão seguinte.
+- A sequência dos cartões deverá manter continuidade lógica entre si.
+
+### 7.7 Jornada de Descoberta
+
+- A navegação do Painel Executivo deverá criar uma **Jornada de Descoberta**.
+- O gestor nunca deve sentir que está sendo obrigado a seguir um fluxo — porém cada cartão deve despertar interesse suficiente para que o próximo faça sentido.
+
+### 7.8 Primeiro Cartão
+
+- Missão única do primeiro cartão: responder **"Por onde devo começar?"**.
+- O primeiro cartão não apresenta números.
+- O primeiro cartão não apresenta gráficos.
+- O primeiro cartão não apresenta indicadores matemáticos.
+- O primeiro cartão orienta o gestor.
+- O primeiro cartão fala diretamente com o gestor.
+- A linguagem utilizada deverá ser operacional, simples e humana.
+- O cartão utiliza linguagem investigativa, nunca acusatória.
+- **Texto aprovado:** "Encontramos uma área que merece sua atenção."
+- **CTA aprovado:** "Começar por aqui →"
+- O CTA não é tratado como botão comercial.
+
+### 7.9 Linguagem
 
 - Toda linguagem utilizada deverá ser simples, objetiva e compreensível para qualquer empresário, independentemente de formação técnica.
 - O Portal traduz a complexidade do Motor NSI; nunca a expõe ao usuário.
+- Toda navegação do Portal Executivo deverá utilizar convites naturais em vez de comandos tradicionais, como: "Clique aqui", "Saiba mais", "Próximo", "Continuar".
+- O Portal conversa com o gestor como um consultor experiente, nunca como um software.
 
-### 7.4 Unidade de análise do Portal
+### 7.10 Unidade de análise do Portal
 
 - A unidade principal do Portal passa a ser a **Operação NSI**.
 - Toda comparação histórica ocorrerá entre Operações NSI, nunca entre relatórios isolados.
 - O relatório é apenas uma representação visual de uma Operação NSI.
 
-### 7.5 Módulos previstos (inicial)
+### 7.11 Módulos previstos (inicial)
 
 - Resumo Executivo
 - Indicadores
@@ -173,12 +223,21 @@ Ser a porta de entrada do cliente ao Portal Executivo — a primeira impressão 
 - Todas as Respostas
 - Configurações
 
-### 7.6 O que ainda NÃO está definido
+### 7.12 Governança das decisões futuras
+
+- Toda decisão visual futura da Home deverá respeitar os princípios registrados nesta seção (7.1 a 7.11).
+
+### 7.13 O que ainda NÃO está definido
 
 Fora de escopo nesta etapa — a definir em sessão futura:
 
 - Layout da Home
+- Posição dos elementos, incluindo a posição do primeiro cartão
+- Tamanho dos cartões
+- Cores
+- Ícones
 - Cabeçalho
+- Componentes visuais
 - Cards
 - KPIs
 - Gráficos
@@ -220,7 +279,7 @@ As seguintes decisões são consideradas aprovadas e estáveis a partir desta AD
 - Definição de stack tecnológica de autenticação (provedor de identidade, biblioteca, protocolo).
 - Fluxo de recuperação de senha e demais fluxos de autoatendimento não convidado.
 - Schema de dados de usuário, empresa ou sessão.
-- Layout, cabeçalho, cards, KPIs, gráficos, filtros e arquitetura visual da Tela 02 — a definir em sessão futura.
+- Layout, posição dos elementos (incluindo a do primeiro cartão), tamanho, cores, ícones, cabeçalho, componentes visuais, cards, KPIs, gráficos e filtros da Tela 02 — a definir em sessão futura.
 - Qualquer tela do Portal além da Tela 01 (congelada) e da Tela 02 (princípios aprovados).
 - Qualquer alteração à ADR-001, à ADR-002 ou à ADR-003.
 
