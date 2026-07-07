@@ -337,20 +337,68 @@ Esses elementos pertencem exclusivamente ao processo decisório humano.
 - Ela não introduz funcionalidades, telas, recomendações ou fluxos de interface.
 - Seu propósito é definir explicitamente o limite epistemológico da plataforma.
 
-### 7.18 Linguagem
+### 7.18 Quarto Cartão — Revelação da Realidade
+
+**Pergunta Cognitiva**
+
+> "O que essa recorrência revela sobre a realidade da minha empresa?"
+
+**Missão Conceitual**
+
+- Após compreender a cadeia de causalidade, o gestor precisa enxergar algo que, até então, permanecia invisível.
+- O Quarto Cartão transforma padrões recorrentes da experiência dos clientes em uma realidade organizacional observável.
+- O Portal não cria essa realidade. O Portal apenas torna visível aquilo que sempre existiu, mas permanecia fragmentado em experiências individuais.
+- O gestor deixa de observar reclamações isoladas e passa a compreender padrões recorrentes sustentados por evidências.
+
+**Fundamentos**
+
+- O Quarto Cartão não recomenda ações.
+- Não estabelece prioridades.
+- Não determina urgências.
+- Não interpreta intenções.
+- Não responsabiliza pessoas.
+- Sua função é revelar uma realidade organizacional sustentada pela recorrência das evidências observadas.
+- A decisão continua pertencendo exclusivamente ao gestor.
+
+**Consequência Cognitiva**
+
+- Ao concluir este cartão, o gestor percebe que a empresa vista pelos clientes pode ser diferente da empresa imaginada internamente.
+- O Portal amplia sua percepção sem substituir seu julgamento.
+- A partir desse momento, a organização passa a compartilhar uma mesma compreensão da realidade observada.
+- As discussões deixam de girar em torno da existência do problema e passam a concentrar-se na forma como a organização responderá a essa realidade.
+
+**Frase Fundadora**
+
+> "O NSI não cria a realidade.
+>
+> Ele torna visível uma realidade que sempre existiu."
+
+**Encerramento Filosófico**
+
+- Antes do NSI, a voz do cliente permanecia dispersa em centenas de experiências individuais.
+- O Quarto Cartão organiza essa voz.
+- O gestor finalmente consegue escutar aquilo que sempre esteve sendo dito: *"Agora você escuta."*
+- Essa frase representa a essência conceitual deste cartão.
+
+**Observações importantes**
+
+- Esta seção descreve exclusivamente a arquitetura cognitiva do Portal Executivo.
+- Não introduz interface, dashboard, gráficos, KPIs, componentes, recomendações, IA consultiva ou fluxos operacionais.
+
+### 7.19 Linguagem
 
 - Toda linguagem utilizada deverá ser simples, objetiva e compreensível para qualquer empresário, independentemente de formação técnica.
 - O Portal traduz a complexidade do Motor NSI; nunca a expõe ao usuário.
 - Toda navegação do Portal Executivo deverá utilizar convites naturais em vez de comandos tradicionais, como: "Clique aqui", "Saiba mais", "Próximo", "Continuar".
 - O Portal conversa com o gestor como um consultor experiente, nunca como um software.
 
-### 7.19 Unidade de análise do Portal
+### 7.20 Unidade de análise do Portal
 
 - A unidade principal do Portal passa a ser a **Operação NSI**.
 - Toda comparação histórica ocorrerá entre Operações NSI, nunca entre relatórios isolados.
 - O relatório é apenas uma representação visual de uma Operação NSI.
 
-### 7.20 Módulos previstos (inicial)
+### 7.21 Módulos previstos (inicial)
 
 - Resumo Executivo
 - Indicadores
@@ -361,17 +409,17 @@ Esses elementos pertencem exclusivamente ao processo decisório humano.
 - Todas as Respostas
 - Configurações
 
-### 7.21 Governança das decisões futuras
+### 7.22 Governança das decisões futuras
 
-- Toda decisão visual futura da Home deverá respeitar os princípios registrados nesta seção (7.1 a 7.20).
+- Toda decisão visual futura da Home deverá respeitar os princípios registrados nesta seção (7.1 a 7.21).
 
-### 7.22 O que ainda NÃO está definido
+### 7.23 O que ainda NÃO está definido
 
 Fora de escopo nesta etapa — a definir em sessão futura:
 
 - Quantidade de cartões
 - Ordem definitiva dos cartões
-- Conteúdo individual dos cartões, além do Primeiro Cartão (7.14, texto e CTA aprovados) e das missões conceituais do Segundo (7.15) e do Terceiro Cartão (7.16)
+- Conteúdo individual dos cartões, além do Primeiro Cartão (7.14, texto e CTA aprovados) e das missões conceituais do Segundo (7.15), do Terceiro (7.16) e do Quarto Cartão (7.18)
 - Soluções sugeridas ao gestor
 - Recomendações automáticas
 - Qualquer comportamento consultivo
