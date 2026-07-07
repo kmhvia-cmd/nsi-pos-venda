@@ -282,20 +282,75 @@ Ser a porta de entrada do cliente ao Portal Executivo — a primeira impressão 
 
 - Ao fechar o Terceiro Cartão, o gestor deve ser capaz de dizer naturalmente: *"Agora entendo como esse problema foi construído. Antes de agir, preciso atacar a causa e não apenas a consequência."*
 
-### 7.17 Linguagem
+### 7.17 Princípio da Observabilidade
+
+**Missão Conceitual**
+
+- O NSI foi concebido para organizar evidências provenientes da experiência real dos clientes.
+- Sua função é reduzir a incerteza do gestor por meio da organização de fatos observáveis, preservando absoluta neutralidade sobre interpretações humanas.
+- Existe um limite arquitetural explícito para a atuação do sistema.
+- O NSI atua apenas até o ponto em que os dados permitem estabelecer relações objetivas entre eventos.
+- A partir do momento em que uma conclusão depende da interpretação de intenções, motivações, comportamentos individuais ou decisões humanas, a responsabilidade deixa de pertencer ao sistema e retorna integralmente ao gestor.
+
+**Fundamentos**
+
+O NSI pode afirmar:
+
+- que uma fricção ocorreu;
+- onde ocorreu;
+- como ela se propagou pela cadeia operacional;
+- quais evidências sustentam essa conclusão;
+- quais padrões foram observados de forma consistente.
+
+O NSI não pode afirmar:
+
+- que um colaborador agiu com negligência;
+- que houve má intenção;
+- que determinada pessoa é responsável;
+- qual decisão deve ser tomada;
+- qual ação disciplinar deve ser aplicada;
+- qual estratégia operacional deve ser adotada.
+
+Esses elementos pertencem exclusivamente ao processo decisório humano.
+
+**Princípio Fundamental**
+
+> "O NSI organiza evidências.
+>
+> A interpretação pertence ao gestor."
+
+**Princípio Arquitetural**
+
+- O limite do NSI não é definido pela complexidade da operação. O limite é definido pela **observabilidade**.
+- Sempre que uma conclusão depender de interpretação subjetiva, o Portal interrompe sua atuação e devolve a responsabilidade ao gestor.
+- O sistema nunca atravessa a fronteira entre evidência e interpretação.
+
+**Consequência Filosófica**
+
+- O objetivo do Portal Executivo não é substituir a experiência do gestor.
+- Seu objetivo é entregar uma representação organizada da realidade observável para que o gestor tome decisões com menor incerteza.
+- A decisão permanece sempre humana.
+
+**Observação**
+
+- Esta seção estabelece um princípio arquitetural permanente do NSI e deverá orientar todos os cartões futuros do Portal Executivo.
+- Ela não introduz funcionalidades, telas, recomendações ou fluxos de interface.
+- Seu propósito é definir explicitamente o limite epistemológico da plataforma.
+
+### 7.18 Linguagem
 
 - Toda linguagem utilizada deverá ser simples, objetiva e compreensível para qualquer empresário, independentemente de formação técnica.
 - O Portal traduz a complexidade do Motor NSI; nunca a expõe ao usuário.
 - Toda navegação do Portal Executivo deverá utilizar convites naturais em vez de comandos tradicionais, como: "Clique aqui", "Saiba mais", "Próximo", "Continuar".
 - O Portal conversa com o gestor como um consultor experiente, nunca como um software.
 
-### 7.18 Unidade de análise do Portal
+### 7.19 Unidade de análise do Portal
 
 - A unidade principal do Portal passa a ser a **Operação NSI**.
 - Toda comparação histórica ocorrerá entre Operações NSI, nunca entre relatórios isolados.
 - O relatório é apenas uma representação visual de uma Operação NSI.
 
-### 7.19 Módulos previstos (inicial)
+### 7.20 Módulos previstos (inicial)
 
 - Resumo Executivo
 - Indicadores
@@ -306,11 +361,11 @@ Ser a porta de entrada do cliente ao Portal Executivo — a primeira impressão 
 - Todas as Respostas
 - Configurações
 
-### 7.20 Governança das decisões futuras
+### 7.21 Governança das decisões futuras
 
-- Toda decisão visual futura da Home deverá respeitar os princípios registrados nesta seção (7.1 a 7.19).
+- Toda decisão visual futura da Home deverá respeitar os princípios registrados nesta seção (7.1 a 7.20).
 
-### 7.21 O que ainda NÃO está definido
+### 7.22 O que ainda NÃO está definido
 
 Fora de escopo nesta etapa — a definir em sessão futura:
 
