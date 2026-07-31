@@ -395,6 +395,39 @@ Esses elementos pertencem exclusivamente ao processo decisório humano.
 - O Portal conduz o gestor pela exploração dessas realidades de forma progressiva, reduzindo a carga cognitiva sem esconder informação.
 - Esta decisão é exclusivamente arquitetural e não define interface, layout, navegação, componentes visuais ou comportamento do front-end.
 
+### Quinto Cartão — Manifestações da Realidade
+
+**Pergunta Cognitiva**
+
+> "Como essa realidade se manifesta na experiência dos clientes?"
+
+**Missão**
+
+- Após o Quarto Cartão revelar que um padrão recorrente constitui uma realidade organizacional, o Quinto Cartão revela como essa realidade se manifesta na experiência dos clientes.
+- O Quinto Cartão organiza as manifestações concretas da realidade já revelada, sustentadas exclusivamente pelas evidências observadas na experiência dos clientes.
+- Sua missão não é revelar uma nova realidade nem compará-la com outras. Sua missão é revelar do que essa realidade é composta.
+
+**Princípios Arquiteturais**
+
+- Toda realidade organizacional é composta por manifestações observáveis sustentadas por evidências dos clientes.
+- O Quinto Cartão permanece dentro da mesma realidade já revelada; não introduz uma realidade adicional.
+- Cada manifestação apresentada deve estar diretamente sustentada por evidências dos clientes — nenhuma manifestação é inferida ou presumida.
+- A organização das manifestações deve ser completa: nenhuma manifestação sustentada por evidência pode ser omitida por conveniência narrativa.
+- O Quinto Cartão não compara esta realidade com outras realidades recorrentes eventualmente identificadas na mesma Operação NSI — a comparação pertence a um momento posterior da jornada.
+
+**Limite Arquitetural**
+
+- O Quinto Cartão termina no ponto em que organizar as manifestações deixaria de expor evidências e passaria a hierarquizá-las por relevância subjetiva.
+- Ele não atribui causa, intenção ou motivação às manifestações apresentadas — essa fronteira já pertence aos cartões anteriores e ao Princípio da Observabilidade.
+- Ele não recomenda ação a partir das manifestações organizadas.
+- Ele não determina qual manifestação é mais importante entre as demais.
+
+**Consequência Cognitiva**
+
+- Ao concluir este cartão, o gestor deve ser capaz de dizer: "Agora entendo do que essa realidade é feita."
+- O gestor permanece livre para continuar a jornada de descoberta daquela realidade ou explorar outras realidades recorrentes disponíveis, sem que o Portal decida por ele.
+- A decisão sobre o que fazer com essas manifestações permanece exclusivamente humana.
+
 ### 7.19 Linguagem
 
 - Toda linguagem utilizada deverá ser simples, objetiva e compreensível para qualquer empresário, independentemente de formação técnica.
