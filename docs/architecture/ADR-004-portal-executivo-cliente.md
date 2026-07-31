@@ -428,6 +428,34 @@ Esses elementos pertencem exclusivamente ao processo decisório humano.
 - O gestor permanece livre para continuar a jornada de descoberta daquela realidade ou explorar outras realidades recorrentes disponíveis, sem que o Portal decida por ele.
 - A decisão sobre o que fazer com essas manifestações permanece exclusivamente humana.
 
+### Sexto Cartão — Contexto Organizacional da Realidade
+
+**Pergunta Cognitiva**
+
+> "Em que contexto organizacional essa realidade existe?"
+
+**Missão**
+
+- Revelar o contexto organizacional em que a realidade já descoberta existe, permitindo ao gestor compreender o ambiente operacional onde ela está inserida, sem inferir causalidade e sem recomendar ações.
+
+**Princípios Arquiteturais**
+
+- Toda realidade organizacional existe inserida em um contexto operacional maior, composto por outras realidades e relações observáveis.
+
+**Limite Arquitetural**
+
+- O Sexto Cartão não revela novas realidades.
+- O Sexto Cartão não cria relações inexistentes.
+- O Sexto Cartão não afirma causalidade.
+- O Sexto Cartão não recomenda ações.
+- O Sexto Cartão não prioriza problemas.
+- O Sexto Cartão não inicia transformação.
+- Sua única função é ampliar a compreensão do gestor sobre o contexto organizacional da realidade já identificada.
+
+**Consequência Cognitiva**
+
+- Ao concluir este cartão, o gestor deve ser capaz de afirmar: "Agora compreendo o contexto em que essa realidade existe."
+
 ### 7.19 Linguagem
 
 - Toda linguagem utilizada deverá ser simples, objetiva e compreensível para qualquer empresário, independentemente de formação técnica.
