@@ -385,6 +385,16 @@ Esses elementos pertencem exclusivamente ao processo decisório humano.
 - Esta seção descreve exclusivamente a arquitetura cognitiva do Portal Executivo.
 - Não introduz interface, dashboard, gráficos, KPIs, componentes, recomendações, IA consultiva ou fluxos operacionais.
 
+### Decisão Arquitetural — Unidade da Jornada Cognitiva
+
+- Uma Operação NSI pode revelar múltiplas realidades recorrentes.
+- Cada realidade recorrente identificada possui sua própria Jornada de Descoberta.
+- A Jornada de Descoberta não pertence à Operação NSI como um todo; ela pertence a cada realidade recorrente identificada.
+- O Primeiro Cartão continua respondendo "Por onde devo começar?", porém essa resposta refere-se à realidade priorizada naquele momento.
+- As demais realidades recorrentes continuam disponíveis ao gestor e nunca são ocultadas pelo Portal.
+- O Portal conduz o gestor pela exploração dessas realidades de forma progressiva, reduzindo a carga cognitiva sem esconder informação.
+- Esta decisão é exclusivamente arquitetural e não define interface, layout, navegação, componentes visuais ou comportamento do front-end.
+
 ### 7.19 Linguagem
 
 - Toda linguagem utilizada deverá ser simples, objetiva e compreensível para qualquer empresário, independentemente de formação técnica.
