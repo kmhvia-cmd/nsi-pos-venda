@@ -541,6 +541,27 @@ Fora de escopo nesta etapa — a definir em sessão futura:
   - se a barra representa tempo decorrido, quantidade de respostas recebidas ou percentual de convites de coleta respondidos.
   Ambos permanecem em arquitetura para decisão futura, sob a governança do Sistema Editorial Visual (ADR-003) quando aplicável.
 
+### 7.25 Títulos Aprovados e Congelados do Painel e das Duas Leituras
+
+**Status: CONGELADO.**
+
+- Título do Painel: **"Painel de Inteligência Organizacional"**.
+- Primeira frente — título: **"Primeira Leitura da Realidade Organizacional"**; subtítulo: **"Respostas recebidas do 1º ao 5º dia"**.
+- Segunda frente — título: **"Segunda Leitura da Realidade Organizacional"**; subtítulo: **"Respostas recebidas do 6º ao 14º dia"**.
+
+**Regras arquiteturais:**
+
+- "Primeira" e "Segunda" indicam exclusivamente ordem temporal — os títulos não estabelecem gravidade, prioridade, importância, qualidade ou superioridade entre as leituras.
+- As duas leituras permanecem distintas e independentes (ADR-005, Princípio 4).
+- No domínio técnico da ADR-005, os nomes permanecem **Leitura Inicial** e **Leitura de Excedência** — esta decisão não os altera, redefine ou substitui.
+- No front-end do Portal, devem ser usados exclusivamente os títulos aprovados nesta seção — nunca os nomes técnicos da ADR-005.
+- Os estados definidos na Seção 7.24 — incluindo "Sem respostas de excedência" e "Nenhuma resposta recebida no período de excedência" — pertencem à **Segunda Leitura da Realidade Organizacional**.
+- Enquanto a Segunda Leitura estiver em coleta, as duas frentes permanecem visíveis simultaneamente:
+  - **Primeira Leitura da Realidade Organizacional** — Disponível;
+  - **Segunda Leitura da Realidade Organizacional** — Coleta em andamento.
+- Quando processada, a Segunda Leitura passa para o estado "Leitura disponível" (Seção 7.24).
+- Esta seção não define nem altera layout, cores, dimensões, componentes, o significado da barra de andamento ou qualquer arquitetura visual — permanece regida pelas mesmas exclusões da Seção 7.24 e pelo Sistema Editorial Visual (ADR-003) quando aplicável.
+
 ---
 
 ## 8. Decisões Congeladas
