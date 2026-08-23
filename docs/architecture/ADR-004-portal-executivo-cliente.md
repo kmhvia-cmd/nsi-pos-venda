@@ -456,6 +456,14 @@ Esses elementos pertencem exclusivamente ao processo decisório humano.
 
 - Ao concluir este cartão, o gestor deve ser capaz de afirmar: "Agora compreendo o contexto em que essa realidade existe."
 
+### Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional
+
+- A Jornada de Inteligência Organizacional está completa e encerrada no Sexto Cartão — Contexto Organizacional da Realidade.
+- Não haverá Sétimo Cartão nesta jornada.
+- Após o Sexto Cartão, inicia-se uma jornada conceitualmente independente, denominada Jornada de Transformação Organizacional.
+- A Jornada de Transformação Organizacional ainda não está arquitetada nesta etapa; sua arquitetura será tratada em sessão futura.
+- Esta decisão é exclusivamente conceitual e arquitetural — não define cartões, telas, layout, componentes visuais, KPIs, gráficos, filtros ou funcionalidades da nova jornada.
+
 ### 7.19 Linguagem
 
 - Toda linguagem utilizada deverá ser simples, objetiva e compreensível para qualquer empresário, independentemente de formação técnica.
@@ -488,9 +496,9 @@ Esses elementos pertencem exclusivamente ao processo decisório humano.
 
 Fora de escopo nesta etapa — a definir em sessão futura:
 
-- Quantidade de cartões
-- Ordem definitiva dos cartões
-- Conteúdo individual dos cartões, além do Primeiro Cartão (7.14, texto e CTA aprovados) e das missões conceituais do Segundo (7.15), do Terceiro (7.16) e do Quarto Cartão (7.18)
+- Quantidade de cartões da futura Jornada de Transformação Organizacional
+- Ordem e sequência cognitiva dos cartões da futura Jornada de Transformação Organizacional
+- Conteúdo individual dos cartões, além do Primeiro Cartão (7.14, texto e CTA aprovados) e das missões conceituais do Segundo (7.15), do Terceiro (7.16), do Quarto (7.18), do Quinto e do Sexto Cartão
 - Soluções sugeridas ao gestor
 - Recomendações automáticas
 - Qualquer comportamento consultivo
