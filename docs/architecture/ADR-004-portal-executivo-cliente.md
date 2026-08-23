@@ -518,6 +518,29 @@ Fora de escopo nesta etapa — a definir em sessão futura:
 - Filtros
 - Arquitetura visual
 
+### 7.24 Exibição da Segunda Leitura (Leitura de Excedência) Durante a Coleta
+
+> Esta seção registra apenas o comportamento de exibição e bloqueio da Segunda Leitura enquanto ela está em coleta, sendo processada, já disponível, ou encerrada sem relatório. As regras de quando um convite de coleta é considerado respondido, quando a Leitura de Excedência encerra (antecipada ou obrigatoriamente) e quando ela é congelada e processada pelo Motor NSI pertencem exclusivamente à ADR-005 (Ciclo Temporal de Coleta e Leituras Independentes) — esta seção não as redefine, apenas reage a elas.
+
+- Enquanto a Leitura de Excedência estiver em coleta, ela aparece no Painel, mas seu conteúdo permanece bloqueado ao gestor: apenas uma barra de andamento e o status "Coleta em andamento" são exibidos — sem respostas, recorrências semânticas, conclusões parciais ou qualquer conteúdo semântico prévio do Motor NSI.
+- Estados visíveis ao gestor, refletindo os eventos definidos na ADR-005:
+  - **Coleta em andamento**
+  - **Coleta concluída — preparando leitura**
+  - **Processamento pelo Motor NSI**
+  - **Leitura disponível**
+  - **Sem respostas de excedência**
+  - **Nenhuma resposta recebida no período de excedência**
+- Os dois últimos estados não são etapas posteriores de "Coleta em andamento" — cada um substitui toda a sequência normal, em circunstâncias distintas:
+  - **"Sem respostas de excedência"** (ADR-005, Princípio 17): todos os convites de coleta foram respondidos na Primeira Leitura, com timestamps estritamente menores que T0 + 120h, e nenhuma resposta foi classificada na Leitura de Excedência na fronteira temporal. A Segunda Leitura nunca chega a exibir "Coleta em andamento"; vai diretamente a este estado. O Painel informa: "Todos os convites foram respondidos na Primeira Leitura." Uma resposta classificada exatamente na fronteira T0 + 120h nunca produz este estado — produz encerramento antecipado com processamento normal, seguido do estado "Leitura disponível".
+  - **"Nenhuma resposta recebida no período de excedência"** (ADR-005, Princípio 19): havia população pendente ao iniciar a Leitura de Excedência, mas nenhuma resposta chegou até o encerramento obrigatório em T0 + 336h. Neste caso, a Segunda Leitura exibe "Coleta em andamento" normalmente durante o período, chegando a este estado apenas no encerramento.
+  - Nenhum dos dois estados representa erro, insuficiência ou falha do sistema.
+- A Primeira Leitura permanece disponível e inalterada durante todo esse processo — sua exibição nunca é interrompida, ocultada ou modificada pelo estado da Segunda Leitura.
+- A Segunda Leitura, mesmo depois de disponível, nunca altera, mistura, recalcula ou substitui a Primeira Leitura na exibição do Painel — consequência direta do Princípio 4 da ADR-005 (Independência Entre Leituras), aplicada aqui à camada de apresentação.
+- Esta seção não define:
+  - layout, cor, dimensão ou estética da barra de andamento nem dos demais elementos visuais;
+  - se a barra representa tempo decorrido, quantidade de respostas recebidas ou percentual de convites de coleta respondidos.
+  Ambos permanecem em arquitetura para decisão futura, sob a governança do Sistema Editorial Visual (ADR-003) quando aplicável.
+
 ---
 
 ## 8. Decisões Congeladas
