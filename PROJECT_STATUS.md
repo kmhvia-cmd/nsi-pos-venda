@@ -26,6 +26,7 @@
 🟢 Branding Sprint 2 — Sistema Editorial Visual: CONGELADA — arquitetura editorial encerrada
 🟢 Branding Sprint 3 — Prototipação Visual: EM PRODUÇÃO — DT-001 v1 produzido e registrado (`docs/branding/documentos-visuais/DT-001.html`)
 🟢 Livro dos Princípios do NSI (v1.0): Aprovado e congelado — fundação intelectual permanente do projeto
+🟢 ADR-005 — Ciclo Temporal de Coleta e Leituras Independentes: Aprovada e congelada
 
 ---
 

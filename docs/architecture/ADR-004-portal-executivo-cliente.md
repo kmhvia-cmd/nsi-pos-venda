@@ -145,6 +145,8 @@ Ser a porta de entrada do cliente ao Portal Executivo — a primeira impressão 
 >
 > **Princípio da Neutralidade Decisória:** o Portal nunca decide pelo gestor — organiza, prioriza e contextualiza informações governáveis pela empresa, entregando inteligência organizada, não consultoria (Seções 7.9 a 7.12).
 
+> **Dependência temporal:** a existência de duas leituras do mesmo lote — Leitura Inicial e Leitura de Excedência — e a regra de que a segunda não altera, recalcula, mistura, substitui ou invalida a primeira são definidas pela ADR-005 (Ciclo Temporal de Coleta e Leituras Independentes). Quando esta seção tratar da exibição dessas leituras no Painel — títulos, posição, componentes visuais —, deverá referenciar a ADR-005 como fonte da regra temporal, sem redefini-la.
+
 ### 7.1 Natureza da tela
 
 - A Home **não** é um dashboard completo.
@@ -541,6 +543,7 @@ As seguintes decisões são consideradas aprovadas e estáveis a partir desta AD
 - Depende da ADR-001 (Seção 4.2), que define o Portal Executivo do Cliente como uma das três plataformas do ecossistema NSI.
 - Depende da ADR-002 (Fundação de Marca), para tom de voz e texto institucional.
 - Depende da ADR-003 (Sistema Editorial Visual), quando a arquitetura visual concreta do Portal for definida — fora do escopo desta ADR.
+- Depende da ADR-005 (Ciclo Temporal de Coleta e Leituras Independentes), para a regra temporal que origina a Leitura Inicial e a Leitura de Excedência exibidas na Seção 7 — esta ADR não redefine essa regra, apenas a referencia.
 - A Tela 02 (Seção 7) já teve seus princípios registrados nesta ADR, com status EM ARQUITETURA; sua arquitetura visual e demais telas subsequentes do Portal dependem desta ADR como registro fundacional e serão adicionadas a ela mediante aprovação própria, uma a uma.
 
 ---
@@ -562,3 +565,4 @@ As seguintes decisões são consideradas aprovadas e estáveis a partir desta AD
 - `docs/architecture/ADR-001-operations-console.md` — define o Portal Executivo do Cliente como plataforma (Seção 4.2) e registra a dependência desta ADR (Seções 2.2, 13, 15).
 - `docs/architecture/ADR-002-brand-foundation.md` — tom de voz e princípios editoriais aplicados ao texto institucional do Portal.
 - `docs/architecture/ADR-003-sistema-editorial-visual.md` — arquitetura visual, aplicável ao Portal quando sua camada visual concreta for definida.
+- `docs/architecture/ADR-005-ciclo-temporal-coleta-leituras-independentes.md` — regra temporal do ciclo de coleta (Leitura Inicial e Leitura de Excedência) exibida na Seção 7.
