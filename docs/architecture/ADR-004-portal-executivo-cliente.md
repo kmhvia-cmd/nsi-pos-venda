@@ -562,6 +562,24 @@ Fora de escopo nesta etapa — a definir em sessão futura:
 - Quando processada, a Segunda Leitura passa para o estado "Leitura disponível" (Seção 7.24).
 - Esta seção não define nem altera layout, cores, dimensões, componentes, o significado da barra de andamento ou qualquer arquitetura visual — permanece regida pelas mesmas exclusões da Seção 7.24 e pelo Sistema Editorial Visual (ADR-003) quando aplicável.
 
+### 7.26 Identidade Técnica da Realidade Recorrente
+
+**Status: CONGELADO.**
+
+- `realidade_id`: identificador técnico próprio, opaco e permanente, atribuído a cada realidade recorrente.
+- `codigo_catalogo` (Catálogo NSI) permanece exclusivamente como atributo histórico e versionável associado à realidade — nunca compõe sua identidade e nunca garante, sozinho, unicidade.
+- O Motor NSI produz um **resultado semântico candidato** a partir do processamento de uma Leitura (ADR-005) — esse resultado, por si só, ainda não é considerado uma realidade organizacional, em conformidade com o **Quarto Cartão** ("Revelação da Realidade") e a "Decisão Arquitetural — Unidade da Jornada Cognitiva" desta ADR.
+- O `realidade_id` nasce **exclusivamente** no momento em que o Quarto Cartão efetivamente revela aquele padrão como realidade organizacional — nunca antes.
+- O **Sexto Cartão não participa do nascimento da realidade**: ele apenas conclui a Jornada de Inteligência Organizacional de uma realidade já revelada anteriormente pelo Quarto Cartão, sendo o evento que habilita (ADR-006, Seção 9) o acesso à Tela 03 para aquela mesma realidade — já existente desde o Quarto Cartão.
+- Cada `realidade_id`, ao nascer, referencia exatamente um resultado candidato de origem — esse vínculo de origem é único, explícito e imutável.
+
+**Regras arquiteturais:**
+
+- A cardinalidade inversa — quantas realidades um mesmo resultado candidato pode originar — não está congelada por esta seção e permanece pendente de decisão futura.
+- O formato concreto da referência técnica ao resultado candidato (antes da revelação) permanece pendente — não se assume chave composta, identificador próprio do resultado, índice ou caminho de arquivo.
+- Não existe comparação ou equivalência automática entre realidades, nem dentro da mesma leitura, nem entre leituras diferentes (ADR-005, Princípio 6; ADR-006, Princípio 8).
+- Esta seção não define schema de banco de dados, tabelas, colunas, endpoints ou código — apenas identidade conceitual.
+
 ---
 
 ## 8. Decisões Congeladas
@@ -610,3 +628,23 @@ As seguintes decisões são consideradas aprovadas e estáveis a partir desta AD
 - `docs/architecture/ADR-002-brand-foundation.md` — tom de voz e princípios editoriais aplicados ao texto institucional do Portal.
 - `docs/architecture/ADR-003-sistema-editorial-visual.md` — arquitetura visual, aplicável ao Portal quando sua camada visual concreta for definida.
 - `docs/architecture/ADR-005-ciclo-temporal-coleta-leituras-independentes.md` — regra temporal do ciclo de coleta (Leitura Inicial e Leitura de Excedência) exibida na Seção 7.
+
+---
+
+## 12. Evolução Aprovada — Identidade Técnica do Usuário (2026-08-25)
+
+Esta seção documenta uma evolução aprovada da ADR-004, registrada como pré-requisito do schema conceitual da Trajetória Contínua (ADR-006), sem alterar nenhum texto já congelado anteriormente — incluindo a Tela 01 (Seção 6, CONGELADA) e a Seção 7 (Tela 02).
+
+**O que foi adicionado:**
+- `usuario_id`: identificador técnico próprio, opaco e estável, atribuído a cada usuário.
+- Gerado no momento do cadastro centralizado pela equipe NSI (Seção 4, Princípio 2 — Cadastro Centralizado na NSI).
+- Independente de nome, e-mail, telefone ou senha — nenhum desses dados compõe ou substitui a identidade do usuário.
+- Cada usuário pertence a exatamente uma empresa — tecnicamente, a exatamente um `empresa_id` (ADR-001, Seção 16) — nunca a mais de uma (Seção 4, Princípio 3 — Múltiplos Usuários, Uma Empresa).
+
+**O que não mudou:**
+- Nenhuma alteração à Tela 01 (Seção 6) ou aos seus princípios já congelados — login e senha continuam o mecanismo de autenticação; o cadastro continua exclusivo da NSI.
+- Nenhuma implementação de código, autenticação, schema de banco de dados ou sessão é definida aqui — apenas identidade conceitual. Continua fora do escopo desta ADR: "Schema de dados de usuário, empresa ou sessão" (Seção 10, Itens Fora do Escopo).
+- A geração concreta e a garantia de unicidade do `usuario_id` — e do `empresa_id` ao qual ele pertence (ADR-001, Seção 16) — permanecem pendentes.
+
+**Origem desta decisão:**
+- Registrada durante a arquitetura do schema conceitual da Trajetória Contínua (ADR-006), que exige autoria técnica obrigatória em cada registro (ADR-006, Seção 10).

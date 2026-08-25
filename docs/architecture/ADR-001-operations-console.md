@@ -271,3 +271,25 @@ As seguintes decisões são consideradas aprovadas e estáveis a partir desta AD
 
 - `PROJECT_STATUS.md` — status consolidado do núcleo técnico na versão `v1.1.0-fonte-unica-webhook-motor`.
 - Commit `0ee7c48` — "fix: consolida lote.json como fonte unica de verdade entre webhook e Motor NSI".
+
+---
+
+## 16. Evolução Aprovada — Identidade Técnica da Empresa e da Operação (2026-08-25)
+
+Esta seção documenta uma evolução aprovada da ADR-001, cumprindo a dependência registrada em sua própria Seção 13 ("Depende de decisão arquitetural futura para definir o modelo de dados de 'Operação' e sua relação técnica com 'Lote'"), sem alterar nenhum texto já congelado anteriormente.
+
+**O que foi adicionado:**
+- `empresa_id`: identificador técnico próprio, opaco e estável, atribuído a cada empresa cliente.
+- O slug atual (`adapters.storage.gerar_slug_empresa`) permanece como atributo de rota e apresentação — usado em `data/empresas/<slug>/` e na rota `/empresa/<slug>` — sem nenhuma migração nesta etapa.
+- `operacao_id`: identificador técnico próprio, opaco e estável, representando a Operação como unidade de negócio (Seção 7).
+- `lote_id` permanece como referência técnica legada utilizada pelos componentes internos atuais, sem alteração do seu funcionamento (Seção 7).
+- Cada `operacao_id` pertence exatamente a um `empresa_id` — nunca a mais de um.
+- Cardinalidade **vigente** entre Operação e Lote: 1 Operação : 1 Lote — refletindo a prática já implícita na Seção 7 original e reafirmada pela ADR-005 (Princípio 5 — Unidade da Operação, Pluralidade de Recortes). Esta é a cardinalidade hoje observada, não uma regra permanente ou imutável — qualquer evolução futura exigirá decisão arquitetural própria, registrada em ADR subsequente.
+
+**O que não mudou:**
+- Nenhuma alteração ao modelo técnico de `lote.json`, ao slug ou a qualquer estrutura interna do Motor — a Seção 7 original permanece integralmente válida, incluindo sua frase-chave: *"Esta decisão não implica alteração do modelo técnico de `lote.json` ou de qualquer estrutura interna do Motor."*
+- Nenhuma migração de dados existentes é realizada ou exigida nesta etapa; `lote_id`, o slug e o funcionamento atual de todos os componentes internos permanecem exatamente como são.
+- O momento e o mecanismo concretos de geração de `empresa_id` e `operacao_id`, e a garantia concreta de sua unicidade, permanecem pendentes — seguem listados na Seção 14 ("Definição de schema de dados para Operação").
+
+**Origem desta decisão:**
+- Registrada durante a arquitetura do schema conceitual da Trajetória Contínua (ADR-006). A identidade de Operação compõe, junto ao tipo, a identidade da Leitura (ADR-005, Seção 16), da qual depende, transitivamente, a identidade da realidade recorrente (ADR-004, Seção 7.26). A identidade de Empresa não integra essa cadeia — ela ancora, em paralelo, a propriedade e o isolamento de cada Operação e de cada usuário (ADR-004, Seção 12).

@@ -353,3 +353,22 @@ Uma resposta classificada exatamente na fronteira T0 + 120 horas que complete a 
 - A janela total de 336 horas (Princípio 1) permanece o limite máximo absoluto — nenhum gatilho pode estendê-la, apenas adiantá-la.
 - A independência entre as duas leituras (Princípio 4) e a ausência de comparação automática (Princípio 6) permanecem integralmente válidas.
 - Nenhuma decisão desta evolução altera layout, títulos, cor ou o que a barra de andamento representa — tudo isso permanece em arquitetura para decisão futura (ADR-004, Seção 7.24).
+
+---
+
+## 16. Evolução Aprovada — Identidade Técnica da Leitura (2026-08-25)
+
+Esta seção documenta uma evolução aprovada da ADR-005, identificada durante a arquitetura do schema conceitual da Trajetória Contínua (ADR-006), sem alterar nenhum texto já congelado anteriormente — incluindo a evolução já registrada na Seção 15.
+
+**O que foi adicionado:**
+- Identidade técnica da Leitura: chave composta por `operacao_id` (ADR-001, Seção 16) + tipo de leitura (Inicial | Excedência) — os dois tipos fechados já definidos pelos Princípios 2 e 3 desta ADR, sem introduzir um terceiro tipo ou alterar qualquer regra de janela.
+- Essa identidade é estritamente separada de: estado da leitura (ex.: "Coleta em andamento", "Sem respostas de excedência"), a janela temporal em si (Princípios 1-3 e 11) e o relatório eventualmente produzido pelo Motor — nenhum desses integra a identidade; todos são atributos associados a ela.
+- A chave permanece endereçável mesmo nos dois cenários sem relatório semântico (Princípios 17 e 19) — a ausência de relatório não impede que a Leitura de Excedência seja referenciada e tenha seu estado preservado historicamente.
+
+**O que não mudou:**
+- Nenhuma alteração às regras temporais, aos gatilhos de encerramento ou aos Princípios 1-19 e à evolução da Seção 15.
+- Nenhuma implementação de código, schema de banco de dados ou API é definida aqui — apenas identidade conceitual.
+- Continua fora do escopo desta ADR: onde e como o estado de cada leitura é efetivamente persistido (Seção 13, Itens Fora do Escopo).
+
+**Origem desta decisão:**
+- Registrada como pré-requisito do schema conceitual da Trajetória Contínua (ADR-006), que precisa vincular cada trajetória a uma Leitura específica sem ambiguidade.

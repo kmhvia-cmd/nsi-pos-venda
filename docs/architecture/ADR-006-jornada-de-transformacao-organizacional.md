@@ -13,13 +13,13 @@
 
 > **Nota de processo:** ADR aberta para cumprir a dependência registrada na ADR-004 ("Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional"): *"Após o Sexto Cartão, inicia-se uma jornada conceitualmente independente, denominada Jornada de Transformação Organizacional... sua arquitetura será tratada em sessão futura."* Esta ADR é essa sessão futura. Registra exclusivamente os princípios fundacionais já decididos — não define cartões, telas internas, layout, fluxos ou funcionalidades.
 >
-> **Esta ADR não está congelada.** Os princípios fundacionais descritos nas Seções 4, 5, 6, 7, 8, 9 e 10 foram aprovados nesta sessão de decisão. A arquitetura completa da Tela 03 permanece **EM ARQUITETURA** — as pendências registradas na Seção 12 continuam abertas e serão tratadas em sessão futura, mediante aprovação própria.
+> **Esta ADR não está congelada.** Os princípios fundacionais descritos nas Seções 4, 5, 6, 7, 8, 9, 10, 11 e 12 foram aprovados nesta sessão de decisão. A arquitetura completa da Tela 03 permanece **EM ARQUITETURA** — as pendências registradas na Seção 14 continuam abertas e serão tratadas em sessão futura, mediante aprovação própria.
 
 ---
 
 ## 1. Objetivo
 
-Registrar os princípios fundacionais da Jornada de Transformação Organizacional — **Tela 03** do Portal Executivo do Cliente — a etapa que sucede o encerramento da Jornada de Inteligência Organizacional no Sexto Cartão (ADR-004). Esta ADR já define a Pergunta Cognitiva Fundadora (Seção 6), o modelo estrutural da jornada — Trajetória Contínua (Seção 7) —, a granularidade dos registros — Granularidade por Ato de Declaração (Seção 8) — e a transição conceitual de acesso entre o Sexto Cartão e a Tela 03 — Modelo Combinado (Seção 9). A arquitetura visual, os componentes concretos de navegação e o schema técnico dos registros permanecem em arquitetura. Esta ADR não implementa nada e não altera nenhuma decisão já congelada nas ADRs anteriores.
+Registrar os princípios fundacionais da Jornada de Transformação Organizacional — **Tela 03** do Portal Executivo do Cliente — a etapa que sucede o encerramento da Jornada de Inteligência Organizacional no Sexto Cartão (ADR-004). Esta ADR já define a Pergunta Cognitiva Fundadora (Seção 6), o modelo estrutural da jornada — Trajetória Contínua (Seção 7) —, a granularidade dos registros — Granularidade por Ato de Declaração (Seção 8) —, a transição conceitual de acesso entre o Sexto Cartão e a Tela 03 — Modelo Combinado (Seção 9) —, o modelo de autoria (Seção 10), referenciando a identidade do usuário definida pela ADR-004, e o schema conceitual da Trajetória Contínua — Registro Atômico Independente (Seção 11). A arquitetura visual, os componentes concretos de navegação e o armazenamento técnico concreto dos registros permanecem em arquitetura. Esta ADR não implementa nada e não altera nenhuma decisão já congelada nas ADRs anteriores.
 
 ---
 
@@ -45,6 +45,8 @@ Registrar os princípios fundacionais da Jornada de Transformação Organizacion
 - Indivisibilidade do conteúdo declarado em um mesmo ato.
 - Organização exclusivamente cronológica dos registros, sem hierarquia ou agrupamento automático.
 - Transição conceitual de acesso entre o Sexto Cartão e a Tela 03 — Modelo Combinado.
+- Modelo de autoria (individual e institucional declarada), referenciando a identidade do usuário definida pela ADR-004.
+- Schema conceitual da Trajetória Contínua — Registro Atômico Independente, incluindo a identidade própria do registro (`registro_id`).
 - Fronteira epistemológica da jornada ("Limite pela Fonte da Afirmação").
 - Regra de acesso independente à Tela 03 para cada realidade recorrente revelada pela Leitura de Excedência — sem comparação, identificação de equivalência ou vinculação automática com realidades reveladas pela Leitura Inicial.
 
@@ -118,7 +120,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - Depois de concluir sua própria Jornada de Inteligência Organizacional até o Sexto Cartão, essa realidade recebe acesso próprio e independente à Tela 03.
 - Esse acesso possui registros próprios e isolados de qualquer acesso originado pela Leitura Inicial.
 - O NSI não compara, identifica equivalência, vincula, atualiza, complementa, reabre ou mistura automaticamente realidades ou registros entre as duas leituras — preservando integralmente o Princípio 6 da ADR-005 (Ausência de Comparação Automática), aplicado por esta ADR à camada de Transformação.
-- Se um gestor humano declarar que percebe relação, semelhança ou continuidade entre realidades de leituras diferentes, essa percepção permanece apenas como declaração humana atribuída, subordinada ao "Limite pela Fonte da Afirmação" (Seção 10).
+- Se um gestor humano declarar que percebe relação, semelhança ou continuidade entre realidades de leituras diferentes, essa percepção permanece apenas como declaração humana atribuída, subordinada ao "Limite pela Fonte da Afirmação" (Seção 12).
 - Mesmo uma declaração humana de relação não produz fusão, recálculo, vinculação automática nem compartilhamento de registros entre os acessos à Tela 03.
 
 ---
@@ -141,7 +143,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - Permite legitimamente agir, acompanhar, preservar a condição atual ou decidir não mudar.
 - Essas alternativas não devem ser apresentadas pelo sistema como opções fechadas ou categorias.
 - A pergunta não recomenda, prioriza, avalia nem conduz.
-- A posição declarada permanece subordinada ao "Limite pela Fonte da Afirmação" (Seção 10).
+- A posição declarada permanece subordinada ao "Limite pela Fonte da Afirmação" (Seção 12).
 - O NSI registra e torna observável a declaração, mas não a interpreta.
 - A pergunta fundadora não define cartões, etapas, campos, fluxo ou layout.
 
@@ -167,7 +169,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - Cada nova declaração humana é acrescentada cronologicamente à mesma trajetória.
 - Nenhum registro anterior é apagado, substituído ou reescrito.
 - Uma correção, mudança de posição ou nova interpretação humana deve ser registrada por acréscimo posterior, preservando o histórico anterior.
-- Cada registro permanece subordinado ao "Limite pela Fonte da Afirmação" (Seção 10).
+- Cada registro permanece subordinado ao "Limite pela Fonte da Afirmação" (Seção 12).
 
 **Permanência**
 
@@ -191,7 +193,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - A pendência "Estrutura interna: cartões ou outro formato" fica resolvida.
 - A pendência "Quantidade e ordem de possíveis etapas" deixa de existir como formulação válida, pois não haverá etapas.
 - A granularidade dos registros dentro da trajetória contínua é registrada na Seção 8 (Granularidade por Ato de Declaração).
-- Permanece em aberto apenas a arquitetura visual e de navegação, e o schema técnico dos registros isolados (Seção 12).
+- Permanece em aberto apenas a arquitetura visual e de navegação, e o armazenamento técnico concreto dos registros isolados (Seção 14).
 
 ---
 
@@ -216,7 +218,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - Qualquer declaração humana posterior, inclusive correção, mudança de posição, explicação adicional ou nova interpretação, gera novo ato de envio confirmado e novo registro.
 - O registro anterior não é apagado, substituído ou reescrito.
 - O NSI não decide que uma declaração posterior corrige, invalida ou supera uma anterior.
-- Qualquer relação entre registros precisa ser declarada por uma pessoa e permanece subordinada ao "Limite pela Fonte da Afirmação" (Seção 10).
+- Qualquer relação entre registros precisa ser declarada por uma pessoa e permanece subordinada ao "Limite pela Fonte da Afirmação" (Seção 12).
 
 **Organização**
 
@@ -229,14 +231,14 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 **Grande volume**
 
 - Esta decisão de granularidade não define layout, filtros, busca, paginação, agrupamento visual ou navegação.
-- A legibilidade de uma trajetória com muitos registros permanece pertencente à arquitetura visual e de navegação (Seção 12).
+- A legibilidade de uma trajetória com muitos registros permanece pertencente à arquitetura visual e de navegação (Seção 14).
 - Futuras soluções de navegação não poderão alterar, resumir ou reinterpretar os registros originais.
 
 **Consequência arquitetural**
 
 - A pendência "Granularidade e organização dos registros dentro da trajetória contínua" fica resolvida no nível conceitual.
-- O schema técnico dos registros permanece pendente (Seção 12).
-- Arquitetura visual e navegação permanecem pendentes (Seção 12).
+- O armazenamento técnico concreto dos registros permanece pendente (Seção 14).
+- Arquitetura visual e navegação permanecem pendentes (Seção 14).
 
 ---
 
@@ -270,7 +272,46 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 
 ---
 
-## 10. Fronteira Epistemológica — Limite pela Fonte da Afirmação
+## 10. Autoria
+
+- Todo registro da Trajetória Contínua exige, obrigatoriamente, um `usuario_id` como autor — identidade técnica definida pela ADR-004 (Evolução Aprovada — Identidade Técnica do Usuário, Seção 12) — nunca a empresa isoladamente.
+- O contexto da declaração pode ser marcado, pela própria pessoa, como pessoal ou institucional.
+- O contexto institucional é uma escolha humana explícita, feita no ato da declaração — nunca inferida, presumida ou aplicada por padrão.
+- Marcar uma declaração como institucional nunca substitui, transfere ou dilui a autoria técnica individual — o `usuario_id` permanece, sempre, o autor do registro.
+- Não existe, nesta decisão, nenhuma definição de papéis, permissões ou níveis hierárquicos — quem está autorizado a declarar em nome da organização permanece pendente, pertencente ao futuro controle de acesso.
+
+---
+
+## 11. Schema Conceitual da Trajetória Contínua — Registro Atômico Independente
+
+**Natureza da Trajetória**
+
+- A Trajetória não possui identidade técnica própria — é inteiramente derivada da coleção de registros que compartilham o mesmo `realidade_id` (ADR-004, §7.26).
+- Não existe evento de criação da Trajetória em si — ela passa a existir no momento em que o primeiro registro é feito (Seção 7, "Início").
+
+**O registro**
+
+- Cada ato humano de envio confirmado gera um registro independente, próprio e imutável (Seção 8, Granularidade por Ato de Declaração).
+- `registro_id`: identificador técnico próprio, opaco, único e imutável, atribuído a cada registro no exato momento em que o ato de envio é confirmado e o registro é criado.
+- Timestamp, posição cronológica e conteúdo **não compõem** a identidade do registro — são atributos associados a ela, nunca parte dela.
+- Cada registro referencia `realidade_id` (vínculo à trajetória) e `usuario_id` (autor, identidade definida pela ADR-004) — as duas referências são paralelas e independentes entre si; `usuario_id` nunca é descendente de `realidade_id`, nem vice-versa.
+- Cada registro preserva: o contexto declarado (pessoal | institucional, Seção 10), o conteúdo literal e indivisível, e o timestamp do ato confirmado.
+- Registros nunca são reabertos, editados ou substituídos — cada correção ou nova posição gera um novo `registro_id`, preservando integralmente o registro anterior, que nunca é alterado.
+
+**Isolamento**
+
+- O armazenamento dos registros da Trajetória é fisicamente isolado de `lote.json` e de `saida_motor.json` — nenhum registro da Transformação escreve, recalcula ou altera qualquer leitura congelada (Princípio 7, Seção 4).
+
+**Fora desta decisão**
+
+- Mecanismo técnico concreto de armazenamento.
+- Regra de geração e garantia concreta de unicidade de `registro_id`.
+- Formato concreto da referência ao resultado candidato de origem de uma realidade (ADR-004, §7.26).
+- Tratamento de concorrência entre múltiplos processos/workers.
+
+---
+
+## 12. Fronteira Epistemológica — Limite pela Fonte da Afirmação
 
 **O que compõe a trajetória:** qualquer informação cuja origem seja uma declaração humana explícita (gestor ou organização): decisões tomadas, ações concluídas, status alcançados, datas e explicações — sempre atribuídas a quem declarou.
 
@@ -290,7 +331,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 
 ---
 
-## 11. Decisões Aprovadas Nesta Sessão
+## 13. Decisões Aprovadas Nesta Sessão
 
 As seguintes decisões são consideradas aprovadas como princípios fundacionais — **não como arquitetura completa da Tela 03**:
 
@@ -307,36 +348,49 @@ As seguintes decisões são consideradas aprovadas como princípios fundacionais
 11. Modelo estrutural — Trajetória Contínua (Seção 7).
 12. Granularidade por Ato de Declaração (Seção 8).
 13. Transição entre o Sexto Cartão e a Tela 03 — Modelo Combinado (Seção 9).
-14. Fronteira epistemológica — Limite pela Fonte da Afirmação (Seção 10).
+14. Autoria (Seção 10), referenciando a identidade do usuário definida pela ADR-004 (Seção 12).
+15. Schema Conceitual da Trajetória Contínua — Registro Atômico Independente, incluindo `registro_id` (Seção 11).
+16. Fronteira epistemológica — Limite pela Fonte da Afirmação (Seção 12).
 
-## 12. Pendências Ainda em Arquitetura
+## 14. Pendências Ainda em Arquitetura
 
-- Arquitetura visual e navegação — a transição conceitual de acesso entre o Sexto Cartão e a Tela 03 já está definida (Seção 9, Modelo Combinado); permanecem pendentes: texto do convite/botão, rota técnica, layout, posição, cores, dimensões, componentes visuais e o mecanismo concreto de navegação.
-- Schema técnico dos registros isolados (Princípio 7).
+- Arquitetura visual e navegação (texto do convite/botão, rota técnica, layout, posição, cores, dimensões, componentes visuais, mecanismo concreto de navegação) — a transição conceitual de acesso já está definida (Seção 9).
+- Referência técnica inequívoca ao resultado candidato do Motor que origina uma realidade recorrente (ADR-004, §7.26).
+- Cardinalidade inversa entre um resultado candidato e as realidades recorrentes que ele pode originar (ADR-004, §7.26).
+- Regra de geração e garantia concreta de unicidade de: `empresa_id` e `operacao_id` (ADR-001, Seção 16), `usuario_id` (ADR-004, Seção 12), `realidade_id` (ADR-004, §7.26) e `registro_id` (Seção 11, nesta ADR).
+- Mecanismo técnico concreto de armazenamento dos registros da Trajetória Contínua.
+- Tratamento de concorrência entre múltiplos processos/workers.
+- Permissões para declarar em nome da organização (autoria institucional).
+- Privacidade, retenção, exclusão legal e auditoria dos registros.
+- Implementação técnica da ADR-005 no Motor NSI (janelas, leituras, estados).
 
 Nenhuma dessas pendências foi decidida nesta ADR. A arquitetura completa da Tela 03 permanece EM ARQUITETURA até que cada uma delas seja tratada e aprovada em sessão futura.
 
 ---
 
-## 13. Dependências
+## 15. Dependências
 
 - Depende da ADR-001 (Seção 4.2), que define o Portal Executivo do Cliente como plataforma.
+- Depende da ADR-001, Seção 16 (Evolução Aprovada — Identidade Técnica da Empresa e da Operação), para o `operacao_id` — que compõe, junto ao tipo, a identidade da Leitura (ADR-005) e, transitivamente, da realidade recorrente — e para o `empresa_id`, que ancora a propriedade e o isolamento de cada `operacao_id` e de cada `usuario_id`, sem integrar a identidade da Leitura.
 - Depende da ADR-004 (Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional; §7.9; §7.17; "Decisão Arquitetural — Unidade da Jornada Cognitiva"), que originou esta ADR e cujos princípios de Observabilidade e Neutralidade Decisória são aqui reafirmados sem exceção.
+- Depende da ADR-004, §7.26 (Identidade Técnica da Realidade Recorrente), para o `realidade_id`, que funciona como chave de agrupamento dos registros que formam a Trajetória Contínua — a Trajetória, por si só, não possui identidade técnica própria (Seção 11).
+- Depende da ADR-004, Seção 12 (Evolução Aprovada — Identidade Técnica do Usuário), para o `usuario_id` exigido como autor de todo registro (Seção 10).
 - Depende da ADR-005 (Princípio 4 — Independência Entre Leituras; Princípio 6 — Ausência de Comparação Automática; ciclo temporal de coleta), quanto à relação temporal, ao isolamento dos dados e à proibição de comparação automática entre leituras, aplicada por esta ADR à camada de Transformação.
+- Depende da ADR-005, Seção 16 (Evolução Aprovada — Identidade Técnica da Leitura), para a identidade composta referenciada por cada realidade recorrente.
 - Depende do Livro dos Princípios do NSI, especialmente "a tecnologia serve; não decide" (Capítulo 5) e "Compreensão Antes de Automação" (Princípio 3).
 - A ADR-004 passará a referenciar esta ADR minimamente quanto à existência da Tela 03 — apenas depois que esta ADR for aprovada; nenhuma alteração é feita agora.
 
 ---
 
-## 14. Itens Fora do Escopo
+## 16. Itens Fora do Escopo
 
 Ver Seção 2.2.
 
 ---
 
-## 15. Referências
+## 17. Referências
 
-- `docs/architecture/ADR-001-operations-console.md` — define o Portal Executivo do Cliente como plataforma (Seção 4.2).
-- `docs/architecture/ADR-004-portal-executivo-cliente.md` — origem da Jornada de Transformação Organizacional (Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional) e princípios reafirmados (§7.9; §7.17; "Decisão Arquitetural — Unidade da Jornada Cognitiva").
-- `docs/architecture/ADR-005-ciclo-temporal-coleta-leituras-independentes.md` — Princípio 4 (Independência Entre Leituras) e Princípio 6 (Ausência de Comparação Automática), quanto ao ciclo temporal de coleta, ao isolamento dos dados desta jornada e à proibição de comparação automática entre leituras, aplicada por esta ADR à camada de Transformação.
+- `docs/architecture/ADR-001-operations-console.md` — define o Portal Executivo do Cliente como plataforma (Seção 4.2); Seção 16, identidade técnica da Empresa e da Operação (`empresa_id`, `operacao_id`).
+- `docs/architecture/ADR-004-portal-executivo-cliente.md` — origem da Jornada de Transformação Organizacional (Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional) e princípios reafirmados (§7.9; §7.17; "Decisão Arquitetural — Unidade da Jornada Cognitiva"); §7.26, Identidade Técnica da Realidade Recorrente; Seção 12, Identidade Técnica do Usuário.
+- `docs/architecture/ADR-005-ciclo-temporal-coleta-leituras-independentes.md` — Princípio 4 (Independência Entre Leituras) e Princípio 6 (Ausência de Comparação Automática), quanto ao ciclo temporal de coleta, ao isolamento dos dados desta jornada e à proibição de comparação automática entre leituras, aplicada por esta ADR à camada de Transformação; Seção 16, identidade técnica da Leitura.
 - `docs/principios/livro-dos-principios.md` — fundação filosófica: "a tecnologia serve; não decide" (Capítulo 5); "Compreensão Antes de Automação" (Princípio 3).
