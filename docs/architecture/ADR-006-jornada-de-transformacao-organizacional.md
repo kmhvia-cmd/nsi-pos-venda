@@ -13,13 +13,13 @@
 
 > **Nota de processo:** ADR aberta para cumprir a dependência registrada na ADR-004 ("Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional"): *"Após o Sexto Cartão, inicia-se uma jornada conceitualmente independente, denominada Jornada de Transformação Organizacional... sua arquitetura será tratada em sessão futura."* Esta ADR é essa sessão futura. Registra exclusivamente os princípios fundacionais já decididos — não define cartões, telas internas, layout, fluxos ou funcionalidades.
 >
-> **Esta ADR não está congelada.** Os princípios fundacionais descritos nas Seções 4, 5, 6, 7, 8 e 9 foram aprovados nesta sessão de decisão. A arquitetura completa da Tela 03 permanece **EM ARQUITETURA** — as pendências registradas na Seção 11 continuam abertas e serão tratadas em sessão futura, mediante aprovação própria.
+> **Esta ADR não está congelada.** Os princípios fundacionais descritos nas Seções 4, 5, 6, 7, 8, 9 e 10 foram aprovados nesta sessão de decisão. A arquitetura completa da Tela 03 permanece **EM ARQUITETURA** — as pendências registradas na Seção 12 continuam abertas e serão tratadas em sessão futura, mediante aprovação própria.
 
 ---
 
 ## 1. Objetivo
 
-Registrar os princípios fundacionais da Jornada de Transformação Organizacional — **Tela 03** do Portal Executivo do Cliente — a etapa que sucede o encerramento da Jornada de Inteligência Organizacional no Sexto Cartão (ADR-004). Esta ADR já define a Pergunta Cognitiva Fundadora (Seção 6), o modelo estrutural da jornada — Trajetória Contínua (Seção 7) — e a granularidade dos registros — Granularidade por Ato de Declaração (Seção 8). A arquitetura visual, a navegação e o schema técnico dos registros permanecem em arquitetura. Esta ADR não implementa nada e não altera nenhuma decisão já congelada nas ADRs anteriores.
+Registrar os princípios fundacionais da Jornada de Transformação Organizacional — **Tela 03** do Portal Executivo do Cliente — a etapa que sucede o encerramento da Jornada de Inteligência Organizacional no Sexto Cartão (ADR-004). Esta ADR já define a Pergunta Cognitiva Fundadora (Seção 6), o modelo estrutural da jornada — Trajetória Contínua (Seção 7) —, a granularidade dos registros — Granularidade por Ato de Declaração (Seção 8) — e a transição conceitual de acesso entre o Sexto Cartão e a Tela 03 — Modelo Combinado (Seção 9). A arquitetura visual, os componentes concretos de navegação e o schema técnico dos registros permanecem em arquitetura. Esta ADR não implementa nada e não altera nenhuma decisão já congelada nas ADRs anteriores.
 
 ---
 
@@ -44,6 +44,7 @@ Registrar os princípios fundacionais da Jornada de Transformação Organizacion
 - Granularidade dos registros — Granularidade por Ato de Declaração.
 - Indivisibilidade do conteúdo declarado em um mesmo ato.
 - Organização exclusivamente cronológica dos registros, sem hierarquia ou agrupamento automático.
+- Transição conceitual de acesso entre o Sexto Cartão e a Tela 03 — Modelo Combinado.
 - Fronteira epistemológica da jornada ("Limite pela Fonte da Afirmação").
 - Regra de acesso independente à Tela 03 para cada realidade recorrente revelada pela Leitura de Excedência — sem comparação, identificação de equivalência ou vinculação automática com realidades reveladas pela Leitura Inicial.
 
@@ -117,7 +118,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - Depois de concluir sua própria Jornada de Inteligência Organizacional até o Sexto Cartão, essa realidade recebe acesso próprio e independente à Tela 03.
 - Esse acesso possui registros próprios e isolados de qualquer acesso originado pela Leitura Inicial.
 - O NSI não compara, identifica equivalência, vincula, atualiza, complementa, reabre ou mistura automaticamente realidades ou registros entre as duas leituras — preservando integralmente o Princípio 6 da ADR-005 (Ausência de Comparação Automática), aplicado por esta ADR à camada de Transformação.
-- Se um gestor humano declarar que percebe relação, semelhança ou continuidade entre realidades de leituras diferentes, essa percepção permanece apenas como declaração humana atribuída, subordinada ao "Limite pela Fonte da Afirmação" (Seção 9).
+- Se um gestor humano declarar que percebe relação, semelhança ou continuidade entre realidades de leituras diferentes, essa percepção permanece apenas como declaração humana atribuída, subordinada ao "Limite pela Fonte da Afirmação" (Seção 10).
 - Mesmo uma declaração humana de relação não produz fusão, recálculo, vinculação automática nem compartilhamento de registros entre os acessos à Tela 03.
 
 ---
@@ -140,7 +141,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - Permite legitimamente agir, acompanhar, preservar a condição atual ou decidir não mudar.
 - Essas alternativas não devem ser apresentadas pelo sistema como opções fechadas ou categorias.
 - A pergunta não recomenda, prioriza, avalia nem conduz.
-- A posição declarada permanece subordinada ao "Limite pela Fonte da Afirmação" (Seção 9).
+- A posição declarada permanece subordinada ao "Limite pela Fonte da Afirmação" (Seção 10).
 - O NSI registra e torna observável a declaração, mas não a interpreta.
 - A pergunta fundadora não define cartões, etapas, campos, fluxo ou layout.
 
@@ -166,7 +167,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - Cada nova declaração humana é acrescentada cronologicamente à mesma trajetória.
 - Nenhum registro anterior é apagado, substituído ou reescrito.
 - Uma correção, mudança de posição ou nova interpretação humana deve ser registrada por acréscimo posterior, preservando o histórico anterior.
-- Cada registro permanece subordinado ao "Limite pela Fonte da Afirmação" (Seção 9).
+- Cada registro permanece subordinado ao "Limite pela Fonte da Afirmação" (Seção 10).
 
 **Permanência**
 
@@ -190,7 +191,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - A pendência "Estrutura interna: cartões ou outro formato" fica resolvida.
 - A pendência "Quantidade e ordem de possíveis etapas" deixa de existir como formulação válida, pois não haverá etapas.
 - A granularidade dos registros dentro da trajetória contínua é registrada na Seção 8 (Granularidade por Ato de Declaração).
-- Permanece em aberto apenas a arquitetura visual e de navegação, e o schema técnico dos registros isolados (Seção 11).
+- Permanece em aberto apenas a arquitetura visual e de navegação, e o schema técnico dos registros isolados (Seção 12).
 
 ---
 
@@ -215,7 +216,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 - Qualquer declaração humana posterior, inclusive correção, mudança de posição, explicação adicional ou nova interpretação, gera novo ato de envio confirmado e novo registro.
 - O registro anterior não é apagado, substituído ou reescrito.
 - O NSI não decide que uma declaração posterior corrige, invalida ou supera uma anterior.
-- Qualquer relação entre registros precisa ser declarada por uma pessoa e permanece subordinada ao "Limite pela Fonte da Afirmação" (Seção 9).
+- Qualquer relação entre registros precisa ser declarada por uma pessoa e permanece subordinada ao "Limite pela Fonte da Afirmação" (Seção 10).
 
 **Organização**
 
@@ -228,18 +229,48 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 **Grande volume**
 
 - Esta decisão de granularidade não define layout, filtros, busca, paginação, agrupamento visual ou navegação.
-- A legibilidade de uma trajetória com muitos registros permanece pertencente à arquitetura visual e de navegação (Seção 11).
+- A legibilidade de uma trajetória com muitos registros permanece pertencente à arquitetura visual e de navegação (Seção 12).
 - Futuras soluções de navegação não poderão alterar, resumir ou reinterpretar os registros originais.
 
 **Consequência arquitetural**
 
 - A pendência "Granularidade e organização dos registros dentro da trajetória contínua" fica resolvida no nível conceitual.
-- O schema técnico dos registros permanece pendente (Seção 11).
-- Arquitetura visual e navegação permanecem pendentes (Seção 11).
+- O schema técnico dos registros permanece pendente (Seção 12).
+- Arquitetura visual e navegação permanecem pendentes (Seção 12).
 
 ---
 
-## 9. Fronteira Epistemológica — Limite pela Fonte da Afirmação
+## 9. Transição entre o Sexto Cartão e a Tela 03
+
+**Modelo aprovado: Combinado — oferta no momento da conclusão + acesso permanente.**
+
+- O acesso à Tela 03 é habilitado após a conclusão do Sexto Cartão daquela realidade.
+- O Portal oferece a entrada nesse momento, mas não redireciona automaticamente.
+- Entrar exige uma decisão humana explícita.
+- Se o gestor não entrar, nada acontece:
+  - não existe estado "pendente";
+  - não existe atraso, incompletude ou abandono;
+  - não existe avaliação negativa.
+- O acesso permanece disponível posteriormente, dentro do contexto daquela realidade específica.
+- Não existe prazo, expiração, pressão ou lembrete insistente.
+- Entrar posteriormente possui a mesma validade arquitetural que entrar no momento da oferta.
+- Cada acesso permanece independente por realidade e por leitura, conforme os Princípios 5 e 8 (Seção 4) já aprovados.
+- O sistema não classifica entrar ou não entrar como avanço, atraso, sucesso ou fracasso.
+
+**Esta decisão não define:**
+
+- texto do convite ou botão;
+- rota técnica;
+- layout;
+- posição;
+- cores;
+- dimensões;
+- componentes visuais;
+- mecanismo concreto de navegação.
+
+---
+
+## 10. Fronteira Epistemológica — Limite pela Fonte da Afirmação
 
 **O que compõe a trajetória:** qualquer informação cuja origem seja uma declaração humana explícita (gestor ou organização): decisões tomadas, ações concluídas, status alcançados, datas e explicações — sempre atribuídas a quem declarou.
 
@@ -259,7 +290,7 @@ A Jornada de Transformação gera registros próprios, em camada de dados separa
 
 ---
 
-## 10. Decisões Aprovadas Nesta Sessão
+## 11. Decisões Aprovadas Nesta Sessão
 
 As seguintes decisões são consideradas aprovadas como princípios fundacionais — **não como arquitetura completa da Tela 03**:
 
@@ -275,18 +306,19 @@ As seguintes decisões são consideradas aprovadas como princípios fundacionais
 10. Pergunta cognitiva fundadora, com seus limites de interpretação (Seção 6).
 11. Modelo estrutural — Trajetória Contínua (Seção 7).
 12. Granularidade por Ato de Declaração (Seção 8).
-13. Fronteira epistemológica — Limite pela Fonte da Afirmação (Seção 9).
+13. Transição entre o Sexto Cartão e a Tela 03 — Modelo Combinado (Seção 9).
+14. Fronteira epistemológica — Limite pela Fonte da Afirmação (Seção 10).
 
-## 11. Pendências Ainda em Arquitetura
+## 12. Pendências Ainda em Arquitetura
 
-- Arquitetura visual e navegação (layout, botão, transição, rota, componentes).
+- Arquitetura visual e navegação — a transição conceitual de acesso entre o Sexto Cartão e a Tela 03 já está definida (Seção 9, Modelo Combinado); permanecem pendentes: texto do convite/botão, rota técnica, layout, posição, cores, dimensões, componentes visuais e o mecanismo concreto de navegação.
 - Schema técnico dos registros isolados (Princípio 7).
 
 Nenhuma dessas pendências foi decidida nesta ADR. A arquitetura completa da Tela 03 permanece EM ARQUITETURA até que cada uma delas seja tratada e aprovada em sessão futura.
 
 ---
 
-## 12. Dependências
+## 13. Dependências
 
 - Depende da ADR-001 (Seção 4.2), que define o Portal Executivo do Cliente como plataforma.
 - Depende da ADR-004 (Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional; §7.9; §7.17; "Decisão Arquitetural — Unidade da Jornada Cognitiva"), que originou esta ADR e cujos princípios de Observabilidade e Neutralidade Decisória são aqui reafirmados sem exceção.
@@ -296,13 +328,13 @@ Nenhuma dessas pendências foi decidida nesta ADR. A arquitetura completa da Tel
 
 ---
 
-## 13. Itens Fora do Escopo
+## 14. Itens Fora do Escopo
 
 Ver Seção 2.2.
 
 ---
 
-## 14. Referências
+## 15. Referências
 
 - `docs/architecture/ADR-001-operations-console.md` — define o Portal Executivo do Cliente como plataforma (Seção 4.2).
 - `docs/architecture/ADR-004-portal-executivo-cliente.md` — origem da Jornada de Transformação Organizacional (Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional) e princípios reafirmados (§7.9; §7.17; "Decisão Arquitetural — Unidade da Jornada Cognitiva").
