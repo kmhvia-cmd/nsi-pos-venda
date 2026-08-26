@@ -27,7 +27,7 @@
 🟢 Branding Sprint 3 — Prototipação Visual: EM PRODUÇÃO — DT-001 v1 produzido e registrado (`docs/branding/documentos-visuais/DT-001.html`)
 🟢 Livro dos Princípios do NSI (v1.0): Aprovado e congelado — fundação intelectual permanente do projeto
 🟢 ADR-005 — Ciclo Temporal de Coleta e Leituras Independentes: Aprovada e congelada — evolução aprovada em 2026-08-23 (convite de coleta com resposta única, gatilhos de encerramento, ordem atômica em T0+120h e dois estados distintos sem relatório) — evolução adicional em 2026-08-25 (identidade técnica da Leitura: chave composta operacao_id+tipo)
-🟡 ADR-006 — Jornada de Transformação Organizacional (Tela 03): EM ARQUITETURA — princípios fundacionais e schema conceitual aprovados (Trajetória Contínua, Registro Atômico Independente); evolução aprovada em 2026-08-26 (formato UUID4 dos identificadores, PostgreSQL como armazenamento definitivo dos registros da Trajetória e política conceitual de idempotência); schema relacional concreto, armazenamento/histórico dos resultados candidatos do Motor e demais pendências técnicas continuam abertos
+🟢 ADR-006 — Jornada de Transformação Organizacional (Tela 03): APROVADA E CONGELADA — evolução aprovada em 2026-08-26 (identidade técnica em UUID4, PostgreSQL como armazenamento definitivo dos registros da Trajetória, política de idempotência, governança de autoria e correção referenciando a ADR-004, detalhamento do acesso à Tela 03, encerramento da relação e Pacote de Preservação Histórica); schema relacional concreto, componentes visuais e Política Jurídica futura permanecem como pendências técnicas e jurídicas não bloqueantes (ADR-006, Seção 14)
 
 ---
 

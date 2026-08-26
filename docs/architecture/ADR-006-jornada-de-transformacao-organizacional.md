@@ -4,16 +4,17 @@
 
 | Campo | Valor |
 |---|---|
-| Status | EM ARQUITETURA |
+| Status | APROVADA E CONGELADA |
 | Data | 2026-08-25 |
+| Data de congelamento | 2026-08-26 |
 | Versão de referência do sistema | `v1.1.0-fonte-unica-webhook-motor` |
 | Commit de referência | `998387f` |
 | Branch | `master` |
 | Escopo desta ADR | Arquitetura — nenhuma implementação de código, frontend ou componente visual |
 
-> **Nota de processo:** ADR aberta para cumprir a dependência registrada na ADR-004 ("Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional"): *"Após o Sexto Cartão, inicia-se uma jornada conceitualmente independente, denominada Jornada de Transformação Organizacional... sua arquitetura será tratada em sessão futura."* Esta ADR é essa sessão futura. Registra exclusivamente os princípios fundacionais já decididos — não define cartões, telas internas, layout, fluxos ou funcionalidades.
+> **Nota de processo:** ADR aberta para cumprir a dependência registrada na ADR-004 ("Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional"): *"Após o Sexto Cartão, inicia-se uma jornada conceitualmente independente, denominada Jornada de Transformação Organizacional... sua arquitetura será tratada em sessão futura."* Esta ADR é essa sessão futura. Registra os princípios fundacionais, o schema conceitual, a governança de autoria e correção, o acesso à Tela 03, o encerramento da relação com a NSI e o Pacote de Preservação Histórica — não define cartões, telas internas, layout, componentes visuais ou implementação técnica.
 >
-> **Esta ADR não está congelada.** Os princípios fundacionais descritos nas Seções 4, 5, 6, 7, 8, 9, 10, 11 e 12 foram aprovados nesta sessão de decisão. A arquitetura completa da Tela 03 permanece **EM ARQUITETURA** — as pendências registradas na Seção 14 continuam abertas e serão tratadas em sessão futura, mediante aprovação própria.
+> **Esta ADR está APROVADA E CONGELADA (Seção 22).** Os princípios fundacionais descritos nas Seções 4 a 21 estão aprovados. As pendências registradas na Seção 14 (Pendências Técnicas, Visuais e Jurídicas Não Bloqueantes) são exclusivamente de implementação técnica ou visual, ou dependem de uma Política Jurídica futura já nomeada como tal — nenhuma delas representa lacuna conceitual, e nenhuma impede este congelamento (Seção 22). Mudanças futuras à arquitetura conceitual aqui congelada exigem evolução formalmente documentada, no mesmo padrão já usado nesta e nas demais ADRs do projeto.
 
 ---
 
@@ -352,20 +353,23 @@ As seguintes decisões são consideradas aprovadas como princípios fundacionais
 15. Schema Conceitual da Trajetória Contínua — Registro Atômico Independente, incluindo `registro_id` (Seção 11).
 16. Fronteira epistemológica — Limite pela Fonte da Afirmação (Seção 12).
 
-## 14. Pendências Ainda em Arquitetura
+## 14. Pendências Técnicas, Visuais e Jurídicas Não Bloqueantes
 
-- Arquitetura visual e navegação (texto do convite/botão, rota técnica, layout, posição, cores, dimensões, componentes visuais, mecanismo concreto de navegação) — a transição conceitual de acesso já está definida (Seção 9).
-- Schema relacional concreto (tabelas, colunas, chaves) em PostgreSQL para os registros da Trajetória Contínua (Seção 11; Seção 18 — Armazenamento).
+Nenhuma das pendências abaixo é uma lacuna conceitual da arquitetura da Tela 03: são exclusivamente pendências de implementação técnica ou visual, ou dependem de uma Política Jurídica futura já nomeada como tal (Seção 21). Nenhuma delas reabre ou impede o congelamento conceitual desta ADR (Seção 22).
+
+- Arquitetura visual e navegação: rota técnica, layout detalhado, posição, cores, dimensões, componentes visuais, mecanismo concreto de navegação — a transição conceitual de acesso e o texto do convite já estão definidos (Seções 9 e 20).
+- Schema relacional concreto em PostgreSQL para os registros da Trajetória Contínua: tabelas, colunas, índices, constraints, row-level security, migrations, endpoints, infraestrutura (Seção 11; Seção 18 — Armazenamento).
 - Constraints e garantia de unicidade persistida de `empresa_id` e `operacao_id` (ADR-001, Seção 17), `usuario_id`, `resultado_id` e `realidade_id` (ADR-004, Seção 13) e `registro_id` (Seção 18) — o formato UUID4 de cada identificador está definido, mas a garantia concreta de unicidade no banco de dados ainda não.
 - Armazenamento técnico e preservação histórica dos resultados candidatos do Motor NSI e de seus eventuais reprocessamentos — inclusive se e como isso se relaciona com `saida_motor.json` (Seção 18 — Armazenamento). Esta pendência não é resolvida pela adoção de PostgreSQL para a Trajetória Contínua, cujo escopo é estritamente distinto.
 - Distinção técnica persistida entre retry e reprocessamento intencional de uma execução do Motor — a política conceitual (Seção 18) estabelece a diferença de intenção, mas não define como ela é implementada ou armazenada.
 - Tratamento de concorrência entre múltiplos processos/workers, além da garantia transacional já descrita para a Trajetória Contínua (Seção 18).
-- Permissões para declarar em nome da organização (autoria institucional).
-- Privacidade, retenção, exclusão legal e auditoria dos registros — incluindo a eventual exceção legal à regra append-only (Seção 18).
+- Mecanismo técnico concreto de geração, empacotamento, criptografia e entrega do Pacote de Encerramento e Preservação Histórica (Seção 21): checksums, ZIP criptografado, link temporário e infraestrutura de envio.
+- Destino técnico dos registros originais da Trajetória Contínua em PostgreSQL após o encerramento da relação (permanecem, são arquivados ou eliminados) — depende da Política Jurídica futura (Seção 21).
+- Política Jurídica NSI própria — privacidade, retenção, atendimento a autoridades, exclusão ou anonimização exigida por lei, preservação para exercício ou defesa de direitos, acesso administrativo excepcional, prazos legais aplicáveis e auditoria das medidas jurídicas (Seção 21) — dependência externa nomeada, ainda não criada.
 - Retenção das chaves de idempotência — prazo, mecanismo e critério de expurgo permanecem indefinidos (Seção 18).
 - Implementação técnica da ADR-005 no Motor NSI (janelas, leituras, estados).
 
-Nenhuma dessas pendências foi decidida nesta ADR. A arquitetura completa da Tela 03 permanece EM ARQUITETURA até que cada uma delas seja tratada e aprovada em sessão futura.
+A ADR-006 está APROVADA E CONGELADA (Seção 22); estas pendências serão tratadas em sessões de arquitetura técnica futuras, registradas como evolução desta ADR quando necessário.
 
 ---
 
@@ -379,7 +383,8 @@ Nenhuma dessas pendências foi decidida nesta ADR. A arquitetura completa da Tel
 - Depende da ADR-005 (Princípio 4 — Independência Entre Leituras; Princípio 6 — Ausência de Comparação Automática; ciclo temporal de coleta), quanto à relação temporal, ao isolamento dos dados e à proibição de comparação automática entre leituras, aplicada por esta ADR à camada de Transformação.
 - Depende da ADR-005, Seção 16 (Evolução Aprovada — Identidade Técnica da Leitura), para a identidade composta referenciada por cada realidade recorrente.
 - Depende do Livro dos Princípios do NSI, especialmente "a tecnologia serve; não decide" (Capítulo 5) e "Compreensão Antes de Automação" (Princípio 3).
-- A ADR-004 passará a referenciar esta ADR minimamente quanto à existência da Tela 03 — apenas depois que esta ADR for aprovada; nenhuma alteração é feita agora.
+- A ADR-004 referencia esta ADR, por meio de suas Seções 14 e 15, quanto aos perfis autorizados a acessar a Jornada de Transformação, à autoria institucional e aos eventos de auditoria relacionados às declarações e correções da Tela 03.
+- Depende de uma Política Jurídica NSI futura e própria (Seção 21), ainda não criada, para privacidade, retenção, atendimento a autoridades e demais obrigações legais — esta ADR fixa apenas os princípios; os detalhes jurídicos pertencem a esse documento futuro.
 
 ---
 
@@ -400,7 +405,7 @@ Ver Seção 2.2.
 
 ## 18. Evolução Aprovada — Formato de Identificadores, Armazenamento Definitivo e Política de Idempotência da Trajetória Contínua (2026-08-26)
 
-Esta seção documenta uma evolução aprovada da ADR-006, complementando a Seção 11 (Schema Conceitual da Trajetória Contínua) e a Seção 14 (Pendências Ainda em Arquitetura, atualizada nesta mesma data). Nenhuma decisão anteriormente aprovada nas Seções 1 a 17 é alterada; apenas a lista viva de pendências da Seção 14 é atualizada.
+Esta seção documenta uma evolução aprovada da ADR-006, complementando a Seção 11 (Schema Conceitual da Trajetória Contínua) e a Seção 14 (Pendências Técnicas, Visuais e Jurídicas Não Bloqueantes, atualizada nesta mesma data). Nenhuma decisão anteriormente aprovada nas Seções 1 a 17 é alterada; apenas a lista viva de pendências da Seção 14 é atualizada.
 
 ### Formato dos identificadores
 
@@ -493,3 +498,138 @@ Este formato define representação e geração probabilisticamente única — n
 
 **Origem desta decisão:**
 - Consolidada nesta sessão (2026-08-26), a partir da arquitetura já aprovada do schema conceitual da Trajetória Contínua (Seção 11) e da identidade técnica registrada em ADR-001 (Seção 17) e ADR-004 (Seção 13).
+
+---
+
+## 19. Evolução Aprovada — Autoria Institucional e Correção de Registros (2026-08-26)
+
+Esta seção documenta uma evolução aprovada da ADR-006, a partir da consolidação de governança, acesso, auditoria e encerramento do Portal NSI. Esta seção não substitui os princípios de autoria, granularidade, preservação e correção definidos nas Seções 7, 8, 10 e 11; resolve a autorização institucional e detalha o caminho excepcional posterior a uma tentativa bloqueada.
+
+### Autorização institucional
+
+- Gestores e Administradores ativos (ADR-004, Seção 14) podem declarar em nome da organização por consequência do próprio perfil — não por autorização concedida caso a caso.
+- Usuários Comuns não declaram em nome da organização.
+- Esta regra resolve, especificamente, a pendência da Seção 10 quanto a "quem está autorizado a declarar em nome da organização" — nenhuma outra frase da Seção 10 é alterada: a marcação institucional continua explícita, opcional e nunca automática; o `usuario_id` continua, sempre, o autor técnico do registro.
+- O NSI não presume representação, intenção ou deliberação tácita como fato observável. O sistema registra apenas atos humanos efetivamente praticados.
+
+### Correção, contestação e tentativa de alteração
+
+- Nenhum Usuário Comum, Gestor ou Administrador pode editar ou excluir uma declaração já confirmada — reafirmando, sem exceção, as Seções 7, 8 e 11.
+- **Caminho normal de correção:** uma correção, contestação, explicação adicional ou mudança de posição gera um novo registro, livremente, sem necessidade de autorização de terceiro — exatamente como já definido nas Seções 7 e 8. O registro anterior permanece intacto.
+- **Caminho excepcional — tentativa de alteração ou exclusão do original:** se alguém tentar editar ou excluir um registro já confirmado, essa tentativa é bloqueada e auditada (ADR-004, Seção 15), e os Administradores são notificados.
+- Depois de uma tentativa bloqueada, a criação de um novo registro de correção ou contestação associado a esse incidente específico exige a autorização de um Administrador.
+- Essa autorização nunca permite modificar ou excluir o registro original — apenas libera a criação de um novo registro, pelo mesmo mecanismo de acréscimo já congelado.
+- A aprovação ou a recusa dessa autorização também fica auditada.
+- O gatilho de autorização do Administrador se aplica exclusivamente ao caminho excepcional (tentativa de alteração ou exclusão do original) — nunca ao caminho normal de correção por acréscimo, que permanece livre.
+
+### Verdade e observabilidade
+
+- Nenhuma declaração, decisão, correção, tentativa ou evento relevante é ocultado, suavizado, reescrito ou apagado na operação normal.
+- O NSI não julga se alguém agiu bem ou mal, com eficiência ou ineficiência, boa-fé ou má-fé, e não atribui culpa. Avaliações, julgamentos e responsabilizações pertencem exclusivamente à empresa, a seus representantes humanos e às autoridades competentes — reafirmando a Fronteira Epistemológica já congelada (Seção 12).
+- Exceções exigidas por lei ao regime de preservação serão executadas formalmente, de maneira restrita e auditável, conforme a Política Jurídica futura (Seção 21) — nunca como uma exceção genérica ou discricionária.
+
+### O que não mudou
+
+- Esta seção não substitui os princípios de autoria, granularidade, preservação e correção definidos nas Seções 7, 8, 10 e 11; resolve a autorização institucional e detalha o caminho excepcional posterior a uma tentativa bloqueada.
+- O caminho normal de correção continua sendo, para todo autor, a simples criação de um novo registro — nunca uma aprovação prévia.
+
+**Origem desta decisão:**
+- Consolidação aprovada de governança, acesso, auditoria e encerramento do Portal NSI (2026-08-26).
+
+---
+
+## 20. Evolução Aprovada — Detalhamento do Acesso à Tela 03 (2026-08-26)
+
+Esta seção documenta uma evolução aprovada da ADR-006, detalhando um item específico que a Seção 9 (Transição entre o Sexto Cartão e a Tela 03 — Modelo Combinado) explicitamente deixou para decisão futura: o texto do convite de acesso. Nenhuma outra frase da Seção 9 é alterada.
+
+- Depois da conclusão do Sexto Cartão daquela realidade, o Portal oferece o acesso com o texto: "Acessar Jornada de Transformação".
+- O texto não presume mudança, plano ou obrigação de agir.
+- Não há redirecionamento automático — entrar exige decisão humana explícita, exatamente como já definido na Seção 9.
+- O gestor decide se e quando entra.
+- O acesso permanece disponível: no Sexto Cartão concluído; e na Home, dentro da área da realidade correspondente.
+- Cada realidade e cada Leitura mantêm acesso próprio e independente — restatement do Princípio 8 (Seção 4) e do Princípio 6 da ADR-005, já congelados; esta seção não redefine essa regra, apenas a reafirma no contexto do convite de acesso.
+- A ausência de entrada não representa atraso, abandono, fracasso ou ineficiência — reafirmando a Seção 9.
+
+### Escopo desta evolução em relação à Seção 9
+
+- Esta seção resolve, especificamente, o item "texto do convite ou botão" da lista "Esta decisão não define" da Seção 9.
+- Todos os demais itens dessa lista continuam indefinidos: rota técnica; layout; posição; cores; dimensões; componentes visuais; mecanismo concreto de navegação.
+
+**Origem desta decisão:**
+- Consolidação aprovada de governança, acesso, auditoria e encerramento do Portal NSI (2026-08-26).
+
+---
+
+## 21. Evolução Aprovada — Encerramento da Relação e Pacote de Preservação Histórica (2026-08-26)
+
+Esta seção documenta uma evolução aprovada da ADR-006. Ela define: o fechamento do acesso ao Portal ao final da relação comercial com a empresa; a entrega do Pacote de Encerramento e Preservação Histórica; os prazos operacionais de download e reemissão desse pacote; e a dependência de uma Política Jurídica futura para a retenção e o destino definitivo dos registros originais. Ela não altera nenhuma decisão já congelada — introduz um evento novo, posterior a todos os já descritos.
+
+### Distinção conceitual
+
+- O encerramento da relação com a NSI é um evento contratual e administrativo de fechamento de acesso ao Portal — não é uma conclusão cognitiva da Jornada de Transformação. A Trajetória Contínua (Seção 7) continua sem conclusão obrigatória; o encerramento da relação não declara nenhuma trajetória como "concluída", "bem-sucedida" ou "malsucedida".
+
+### Pacote de Encerramento e Preservação Histórica
+
+Ao encerrar a relação, a empresa recebe o "Pacote de Encerramento e Preservação Histórica NSI", contendo: relatório completo em PDF/A; auditoria completa em CSV; dados estruturados em JSON; declarações, leituras e arquivos gerados; PDFs anteriormente produzidos; manifesto de integridade; checksums; comprovante de entrega; pacote ZIP criptografado.
+
+### Prazo de download
+
+- A empresa terá 30 dias corridos para baixar o pacote, com o prazo visível no Portal.
+- Se o download integral ocorrer antes do final dos 30 dias, o Portal será fechado imediatamente.
+- O simples clique no botão não conta como download — somente a transferência integral, concluída e tecnicamente validada fecha o Portal.
+- Download interrompido ou incompleto não fecha o Portal.
+
+### Comprovante
+
+- Após o download integral, é gerado automaticamente um comprovante contendo: empresa; usuário que realizou o download; data e hora; identificação do pacote; código de integridade; confirmação do fechamento do Portal.
+- O comprovante é enviado ao e-mail institucional da empresa e a todos os Administradores ativos.
+
+### Ausência de download
+
+- Se o pacote não for baixado nos 30 dias, o Portal é fechado.
+- A NSI envia automaticamente um link criptografado e temporário, com validade de sete dias corridos, ao e-mail institucional e a todos os Administradores ativos.
+- Depois do vencimento, um Administrador autenticado pode solicitar novo link. Toda reemissão fica auditada.
+- A NSI não mantém o Portal operacional apenas porque a empresa não realizou o download.
+
+### Reemissão e retenção do pacote completo
+
+- O pacote completo fica disponível para reemissão por 90 dias após o encerramento.
+- Depois dos 90 dias, o pacote completo é eliminado.
+- Permanece somente o conjunto estritamente necessário para: obrigações legais ou regulatórias; exercício ou defesa de direitos; atendimento a autoridades competentes; comprovação da entrega; comprovação da integridade do material.
+- Esse conjunto fica isolado, com acesso restrito — sem reutilização comercial, nova análise ou reaproveitamento operacional.
+- Ao final do prazo legal aplicável, os dados são eliminados ou anonimizados conforme obrigação jurídica.
+
+### O que esta seção não define
+
+- O destino dos registros originais da Trajetória Contínua em PostgreSQL após o encerramento — se permanecem, são arquivados ou são eliminados — não é definido por esta seção. Este ponto depende da Política Jurídica futura, abaixo, e essa indefinição não impede o congelamento conceitual desta ADR (Seção 22): o princípio de preservação e o tratamento da exceção legal já estão fixados; o mecanismo concreto de retenção dos dados originais é, por natureza, um detalhe de implementação subordinado a essa política.
+
+### Dependência — Política Jurídica futura
+
+Será criada uma Política Jurídica própria, externa a esta ADR, para: privacidade; retenção; atendimento a autoridades; exclusão ou anonimização exigida por lei; preservação para exercício ou defesa de direitos; acesso administrativo excepcional; prazos legais aplicáveis; auditoria das medidas jurídicas.
+
+Esta ADR fixa somente os princípios de verdade, preservação, rastreabilidade, acesso controlado e cumprimento legal (Seção 19). Não define nenhum prazo jurídico além dos prazos operacionais expressamente aprovados nesta seção (sete, trinta e noventa dias).
+
+**Origem desta decisão:**
+- Consolidação aprovada de governança, acesso, auditoria e encerramento do Portal NSI (2026-08-26).
+
+---
+
+## 22. Congelamento da ADR-006 (2026-08-26)
+
+Com as Seções 19, 20 e 21 aprovadas, e com a auditoria de consistência registrada nesta sessão (verificação de contradições, distinção entre regra arquitetural e detalhe de implementação futura, preservação da autoria humana visível e do regime append-only, e tratamento das obrigações legais como exceção formal, restrita e auditável), a ADR-006 passa do status EM ARQUITETURA para APROVADA E CONGELADA.
+
+### Verificação de ausência de pendência conceitual
+
+Todas as pendências remanescentes, listadas na Seção 14 (Pendências Técnicas, Visuais e Jurídicas Não Bloqueantes), são de uma das duas naturezas seguintes — nenhuma delas é uma lacuna conceitual da arquitetura da Tela 03:
+
+- **Implementação técnica ou visual:** rota técnica; layout detalhado; componentes visuais; dimensões; cores; tabelas SQL; colunas; índices; constraints; row-level security; infraestrutura; migrations; endpoints; implementação do Portal; implementação técnica da ADR-005 no Motor NSI; mecanismo técnico concreto de geração e entrega do Pacote de Preservação Histórica.
+- **Dependência de uma Política Jurídica futura, já nomeada como tal** (Seção 21): privacidade, retenção, exclusão legal e demais obrigações jurídicas.
+
+### O que o congelamento significa
+
+- Os princípios fundacionais, o schema conceitual, a governança de perfis e autoria (referenciando a ADR-004), o mecanismo de correção, a transição de acesso à Tela 03, e o encerramento da relação com o Pacote de Preservação Histórica estão aprovados e estáveis.
+- Mudanças futuras a qualquer decisão conceitual já congelada nesta ADR só poderão ocorrer por evolução arquitetural formalmente documentada — no mesmo método já usado por esta e por todas as demais ADRs do projeto: preservação do texto histórico, registro explícito do que muda e do que não muda, e aprovação própria.
+- Sessões de arquitetura técnica futuras (schema relacional concreto, componentes visuais, implementação do Portal, Política Jurídica) serão registradas como evoluções desta ADR, sem reabrir sua arquitetura conceitual.
+
+**Origem desta decisão:**
+- Consolidação aprovada de governança, acesso, auditoria e encerramento do Portal NSI (2026-08-26).

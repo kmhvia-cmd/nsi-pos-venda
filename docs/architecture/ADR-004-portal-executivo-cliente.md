@@ -675,3 +675,178 @@ Esta seção documenta uma evolução aprovada da ADR-004, complementando a Seç
 
 **Origem desta decisão:**
 - Registrada durante a consolidação da identidade técnica e da política de idempotência da Trajetória Contínua (ADR-006).
+
+---
+
+## 14. Evolução Aprovada — Perfis de Acesso, Cadastro Delegado, Convites e Administração da Empresa (2026-08-26)
+
+Esta seção documenta uma evolução aprovada da ADR-004, a partir da consolidação de governança, acesso, auditoria e encerramento do Portal NSI. Ela evolui explicitamente o Princípio 2 (Seção 4) e a Decisão Congelada 2 (Seção 8) — preservando seu texto original como registro histórico — e não altera nenhuma outra decisão já congelada, incluindo a Tela 01 (Seção 6, CONGELADA).
+
+### Evolução do cadastro centralizado na NSI
+
+- **Texto original preservado como registro histórico, mas parcialmente superado por esta evolução quanto ao agente responsável pelos cadastros posteriores:** Princípio 2 — "O cadastro de empresas e usuários é realizado exclusivamente pela equipe NSI. Nenhum usuário se autocadastra." Decisão Congelada 2 — "O cadastro de empresas e usuários é responsabilidade exclusiva da equipe NSI."
+- A NSI continua responsável pelo cadastro da empresa e do primeiro Administrador.
+- Os cadastros posteriores passam a ser responsabilidade dos Administradores da própria empresa.
+- A antiga exclusividade da NSI deixa de reger os cadastros posteriores — permanece válida apenas para o cadastro inicial (empresa e primeiro Administrador).
+- O autocadastro público continua proibido em qualquer hipótese (Princípio 1, Seção 4) — o usuário-alvo de um convite nunca se cadastra "do zero" por conta própria (Tela 01, §6.2), independentemente de quem inicia o convite.
+
+### Perfis de Acesso
+
+**Usuário Comum**
+- Possui login individual.
+- Visualiza apenas o conteúdo básico liberado no Portal.
+- Não abre Cartões, conjuntos, detalhes ou pop-ups.
+- Não registra declarações ou decisões.
+- Não gera PDF.
+- Não administra usuários.
+- Não consulta a auditoria completa — apenas o próprio histórico (Seção 15).
+
+**Gestor**
+- Possui todas as permissões de visualização.
+- Abre Cartões, conjuntos, detalhes e pop-ups.
+- Acessa a Jornada de Transformação Organizacional (ADR-006).
+- Gera PDFs.
+- Registra decisões e declarações.
+- Pode declarar em nome da organização (ADR-006, Seção 19).
+- Não administra usuários.
+- Não consulta a auditoria completa — apenas o próprio histórico (Seção 15).
+
+**Administrador da Empresa**
+- Possui todas as permissões do Gestor.
+- Cria, convida, remove, promove e rebaixa usuários.
+- Define Gestores e outros Administradores.
+- Consulta e exporta a auditoria completa da empresa (Seção 15).
+- Não pode editar ou apagar registros históricos.
+- A empresa pode ter no máximo três Administradores.
+- A empresa deve manter pelo menos um Administrador.
+- A quantidade recomendada, mas não obrigatória, é de dois Administradores.
+
+### Cadastro e Convites
+
+- A NSI cadastra a empresa e o primeiro Administrador.
+- A partir daí, os Administradores criam usuários e enviam convites diretamente pelo Portal.
+- Não existe autocadastro público (Princípio 1, Seção 4, integralmente preservado).
+- O Administrador define no convite o perfil: Usuário Comum, Gestor ou Administrador.
+- O convidado não escolhe nem altera o próprio perfil.
+- O convite possui validade de sete dias corridos.
+- Se expirar, um Administrador poderá emitir outro.
+- Criação, convite, expiração, reemissão, aceitação e perfil atribuído ficam auditados (Seção 15).
+
+### Administração e Responsabilidade da Empresa
+
+- A empresa é responsável pelas pessoas que autoriza e pelas permissões que concede.
+- A NSI não verifica propriedade, hierarquia ou legitimidade interna das escolhas empresariais.
+- A NSI não arbitra conflitos internos.
+- Qualquer Administrador ativo pode remover outro Administrador sozinho.
+- Uma regra de aprovação por dois Administradores foi cogitada e expressamente descartada — não é adotada nesta ou em nenhuma outra seção.
+- O último Administrador não pode sair definitivamente sem substituição.
+
+#### Transição do último Administrador
+
+- Ao solicitar saída, o último Administrador assume o status "Administrador em transição".
+- Continua ativo por até sete dias corridos enquanto indica e ativa o substituto.
+- Imediatamente após a solicitação, aparece na tela inicial um aviso discreto com contagem regressiva, visível para todos os usuários, em um canto da tela, sem prejudicar a visualização.
+- Durante os sete dias, o Portal funciona normalmente.
+- Se não houver substituição ao final do prazo, todos poderão fazer login, mas ficarão restritos à tela inicial — o restante do Portal permanecerá bloqueado.
+- O Administrador em transição poderá apenas concluir a indicação e ativação do substituto.
+- A ativação do substituto desbloqueia o Portal.
+- A NSI nunca escolhe quem será o novo Administrador.
+
+### Remoção, Rebaixamento e Retorno de Usuário
+
+- Remoção ou redução de permissão produz efeito imediato.
+- Todas as sessões abertas do usuário são encerradas (Seção 15).
+- O usuário recebe aviso automático por e-mail, sem exposição de justificativas internas.
+- Autor da alteração, data, hora, perfil anterior e perfil posterior ficam auditados (Seção 15).
+- O histórico da pessoa permanece associado ao mesmo `usuario_id` (Seção 12) — consistente com sua natureza opaca e estável.
+- Se a mesma pessoa retornar futuramente, o mesmo `usuario_id` será reativado.
+- Remoção, período sem acesso e reativação permanecem visíveis.
+- Nenhum histórico é transferido para outra pessoa.
+
+### O que não mudou
+
+- O Princípio 1 (Acesso Exclusivo por Convite, Seção 4) permanece integralmente válido — não existe cadastro público em nenhuma hipótese.
+- A Tela 01 (Seção 6, CONGELADA) não é alterada: login e senha continuam o mecanismo de autenticação; o usuário-alvo de um convite continua sem se autocadastrar "do zero".
+- O `usuario_id` (Seção 12) continua opaco, estável e independente de nome, e-mail, telefone ou senha; a reativação reutiliza o mesmo identificador, nunca cria um novo.
+- "Schema de dados de usuário, empresa ou sessão" (Seção 10, Itens Fora do Escopo) continua fora do escopo — esta seção define perfis e fluxos arquiteturais, não schema técnico concreto.
+- Nenhuma implementação de código, frontend, componente visual, schema de banco de dados ou API é definida aqui.
+
+**Origem desta decisão:**
+- Consolidação aprovada de governança, acesso, auditoria e encerramento do Portal NSI (2026-08-26).
+
+---
+
+## 15. Evolução Aprovada — Autenticação, Sessões, Recuperação de Acesso e Auditoria do Portal (2026-08-26)
+
+Esta seção documenta uma evolução aprovada da ADR-004, complementando a Seção 14 (perfis e administração) a partir da mesma consolidação. Ela adiciona um fator de autenticação e um fluxo de recuperação mediado — sem revogar a Decisão Congelada 3 nem a Seção 6.3 — e define a arquitetura de auditoria do Portal.
+
+### Autenticação e Sessões
+
+- MFA é obrigatório para Gestores e Administradores.
+- MFA não é obrigatório para Usuários Comuns nesta etapa.
+- A Decisão Congelada 3 ("A autenticação do Portal é feita por login e senha", Seção 8) permanece o mecanismo-base para todos os perfis; o MFA é um fator adicional exigido apenas de Gestores e Administradores — não uma substituição do login e senha.
+- A sessão expira após 30 minutos sem atividade.
+- Cada usuário pode manter até três sessões simultâneas.
+- Todas as sessões são identificadas e auditadas.
+- Acesso por novo dispositivo gera aviso automático.
+- A remoção ou redução de permissão de um usuário (Seção 14) encerra imediatamente todas as suas sessões.
+
+### Recuperação de Acesso
+
+- O usuário solicita recuperação a um Administrador.
+- O Administrador autoriza o envio de um link individual, temporário e de uso único.
+- O usuário cria a própria senha; o Administrador nunca vê a senha.
+- Qualquer provedor de e-mail é aceito, desde que o endereço esteja previamente cadastrado e confirmado.
+- Este fluxo é mediado por um Administrador — não é o "fluxo de autoatendimento não convidado" que a Tela 01 (§6.3, CONGELADA) excluiu de seu escopo original. Esta seção cumpre o ponteiro que a própria Tela 01 deixou aberto ("tratado, se necessário, em revisão futura desta mesma tela"), sem contrariar a regra congelada.
+
+#### Alteração de e-mail
+
+- O usuário solicita a mudança.
+- Confirma o endereço antigo e o novo.
+- Um Administrador autoriza a alteração.
+- O endereço anterior recebe notificação.
+- Todo o processo fica auditado.
+
+#### Único Administrador
+
+- Se o único Administrador alterar o próprio e-mail, serão exigidos: acesso ao e-mail antigo; confirmação do e-mail novo; senha atual; MFA.
+- Se o único Administrador ainda possui acesso ao e-mail previamente cadastrado, mas perdeu o MFA, a NSI poderá executar recuperação técnica excepcional mediante confirmação por esse e-mail.
+- Se o único Administrador perdeu o acesso ao e-mail previamente cadastrado, a NSI não realizará recuperação por documentos, por outro endereço ou por decisão própria — a empresa deverá primeiro recuperar o acesso ao e-mail cadastrado por seus próprios meios.
+- A NSI apenas recupera tecnicamente o acesso quando o e-mail cadastrado permanece acessível — nunca decide quem representa a empresa e não assume função de governança interna (consistente com "A NSI não arbitra conflitos internos", Seção 14).
+
+### Auditoria Integral do Portal
+
+A auditoria registrará: login e logout; usuário, empresa, data e hora; páginas acessadas; abertura e fechamento de Cartões, conjuntos e pop-ups; entrada, saída e tempo de permanência; geração e exportação de PDFs; declarações e decisões; contexto pessoal ou institucional da declaração; solicitações, aprovações e recusas; criação de usuários e convites; aceitação e expiração de convites; mudanças de perfil e permissão; remoções e reativações; tentativas bloqueadas de alteração ou exclusão; consultas e exportações de auditoria; endereço IP; navegador; dispositivo; identificador da sessão.
+
+As regras de substância dos eventos ligados a declarações, correções e tentativas bloqueadas de alteração ou exclusão de registros da Trajetória Contínua pertencem à ADR-006 (Seções 19 e 21) — esta seção apenas os inclui no catálogo de eventos auditados do Portal, sem redefini-los.
+
+#### Limite interpretativo
+
+- Tempo de permanência não prova leitura, atenção, trabalho, produtividade, eficiência, intenção, mérito ou culpa.
+- O NSI não produz pontuação nem conclusão sobre esses dados.
+- O sistema torna os eventos observáveis; a interpretação pertence exclusivamente às pessoas autorizadas da empresa — reafirmando, para os dados de auditoria, o Princípio da Observabilidade já congelado (Seção 7.17).
+
+#### Acesso à auditoria
+
+- Cada Usuário Comum pode consultar somente o próprio histórico.
+- Cada Gestor pode consultar somente o próprio histórico.
+- Administradores podem consultar a auditoria completa da empresa.
+- Administradores podem exportar toda a auditoria a qualquer momento, em PDF e CSV.
+- A própria consulta ou exportação fica auditada.
+
+#### Integridade
+
+- A auditoria é append-only e verificável.
+- Nenhum Usuário Comum, Gestor, Administrador ou operador comum da NSI pode editar ou apagar eventos.
+- Eventual correção gera novo evento vinculado ao anterior.
+- Senhas, códigos MFA, tokens, segredos e links de recuperação nunca entram na auditoria. Registra-se somente que a autenticação, recuperação ou alteração ocorreu e qual foi seu resultado.
+
+### O que não mudou
+
+- A Decisão Congelada 3 (Seção 8) permanece o mecanismo-base de autenticação para todos os perfis; o MFA descrito aqui é adicional, restrito a Gestores e Administradores.
+- A Tela 01 (§6.3, CONGELADA) continua vedando recuperação por autoatendimento não convidado; o fluxo aqui definido é mediado por Administrador, portanto distinto.
+- "Schema de dados de usuário, empresa ou sessão" (Seção 10, Itens Fora do Escopo) continua fora do escopo — esta seção define arquitetura e política, não schema técnico concreto.
+- Nenhuma implementação de código, frontend, componente visual, schema de banco de dados ou API é definida aqui.
+
+**Origem desta decisão:**
+- Consolidação aprovada de governança, acesso, auditoria e encerramento do Portal NSI (2026-08-26).
