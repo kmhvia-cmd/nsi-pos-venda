@@ -19,7 +19,7 @@
 🟢 Git: Organizado
 🟢 Segurança essencial: Concluída
 🟢 Fonte única de verdade (Webhook → `lote.json` → Motor): Concluída
-🟢 ADR-001 — NSI Operations Console: Aprovada e congelada na arquitetura — evolução aprovada em 2026-08-25 (identidade técnica da Empresa e da Operação: empresa_id e operacao_id, com lote_id e slug como referências legadas)
+🟢 ADR-001 — NSI Operations Console: Aprovada e congelada na arquitetura — evolução aprovada em 2026-08-25 (identidade técnica da Empresa e da Operação: empresa_id e operacao_id, com lote_id e slug como referências legadas) — evolução adicional em 2026-08-26 (formato UUID4 de empresa_id e operacao_id)
 🟢 ADR-002 — Fundação de Marca NSI: Aprovada e congelada na arquitetura
 🟢 Branding Sprint 1 — Fundação da Marca (`docs/branding/`): CONGELADA
 🟢 ADR-003 — Sistema Editorial Visual do NSI: Aprovada (abertura da Sprint 2)
@@ -27,7 +27,7 @@
 🟢 Branding Sprint 3 — Prototipação Visual: EM PRODUÇÃO — DT-001 v1 produzido e registrado (`docs/branding/documentos-visuais/DT-001.html`)
 🟢 Livro dos Princípios do NSI (v1.0): Aprovado e congelado — fundação intelectual permanente do projeto
 🟢 ADR-005 — Ciclo Temporal de Coleta e Leituras Independentes: Aprovada e congelada — evolução aprovada em 2026-08-23 (convite de coleta com resposta única, gatilhos de encerramento, ordem atômica em T0+120h e dois estados distintos sem relatório) — evolução adicional em 2026-08-25 (identidade técnica da Leitura: chave composta operacao_id+tipo)
-🟡 ADR-006 — Jornada de Transformação Organizacional (Tela 03): EM ARQUITETURA — princípios fundacionais e schema conceitual aprovados (Trajetória Contínua, Registro Atômico Independente); arquitetura visual, armazenamento concreto e demais pendências técnicas continuam abertos
+🟡 ADR-006 — Jornada de Transformação Organizacional (Tela 03): EM ARQUITETURA — princípios fundacionais e schema conceitual aprovados (Trajetória Contínua, Registro Atômico Independente); evolução aprovada em 2026-08-26 (formato UUID4 dos identificadores, PostgreSQL como armazenamento definitivo dos registros da Trajetória e política conceitual de idempotência); schema relacional concreto, armazenamento/histórico dos resultados candidatos do Motor e demais pendências técnicas continuam abertos
 
 ---
 

@@ -355,13 +355,14 @@ As seguintes decisões são consideradas aprovadas como princípios fundacionais
 ## 14. Pendências Ainda em Arquitetura
 
 - Arquitetura visual e navegação (texto do convite/botão, rota técnica, layout, posição, cores, dimensões, componentes visuais, mecanismo concreto de navegação) — a transição conceitual de acesso já está definida (Seção 9).
-- Referência técnica inequívoca ao resultado candidato do Motor que origina uma realidade recorrente (ADR-004, §7.26).
-- Cardinalidade inversa entre um resultado candidato e as realidades recorrentes que ele pode originar (ADR-004, §7.26).
-- Regra de geração e garantia concreta de unicidade de: `empresa_id` e `operacao_id` (ADR-001, Seção 16), `usuario_id` (ADR-004, Seção 12), `realidade_id` (ADR-004, §7.26) e `registro_id` (Seção 11, nesta ADR).
-- Mecanismo técnico concreto de armazenamento dos registros da Trajetória Contínua.
-- Tratamento de concorrência entre múltiplos processos/workers.
+- Schema relacional concreto (tabelas, colunas, chaves) em PostgreSQL para os registros da Trajetória Contínua (Seção 11; Seção 18 — Armazenamento).
+- Constraints e garantia de unicidade persistida de `empresa_id` e `operacao_id` (ADR-001, Seção 17), `usuario_id`, `resultado_id` e `realidade_id` (ADR-004, Seção 13) e `registro_id` (Seção 18) — o formato UUID4 de cada identificador está definido, mas a garantia concreta de unicidade no banco de dados ainda não.
+- Armazenamento técnico e preservação histórica dos resultados candidatos do Motor NSI e de seus eventuais reprocessamentos — inclusive se e como isso se relaciona com `saida_motor.json` (Seção 18 — Armazenamento). Esta pendência não é resolvida pela adoção de PostgreSQL para a Trajetória Contínua, cujo escopo é estritamente distinto.
+- Distinção técnica persistida entre retry e reprocessamento intencional de uma execução do Motor — a política conceitual (Seção 18) estabelece a diferença de intenção, mas não define como ela é implementada ou armazenada.
+- Tratamento de concorrência entre múltiplos processos/workers, além da garantia transacional já descrita para a Trajetória Contínua (Seção 18).
 - Permissões para declarar em nome da organização (autoria institucional).
-- Privacidade, retenção, exclusão legal e auditoria dos registros.
+- Privacidade, retenção, exclusão legal e auditoria dos registros — incluindo a eventual exceção legal à regra append-only (Seção 18).
+- Retenção das chaves de idempotência — prazo, mecanismo e critério de expurgo permanecem indefinidos (Seção 18).
 - Implementação técnica da ADR-005 no Motor NSI (janelas, leituras, estados).
 
 Nenhuma dessas pendências foi decidida nesta ADR. A arquitetura completa da Tela 03 permanece EM ARQUITETURA até que cada uma delas seja tratada e aprovada em sessão futura.
@@ -394,3 +395,101 @@ Ver Seção 2.2.
 - `docs/architecture/ADR-004-portal-executivo-cliente.md` — origem da Jornada de Transformação Organizacional (Decisão Arquitetural — Encerramento da Jornada de Inteligência Organizacional) e princípios reafirmados (§7.9; §7.17; "Decisão Arquitetural — Unidade da Jornada Cognitiva"); §7.26, Identidade Técnica da Realidade Recorrente; Seção 12, Identidade Técnica do Usuário.
 - `docs/architecture/ADR-005-ciclo-temporal-coleta-leituras-independentes.md` — Princípio 4 (Independência Entre Leituras) e Princípio 6 (Ausência de Comparação Automática), quanto ao ciclo temporal de coleta, ao isolamento dos dados desta jornada e à proibição de comparação automática entre leituras, aplicada por esta ADR à camada de Transformação; Seção 16, identidade técnica da Leitura.
 - `docs/principios/livro-dos-principios.md` — fundação filosófica: "a tecnologia serve; não decide" (Capítulo 5); "Compreensão Antes de Automação" (Princípio 3).
+
+---
+
+## 18. Evolução Aprovada — Formato de Identificadores, Armazenamento Definitivo e Política de Idempotência da Trajetória Contínua (2026-08-26)
+
+Esta seção documenta uma evolução aprovada da ADR-006, complementando a Seção 11 (Schema Conceitual da Trajetória Contínua) e a Seção 14 (Pendências Ainda em Arquitetura, atualizada nesta mesma data). Nenhuma decisão anteriormente aprovada nas Seções 1 a 17 é alterada; apenas a lista viva de pendências da Seção 14 é atualizada.
+
+### Formato dos identificadores
+
+Os seis identificadores técnicos da cadeia da Trajetória Contínua usam UUID4 completo, canônico, opaco, estável e imutável como formato técnico:
+
+- `empresa_id` (ADR-001, Seção 17);
+- `operacao_id` (ADR-001, Seção 17);
+- `usuario_id` (ADR-004, Seção 13);
+- `resultado_id` (ADR-004, Seção 13);
+- `realidade_id` (ADR-004, Seção 13);
+- `registro_id` (definido nesta ADR, Seção 11).
+
+Este formato define representação e geração probabilisticamente única — não define, por si só, a garantia de unicidade persistida. Constraints de banco de dados, tratamento de colisão e o schema relacional concreto continuam pendentes (Seção 14).
+
+### Ausência de identidade própria da Trajetória
+
+- Reafirma-se, sem alterar a substância já registrada na Seção 11 ("Natureza da Trajetória"): a Trajetória Contínua não possui `trajetoria_id` nem qualquer outra identidade técnica própria. Ela é inteiramente derivada da coleção de registros que compartilham o mesmo `realidade_id`.
+
+### Armazenamento definitivo — escopo estritamente limitado à Trajetória Contínua
+
+- PostgreSQL é o armazenamento arquitetural definitivo dos registros da Trajetória Contínua (Seção 11) — não haverá solução provisória oficial em JSON ou SQLite para esses registros.
+- Esta decisão é estritamente escopada aos registros da Trajetória Contínua (`registro_id`, e sua referência a `realidade_id` e `usuario_id`). Ela **não** decide, amplia ou sugere que a empresa, a Operação, o usuário, o resultado semântico candidato do Motor NSI (`resultado_id`) ou a saída do Motor NSI (`saida_motor.json`) já sejam ou venham a ser armazenados em PostgreSQL — cada uma dessas entidades depende de decisão arquitetural própria, ainda não tomada. `saida_motor.json` permanece exatamente como está.
+- O schema relacional concreto (tabelas, colunas, chaves, constraints) que implementará este armazenamento em PostgreSQL não é definido nesta seção — permanece pendente (Seção 14).
+
+### Regra de aplicação — Append-Only
+
+- A aplicação comum aos registros da Trajetória Contínua é append-only: toda correção, mudança de posição ou nova declaração gera um novo registro, nunca a edição ou remoção de um registro existente — reafirmando, para a aplicação como um todo, o que a Seção 8 já estabelece por ato de declaração.
+- Esta regra rege a operação normal do sistema. Uma eventual exceção decorrente de obrigação legal (ex.: direito ao esquecimento, ordem judicial de exclusão) não é decidida, autorizada nem desenhada por esta seção — permanece inteiramente pendente, junto às demais questões de privacidade, retenção e exclusão legal (Seção 14).
+
+### Política de Idempotência
+
+**Natureza e escopo lógico da chave**
+
+- A chave de idempotência identifica uma intenção técnica de criação — nunca a entidade criada. Ela é explícita, opaca e estritamente separada do ID da entidade.
+- O escopo lógico de uma chave é composto por: o contexto de empresa (`empresa_id`), quando aplicável; o tipo de operação de criação (ex.: cadastro de empresa, criação de Operação, cadastro de usuário, execução do Motor, ato humano confirmado, revelação); e a própria chave opaca daquela intenção. Este escopo é conceitual — não define schema, tabela ou coluna concreta.
+- Conteúdo, nome, e-mail, telefone, slug, `codigo_catalogo`, timestamp ou hash nunca são usados para inferir duplicidade — apenas a chave de idempotência, comparada dentro do seu escopo.
+
+**Comportamento geral sob retry e conflito**
+
+- No mesmo escopo, a mesma chave acompanhada da mesma solicitação retorna o resultado originalmente persistido.
+- A mesma chave acompanhada de conteúdo ou parâmetros diferentes é rejeitada como conflito.
+- Uma nova intenção legítima usa uma nova chave, mesmo que o conteúdo seja idêntico ao de uma intenção anterior — nenhuma deduplicação por conteúdo jamais ocorre.
+
+**Aplicação às seis criações da cadeia**
+
+*Empresa*
+- Um retry do mesmo cadastro retorna o mesmo `empresa_id`.
+- Uma nova empresa usa uma nova chave, mesmo com nome idêntico ao de uma empresa já cadastrada.
+
+*Operação*
+- Um retry da mesma criação retorna o mesmo `operacao_id`.
+- Uma nova Operação usa uma nova chave.
+
+*Usuário*
+- Um retry do mesmo cadastro retorna o mesmo `usuario_id`.
+- Um novo usuário usa uma nova chave.
+- Nome, e-mail ou telefone não determinam duplicidade — apenas a chave de idempotência.
+
+*Motor (execução de processamento)*
+- Uma solicitação de processamento possui uma única chave de idempotência e pode produzir vários `resultado_id`.
+- Um retry técnico da mesma execução retorna exatamente o mesmo conjunto de `resultado_id` já produzido.
+- Um reprocessamento intencional usa uma nova chave e produz um novo conjunto de `resultado_id`.
+- A persistência técnica dessa idempotência e o histórico das execuções e reprocessamentos do Motor continuam pendentes (Seção 14) — esta seção não define onde ou como esse histórico é armazenado, nem afirma que PostgreSQL garante a idempotência do Motor: a garantia transacional descrita adiante é escopada exclusivamente aos registros da Trajetória Contínua.
+
+*Realidade (revelação)*
+- Um retry da revelação retorna o mesmo `realidade_id` já existente.
+- Mesmo que a revelação seja tentada novamente com uma chave de idempotência nova, a cardinalidade `resultado_id` → 0..1 `realidade_id` (ADR-004, Seção 13) prevalece: uma chave nova nunca autoriza a criação de um segundo `realidade_id` a partir do mesmo `resultado_id`. A invariante de domínio tem precedência sobre a semântica técnica de idempotência.
+
+*Registro*
+- Um retry do mesmo ato humano confirmado (Seção 8) retorna o mesmo `registro_id` já criado.
+- Uma nova confirmação humana cria um novo `registro_id`, mesmo com texto idêntico ao de um registro anterior — consistente com a Seção 8 ("O NSI não decide que uma declaração posterior corrige, invalida ou supera uma anterior").
+
+**Reprocessamento do Motor — o que esta seção não decide**
+
+- O reprocessamento intencional de uma execução do Motor cria uma nova execução e novos `resultado_id` — não altera nem apaga os candidatos produzidos por execuções anteriores.
+- A preservação histórica de candidatos de execuções anteriores, o critério de seleção do conjunto aplicável quando existir mais de um, e a eventual designação de uma versão canônica entre múltiplos conjuntos de `resultado_id` permanecem inteiramente pendentes (Seção 14) — esta seção não declara que os conjuntos antigos e novos simplesmente coexistem como solução já definida; apenas que nenhum deles é apagado.
+
+**Garantia transacional**
+
+- PostgreSQL garante persistência e idempotência exclusivamente para os registros da Trajetória Contínua, dentro do escopo aprovado nesta seção (Armazenamento definitivo).
+- Esta garantia não se estende aos candidatos do Motor NSI, nem decide, por si só, que empresa, Operação, usuário ou resultado candidato já serão armazenados em PostgreSQL — cada uma dessas entidades depende de decisão arquitetural própria, ainda não tomada.
+
+### O que não mudou
+
+- Nenhuma decisão anteriormente aprovada nas Seções 1 a 17 é alterada; apenas a lista viva de pendências da Seção 14 é atualizada.
+- Nenhuma definição de schema relacional, tabela, coluna, constraint ou endpoint — apenas política conceitual de idempotência e de formato de identificador.
+- Nenhuma decisão sobre concorrência entre múltiplos processos/workers além da garantia transacional já descrita.
+- O armazenamento e o histórico técnico das execuções, dos resultados candidatos e dos reprocessamentos do Motor NSI permanecem pendentes.
+- A retenção das chaves de idempotência (prazo, mecanismo, critério de expurgo) permanece pendente, junto à política de privacidade e retenção (Seção 14) — nenhum prazo numérico é definido nesta seção.
+
+**Origem desta decisão:**
+- Consolidada nesta sessão (2026-08-26), a partir da arquitetura já aprovada do schema conceitual da Trajetória Contínua (Seção 11) e da identidade técnica registrada em ADR-001 (Seção 17) e ADR-004 (Seção 13).

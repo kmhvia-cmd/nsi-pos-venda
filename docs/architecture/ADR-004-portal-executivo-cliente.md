@@ -648,3 +648,30 @@ Esta seção documenta uma evolução aprovada da ADR-004, registrada como pré-
 
 **Origem desta decisão:**
 - Registrada durante a arquitetura do schema conceitual da Trajetória Contínua (ADR-006), que exige autoria técnica obrigatória em cada registro (ADR-006, Seção 10).
+
+---
+
+## 13. Evolução Aprovada — Identidade Técnica do Resultado Candidato e Formato dos Identificadores (2026-08-26)
+
+Esta seção documenta uma evolução aprovada da ADR-004, complementando a Seção 7.26 (Identidade Técnica da Realidade Recorrente, CONGELADA) e a Seção 12 (Evolução Aprovada — Identidade Técnica do Usuário), sem alterar nenhum texto já congelado anteriormente.
+
+**O que foi adicionado:**
+- `resultado_id`: identificador técnico próprio, opaco, estável e imutável, atribuído a cada resultado semântico candidato produzido pelo Motor NSI — a mesma entidade já referida na Seção 7.26 como "resultado candidato", agora com identidade nomeada. `resultado_id` usa UUID4 completo, canônico, opaco, estável e imutável como formato técnico.
+- `resultado_id` nasce no momento em que o candidato é produzido pelo processamento de uma Leitura (ADR-005) — antes e independentemente de qualquer revelação pelo Quarto Cartão.
+- `codigo_catalogo` e `versao_catalogo` (Catálogo NSI) são atributos históricos e versionáveis do resultado candidato. Nenhum dos dois, isoladamente ou em conjunto, compõe identidade ou garante unicidade do resultado candidato ou da realidade. Se e como `versao_catalogo` se reproduz (ou não) na realidade eventualmente originada por aquele candidato é uma decisão ainda não tomada — não se assume herança, cópia ou qualquer outro mecanismo de propagação.
+- Cardinalidade entre `resultado_id` e `realidade_id`: cada `resultado_id` origina zero ou um `realidade_id`; cada `realidade_id` referencia exatamente um `resultado_id`.
+- O Quarto Cartão, ao revelar uma realidade, não divide, funde ou compara resultados candidatos entre si — cada revelação opera exclusivamente sobre um único `resultado_id` de origem, preservando o vínculo único, explícito e imutável já congelado na Seção 7.26.
+- `realidade_id` usa UUID4 completo, canônico, opaco, estável e imutável como formato técnico.
+- `usuario_id` (Seção 12) usa UUID4 completo, canônico, opaco, estável e imutável como formato técnico.
+
+**Escopo desta evolução em relação à Seção 7.26:**
+- Esta seção resolve, especificamente, as duas únicas pendências que a própria Seção 7.26 declarava abertas: (i) "o formato concreto da referência técnica ao resultado candidato (antes da revelação)", agora nomeado `resultado_id`; e (ii) "a cardinalidade inversa... quantas realidades um mesmo resultado candidato pode originar", agora fixada em 0..1. Nenhuma outra frase da Seção 7.26 é alterada, reinterpretada ou substituída por esta seção.
+
+**O que não mudou:**
+- Nenhuma alteração à Tela 01 (Seção 6, CONGELADA), à Seção 7 (Tela 02) ou a qualquer outra frase da Seção 7.26 além das duas pendências explicitadas acima.
+- O formato UUID4 define representação e geração probabilisticamente única — não define, por si só, a garantia de unicidade persistida (constraints, schema concreto de banco de dados), que permanece pendente.
+- O armazenamento técnico e a preservação histórica dos resultados candidatos do Motor NSI e de eventuais reprocessamentos permanecem inteiramente pendentes. Nenhuma decisão desta seção implica que `resultado_id` ou a saída do Motor passem a ser persistidos em PostgreSQL — o PostgreSQL aprovado para a Trajetória Contínua (ADR-006) não substitui nem se estende a `saida_motor.json`.
+- Nenhuma implementação de código, schema de banco de dados ou API é definida aqui — apenas identidade conceitual.
+
+**Origem desta decisão:**
+- Registrada durante a consolidação da identidade técnica e da política de idempotência da Trajetória Contínua (ADR-006).

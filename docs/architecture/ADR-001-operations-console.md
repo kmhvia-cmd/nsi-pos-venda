@@ -293,3 +293,22 @@ Esta seção documenta uma evolução aprovada da ADR-001, cumprindo a dependên
 
 **Origem desta decisão:**
 - Registrada durante a arquitetura do schema conceitual da Trajetória Contínua (ADR-006). A identidade de Operação compõe, junto ao tipo, a identidade da Leitura (ADR-005, Seção 16), da qual depende, transitivamente, a identidade da realidade recorrente (ADR-004, Seção 7.26). A identidade de Empresa não integra essa cadeia — ela ancora, em paralelo, a propriedade e o isolamento de cada Operação e de cada usuário (ADR-004, Seção 12).
+
+---
+
+## 17. Evolução Aprovada — Formato Técnico dos Identificadores (2026-08-26)
+
+Esta seção documenta uma evolução aprovada da ADR-001, complementando a Seção 16 (Evolução Aprovada — Identidade Técnica da Empresa e da Operação), sem alterar nenhum texto já congelado anteriormente.
+
+**O que foi adicionado:**
+- `empresa_id` e `operacao_id` usam UUID4 completo, canônico, opaco, estável e imutável como formato técnico do identificador.
+- `empresa_id` nasce no momento do cadastro da empresa pela equipe NSI (Seção 8, "Empresa cadastrada"; ADR-004, §4, Princípio 2 — Cadastro Centralizado na NSI).
+- `operacao_id` nasce no momento da criação da Operação (Seção 8, "Operação criada").
+- Permanecem pendentes apenas: o mecanismo técnico concreto de geração, a persistência e a garantia concreta de unicidade persistida (constraints de banco de dados, tratamento de colisão, schema concreto) de ambos os identificadores — pendências já registradas na Seção 16 e listadas na Seção 14.
+
+**O que não mudou:**
+- Nenhuma alteração ao `lote_id`, ao slug ou a qualquer estrutura interna do Motor.
+- Nenhuma implementação de código, schema de banco de dados ou API é definida aqui — apenas formato técnico e momento conceitual de nascimento do identificador.
+
+**Origem desta decisão:**
+- Registrada durante a consolidação da identidade técnica e da política de idempotência da Trajetória Contínua (ADR-006), que exige um formato uniforme de identificador — e o momento de seu nascimento — para toda a cadeia de entidades (`empresa_id`, `operacao_id`, `usuario_id`, `resultado_id`, `realidade_id`, `registro_id`).
