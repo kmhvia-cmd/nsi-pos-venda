@@ -19,15 +19,16 @@
 🟢 Git: Organizado
 🟢 Segurança essencial: Concluída
 🟢 Fonte única de verdade (Webhook → `lote.json` → Motor): Concluída
-🟢 ADR-001 — NSI Operations Console: Aprovada e congelada na arquitetura — evolução aprovada em 2026-08-25 (identidade técnica da Empresa e da Operação: empresa_id e operacao_id, com lote_id e slug como referências legadas) — evolução adicional em 2026-08-26 (formato UUID4 de empresa_id e operacao_id)
+🟢 ADR-001 — NSI Operations Console: Aprovada e congelada na arquitetura — evolução aprovada em 2026-08-25 (identidade técnica da Empresa e da Operação: empresa_id e operacao_id, com lote_id e slug como referências legadas) — evolução adicional em 2026-08-26 (formato UUID4 de empresa_id e operacao_id) — evolução adicional em 2026-08-27 (Operador Interno, novos eventos de Timeline do ciclo de preparação e disparo, e reafirmação da exposição da Operação em vez do lote_id, referenciando a ADR-007)
 🟢 ADR-002 — Fundação de Marca NSI: Aprovada e congelada na arquitetura
 🟢 Branding Sprint 1 — Fundação da Marca (`docs/branding/`): CONGELADA
 🟢 ADR-003 — Sistema Editorial Visual do NSI: Aprovada (abertura da Sprint 2)
 🟢 Branding Sprint 2 — Sistema Editorial Visual: CONGELADA — arquitetura editorial encerrada
 🟢 Branding Sprint 3 — Prototipação Visual: EM PRODUÇÃO — DT-001 v1 produzido e registrado (`docs/branding/documentos-visuais/DT-001.html`)
 🟢 Livro dos Princípios do NSI (v1.0): Aprovado e congelado — fundação intelectual permanente do projeto
-🟢 ADR-005 — Ciclo Temporal de Coleta e Leituras Independentes: Aprovada e congelada — evolução aprovada em 2026-08-23 (convite de coleta com resposta única, gatilhos de encerramento, ordem atômica em T0+120h e dois estados distintos sem relatório) — evolução adicional em 2026-08-25 (identidade técnica da Leitura: chave composta operacao_id+tipo)
+🟢 ADR-005 — Ciclo Temporal de Coleta e Leituras Independentes: Aprovada e congelada — evolução aprovada em 2026-08-23 (convite de coleta com resposta única, gatilhos de encerramento, ordem atômica em T0+120h e dois estados distintos sem relatório) — evolução adicional em 2026-08-25 (identidade técnica da Leitura: chave composta operacao_id+tipo) — evolução adicional em 2026-08-27 (distinção formal entre M0 e T0 da Coleta, referenciando a ADR-007)
 🟢 ADR-006 — Jornada de Transformação Organizacional (Tela 03): APROVADA E CONGELADA — evolução aprovada em 2026-08-26 (identidade técnica em UUID4, PostgreSQL como armazenamento definitivo dos registros da Trajetória, política de idempotência, governança de autoria e correção referenciando a ADR-004, detalhamento do acesso à Tela 03, encerramento da relação e Pacote de Preservação Histórica); schema relacional concreto, componentes visuais e Política Jurídica futura permanecem como pendências técnicas e jurídicas não bloqueantes (ADR-006, Seção 14)
+🟢 ADR-007 — Ciclo Operacional de Preparação e Disparo da Coleta: APROVADA E CONGELADA — arquitetura completa do ciclo entre o upload do CSV (M0) e a confirmação humana do primeiro disparo (T0 da Coleta); evolução correspondente registrada em ADR-001 (Seção 18) e ADR-005 (Seção 17)
 
 ---
 
@@ -66,6 +67,9 @@ Arquitetura editorial encerrada (Sprint 2). Produção iniciada: `DT-001` v1 já
 - Webhook operacional completo: consumir eventos de status de entrega da Meta (`statuses` do payload, hoje não lidos) para popular `visualizado_sem_resposta` / `entregue_sem_visualizacao` / `nao_entregue`
 - Cálculo completo do ICE em produção (com cobertura semântica real)
 - `adapters.storage.salvar_lote` (criação inicial do lote no upload) ainda escreve `lote.json` diretamente, fora de `salvar_lote_atomico` — aceito por ora, pois trata exclusivamente da criação (arquivo ainda não existe no momento da escrita, sem risco de concorrência); candidato a unificação em Sprint futura
+
+### ADR-007 — Ciclo Operacional de Preparação e Disparo da Coleta (aprovada e congelada)
+Arquitetura completa aprovada e congelada para o ciclo entre o upload do CSV (M0) e a confirmação humana do primeiro disparo (T0 da Coleta). Pendências técnicas registradas na própria ADR-007 (Seção 24), não bloqueantes ao congelamento conceitual: mecanismo concreto de detecção do congelamento em M0+192h; chave de idempotência persistente entre processos/workers para o disparo; mapeamento dos códigos de erro da WhatsApp Cloud API às categorias de falha; autenticação e MFA do Operador Interno; schema de dados, endpoints e interface visual da Central de Operações. Uma pendência técnica é bloqueante para o uso operacional conforme a ADR-007: a correlação persistente entre registro de coleta, envio, resposta e produto — hoje `adapters.storage.buscar_lote_por_telefone` e `salvar_resposta_cliente` casam a resposta apenas por telefone, o que não é conforme à ADR-007 sempre que um mesmo telefone possuir mais de um registro de coleta; enquanto essa correlação não existir, nenhuma resposta ambígua pode entrar no Motor NSI como corretamente vinculada a um produto.
 
 ---
 

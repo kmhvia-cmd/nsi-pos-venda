@@ -312,3 +312,21 @@ Esta seção documenta uma evolução aprovada da ADR-001, complementando a Seç
 
 **Origem desta decisão:**
 - Registrada durante a consolidação da identidade técnica e da política de idempotência da Trajetória Contínua (ADR-006), que exige um formato uniforme de identificador — e o momento de seu nascimento — para toda a cadeia de entidades (`empresa_id`, `operacao_id`, `usuario_id`, `resultado_id`, `realidade_id`, `registro_id`).
+
+---
+
+## 18. Evolução Aprovada — Operador Interno, Novos Eventos da Timeline e Exposição da Operação no Ciclo de Disparo (2026-08-27)
+
+Esta seção documenta uma evolução aprovada da ADR-001, complementando a Seção 7 (Unidade Principal da Plataforma) e o Princípio 2 (Timeline Completa por Operação, Seção 6), a partir da arquitetura do ciclo operacional de preparação e disparo da coleta, registrada em ADR própria (ADR-007). Nenhuma decisão anteriormente aprovada nas Seções 1 a 17 é alterada.
+
+**O que foi adicionado:**
+- Existe, nesta primeira versão, um Operador Interno da NSI, autorizado a confirmar disparos e novas tentativas de reenvio no Operations Console — sua definição completa, incluindo autenticação e MFA, pertence à ADR-007 (Seção 15).
+- A Timeline de uma Operação passa a poder registrar, quando aplicável, os eventos do ciclo de preparação e disparo definidos na ADR-007: lote congelado, aguardando confirmação de disparo, abertura da confirmação de disparo (1º ato, sem efeito decisório), disparo confirmado (2º ato, decisão efetiva), disparo em processamento, e os três estados finais de processamento — sem redefinir o Princípio 2 (Seção 6), apenas estendendo o catálogo de eventos possíveis de uma Timeline.
+- Reafirma-se, sem alteração, que a interface do Operations Console nunca exibe `lote_id` técnico ao operador (Seção 7, já congelada) — a ADR-007 aplica essa mesma regra, já vigente, ao ciclo de preparação e disparo (ADR-007, Seção 14).
+
+**O que não mudou:**
+- Nenhuma alteração à Seção 7 (Unidade Principal da Plataforma), ao Princípio 2 (Timeline) ou a qualquer outra decisão já congelada nas Seções 1 a 17.
+- Nenhuma implementação de autenticação, schema de dados ou API é definida aqui — a arquitetura completa do ciclo de preparação e disparo, incluindo o Operador Interno, pertence à ADR-007.
+
+**Origem desta decisão:**
+- Registrada durante a arquitetura do ciclo operacional de preparação e disparo da coleta (ADR-007), que exige um operador autorizado e novos eventos de Timeline não previstos na versão original desta ADR.

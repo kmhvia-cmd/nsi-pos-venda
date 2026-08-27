@@ -372,3 +372,21 @@ Esta seção documenta uma evolução aprovada da ADR-005, identificada durante 
 
 **Origem desta decisão:**
 - Registrada como pré-requisito do schema conceitual da Trajetória Contínua (ADR-006), que precisa vincular cada trajetória a uma Leitura específica sem ambiguidade.
+
+---
+
+## 17. Evolução Aprovada — Distinção Formal entre M0 e T0 da Coleta (2026-08-27)
+
+Esta seção documenta uma evolução aprovada da ADR-005, complementando o Princípio 1 (Janela Total de 336 Horas) sem alterar seu texto. Nenhuma janela, gatilho ou decisão já congelada nas Seções 1 a 16 é alterada.
+
+**O que foi adicionado:**
+- O T0 desta ADR — "o timestamp exato do disparo do lote" (Princípio 1) — é agora formalmente distinguido de M0, o Marco de Upload definido na ADR-007 (Seção 6), que corresponde ao momento em que o CSV original é recebido e o lote é criado, anterior ao disparo.
+- A ADR-007 define M0 e passa a reger integralmente o intervalo entre M0 e o disparo (validação, correção, congelamento, confirmação humana em dois atos) — um domínio inteiramente anterior ao início da janela de coleta desta ADR.
+- O T0 desta ADR passa a ser operacionalmente definido, pela ADR-007 (Seção 18), como o timestamp exato do primeiro disparo confirmado pelo Operador Interno da NSI — preenchendo, sem alterar, a definição já existente do Princípio 1.
+
+**O que não mudou:**
+- Nenhuma alteração à janela de 336 horas, aos gatilhos de encerramento, aos princípios do convite de coleta (Princípios 12-14) ou a qualquer outra decisão já congelada nesta ADR.
+- Esta ADR continua a não tratar de nada anterior ao disparo do lote — o que acontece antes (upload, validação, correção, congelamento, confirmação humana) pertence exclusivamente à ADR-007.
+
+**Origem desta decisão:**
+- Registrada durante a arquitetura do ciclo operacional de preparação e disparo da coleta (ADR-007), que precisou nomear e distinguir formalmente os dois relógios do sistema — M0 e T0 — para evitar colisão terminológica.
