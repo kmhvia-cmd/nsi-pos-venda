@@ -1,20 +1,28 @@
 """
 tests/unit/test_storage_upload_estrutura_csv.py
 
-Sprint A1 (Parte 4 do plano de implementacao - ADR-007 Secoes 6 e 7.1).
+Sprint A1 + Sprint A2 (Parte 4 do plano de implementacao - ADR-007
+Secoes 6, 7.1 e 8).
 
-Valida exclusivamente a IDENTIDADE por linha e a validacao ESTRUTURAL
-do cabecalho do CSV de upload:
-  - apenas .csv e aceito;
-  - cabecalho canonico exato (nome, whatsapp, produto), em qualquer
-    ordem, sem duplicatas e sem colunas extras;
-  - mapeamento por NOME de coluna, nunca por posicao;
-  - cada linha recebe um registro_coleta_id (UUID4) proprio, mesmo
-    quando linhas sao identicas entre si.
+Sprint A1: IDENTIDADE por linha e validacao ESTRUTURAL do cabecalho do
+CSV de upload (apenas .csv; cabecalho canonico nome/whatsapp/produto
+em qualquer ordem, sem duplicatas nem colunas extras; mapeamento por
+nome de coluna; registro_coleta_id por linha).
 
-Normalizacao de whatsapp, validacao de conteudo, separacao de
-validos/invalidos e versionamento NAO sao objeto deste arquivo -
-pertencem as Sprints A2/A3.
+Sprint A2: validacao de CONTEUDO por linha, isoladamente:
+  - nome/produto vazios ou so com espacos = ausentes; textos literais
+    "nan"/"none"/"null" sao PRESERVADOS como conteudo real;
+  - whatsapp normalizado (remove formatacao; codigo do pais decidido
+    pelo COMPRIMENTO, nunca por startswith("55") isoladamente - DDD 55
+    existe) e validado contra os 67 DDDs oficiais da Anatel;
+  - registros validos e invalidos sao separados, ambos preservando o
+    registro_coleta_id da linha original; invalidos preservam os
+    valores brutos exatamente como recebidos pelo csv.reader;
+  - lote sem nenhum registro valido recebe status "sem_registros_validos",
+    e e criado normalmente - nunca tratado como erro de upload.
+
+Correcao, reenvio de CSV corrigido e versionamento pertencem a Sprint
+A3 - nao sao objeto deste arquivo.
 
 Usa diretorios temporarios (tmp_path) via monkeypatch em Config - nunca
 toca em data/ real.
@@ -84,7 +92,11 @@ def test_upload_aceita_cabecalho_canonico_em_qualquer_ordem(tmp_path, monkeypatc
     lote = storage.carregar_lote(resultado["lote_id"])
     cliente = lote["clientes"][0]
     assert cliente["nome"] == "Ana Silva"
-    assert cliente["telefone"] == "(11) 98765-4321"
+    # Atualizado na Sprint A2: telefone agora e normalizado (a asserção
+    # original, da Sprint A1, verificava o valor bruto sem normalizacao,
+    # que ainda nao existia). A finalidade do teste - ordem livre do
+    # cabecalho mapeada corretamente por nome - permanece a mesma.
+    assert cliente["telefone"] == "5511987654321"
     assert cliente["produto"] == "Treinamento"
     print("OK: test_upload_aceita_cabecalho_canonico_em_qualquer_ordem")
 
@@ -271,6 +283,240 @@ def test_upload_com_read_retornando_str_nao_falha(tmp_path, monkeypatch):
     assert cliente["telefone"] == "5511999990000"
     assert cliente["produto"] == "Produto X"
     print("OK: test_upload_com_read_retornando_str_nao_falha")
+
+
+# ============================================================
+# Sprint A2 - validacao de conteudo, normalizacao e separacao
+# ============================================================
+
+def _linha_csv(nome, whatsapp, produto) -> str:
+    """Monta uma linha de dados usando csv.writer, para respeitar
+    corretamente aspas/virgulas se o valor exigir."""
+    import io as io_module
+    buf = io_module.StringIO()
+    import csv as csv_module
+    csv_module.writer(buf).writerow([nome, whatsapp, produto])
+    return buf.getvalue()
+
+
+def _upload_uma_linha(tmp_path, monkeypatch, nome, whatsapp, produto):
+    _config_lotes_dir(tmp_path, monkeypatch)
+    conteudo = "nome,whatsapp,produto\n" + _linha_csv(nome, whatsapp, produto)
+    resultado = storage.salvar_lote(_ArquivoCSVFake(conteudo), empresa="Empresa Teste")
+    return resultado
+
+
+def test_nome_vazio_e_ausente(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "", "5511987654321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes"] == []
+    assert lote["clientes_invalidos"][0]["motivos"] == ["nome_ausente"]
+    print("OK: test_nome_vazio_e_ausente")
+
+
+def test_produto_somente_espacos_e_ausente(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "5511987654321", "   ")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes_invalidos"][0]["motivos"] == ["produto_ausente"]
+    print("OK: test_produto_somente_espacos_e_ausente")
+
+
+def test_textos_nan_none_null_sao_preservados_como_conteudo_real(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Nan", "5511987654321", "None")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert "erro" not in resultado
+    cliente = lote["clientes"][0]
+    assert cliente["nome"] == "Nan"
+    assert cliente["produto"] == "None"
+    print("OK: test_textos_nan_none_null_sao_preservados_como_conteudo_real")
+
+
+def test_whatsapp_ausente(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes_invalidos"][0]["motivos"] == ["whatsapp_ausente"]
+    print("OK: test_whatsapp_ausente")
+
+
+def test_normalizacao_parenteses_espaco_hifen(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "(11) 98765-4321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes"][0]["telefone"] == "5511987654321"
+    print("OK: test_normalizacao_parenteses_espaco_hifen")
+
+
+def test_normalizacao_com_codigo_do_pais_explicito(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "+55 11 98765-4321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes"][0]["telefone"] == "5511987654321"
+    print("OK: test_normalizacao_com_codigo_do_pais_explicito")
+
+
+def test_normalizacao_numero_fixo_sem_nono_digito(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "11 3456-7890", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes"][0]["telefone"] == "551134567890"
+    print("OK: test_normalizacao_numero_fixo_sem_nono_digito")
+
+
+def test_ddd_55_nacional_sem_codigo_do_pais(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "55 99765-4321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert "erro" not in resultado
+    assert lote["clientes"][0]["telefone"] == "5555997654321"
+    print("OK: test_ddd_55_nacional_sem_codigo_do_pais")
+
+
+def test_ddd_55_com_codigo_do_pais_converge_ao_mesmo_resultado(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "+55 55 99765-4321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes"][0]["telefone"] == "5555997654321"
+    print("OK: test_ddd_55_com_codigo_do_pais_converge_ao_mesmo_resultado")
+
+
+def test_ddd_99_e_valido(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "99 98765-4321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert "erro" not in resultado
+    assert lote["clientes"][0]["telefone"] == "5599987654321"
+    print("OK: test_ddd_99_e_valido")
+
+
+def test_ddd_00_e_invalido(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "00 98765-4321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes_invalidos"][0]["motivos"] == ["whatsapp_ddd_invalido"]
+    print("OK: test_ddd_00_e_invalido")
+
+
+def test_ddd_10_e_invalido(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "10 98765-4321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes_invalidos"][0]["motivos"] == ["whatsapp_ddd_invalido"]
+    print("OK: test_ddd_10_e_invalido")
+
+
+def test_whatsapp_com_letras_e_caracteres_invalidos(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "11ABCDE4321", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes_invalidos"][0]["motivos"] == ["whatsapp_caracteres_invalidos"]
+    print("OK: test_whatsapp_com_letras_e_caracteres_invalidos")
+
+
+def test_whatsapp_comprimento_invalido_isolado_sem_cascata(tmp_path, monkeypatch):
+    # 7 digitos - normalizado permanece com 7 (fora de 10/11/12/13) -
+    # motivo unico de comprimento, nunca acompanhado de outro motivo
+    # de whatsapp derivado dele.
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "1234567", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    motivos = lote["clientes_invalidos"][0]["motivos"]
+    assert motivos == ["whatsapp_comprimento_invalido"]
+    print("OK: test_whatsapp_comprimento_invalido_isolado_sem_cascata")
+
+
+def test_whatsapp_codigo_pais_invalido(tmp_path, monkeypatch):
+    # 13 digitos, nao comeca com 55 - codigo do pais invalido, isolado.
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "Ana", "1234567890123", "Produto X")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["clientes_invalidos"][0]["motivos"] == ["whatsapp_codigo_pais_invalido"]
+    print("OK: test_whatsapp_codigo_pais_invalido")
+
+
+def test_multiplos_motivos_na_mesma_linha(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "", "00123", "")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    motivos = lote["clientes_invalidos"][0]["motivos"]
+    assert "nome_ausente" in motivos
+    assert "produto_ausente" in motivos
+    assert len(motivos) == 3  # nome, produto e whatsapp (comprimento)
+    print("OK: test_multiplos_motivos_na_mesma_linha")
+
+
+def test_registro_coleta_id_preservado_em_validos_e_invalidos(tmp_path, monkeypatch):
+    _config_lotes_dir(tmp_path, monkeypatch)
+    conteudo = (
+        "nome,whatsapp,produto\n"
+        + _linha_csv("Ana", "5511987654321", "Produto X")
+        + _linha_csv("", "5511987654322", "Produto Y")
+    )
+    resultado = storage.salvar_lote(_ArquivoCSVFake(conteudo), empresa="Empresa Teste")
+    lote = storage.carregar_lote(resultado["lote_id"])
+
+    assert len(lote["clientes"]) == 1
+    assert len(lote["clientes_invalidos"]) == 1
+    id_valido = lote["clientes"][0]["registro_coleta_id"]
+    id_invalido = lote["clientes_invalidos"][0]["registro_coleta_id"]
+    uuid_module.UUID(id_valido, version=4)
+    uuid_module.UUID(id_invalido, version=4)
+    assert id_valido != id_invalido
+    print("OK: test_registro_coleta_id_preservado_em_validos_e_invalidos")
+
+
+def test_valores_brutos_preservados_exatamente(tmp_path, monkeypatch):
+    resultado = _upload_uma_linha(tmp_path, monkeypatch, "  Ana  ", "abc", "  Produto X  ")
+    lote = storage.carregar_lote(resultado["lote_id"])
+    invalido = lote["clientes_invalidos"][0]
+    # Preservados exatamente como o csv.reader entregou - inclusive
+    # espacos internos/externos, sem qualquer conversao.
+    assert invalido["nome_bruto"] == "  Ana  "
+    assert invalido["whatsapp_bruto"] == "abc"
+    assert invalido["produto_bruto"] == "  Produto X  "
+    print("OK: test_valores_brutos_preservados_exatamente")
+
+
+def test_separacao_e_contagens_com_validos_e_invalidos(tmp_path, monkeypatch):
+    _config_lotes_dir(tmp_path, monkeypatch)
+    conteudo = (
+        "nome,whatsapp,produto\n"
+        + _linha_csv("Ana", "5511987654321", "Produto X")
+        + _linha_csv("Bruno", "5511987654322", "Produto Y")
+        + _linha_csv("Carla", "5511987654323", "Produto Z")
+        + _linha_csv("", "00123", "Produto W")
+        + _linha_csv("Erro2", "abc", "Produto V")
+    )
+    resultado = storage.salvar_lote(_ArquivoCSVFake(conteudo), empresa="Empresa Teste")
+
+    assert resultado["total_recebido"] == 5
+    assert resultado["total_valido"] == 3
+    assert resultado["total_invalido"] == 2
+    assert resultado["total_clientes"] == 3  # legado = total_valido
+    assert resultado["status"] == "aguardando_d8"
+
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert len(lote["clientes"]) == 3
+    assert len(lote["clientes_invalidos"]) == 2
+    assert lote["total_recebido"] == 5
+    assert lote["total_valido"] == 3
+    assert lote["total_invalido"] == 2
+    assert lote["total_clientes"] == 3
+    print("OK: test_separacao_e_contagens_com_validos_e_invalidos")
+
+
+def test_lote_sem_nenhum_registro_valido_e_criado_com_status_proprio(tmp_path, monkeypatch):
+    _config_lotes_dir(tmp_path, monkeypatch)
+    conteudo = (
+        "nome,whatsapp,produto\n"
+        + _linha_csv("", "abc", "")
+        + _linha_csv("Bruno", "00123", "")
+    )
+    resultado = storage.salvar_lote(_ArquivoCSVFake(conteudo), empresa="Empresa Teste")
+
+    # NUNCA tratado como erro de upload - o arquivo foi estruturalmente
+    # aceito e precisa permanecer auditavel.
+    assert "erro" not in resultado
+    assert resultado["status"] == "sem_registros_validos"
+    assert resultado["total_recebido"] == 2
+    assert resultado["total_valido"] == 0
+    assert resultado["total_invalido"] == 2
+
+    lote = storage.carregar_lote(resultado["lote_id"])
+    assert lote["status"] == "sem_registros_validos"
+    assert lote["clientes"] == []
+    assert len(lote["clientes_invalidos"]) == 2
+    for invalido in lote["clientes_invalidos"]:
+        assert "registro_coleta_id" in invalido and invalido["registro_coleta_id"]
+        assert invalido["motivos"]
+    print("OK: test_lote_sem_nenhum_registro_valido_e_criado_com_status_proprio")
 
 
 if __name__ == "__main__":

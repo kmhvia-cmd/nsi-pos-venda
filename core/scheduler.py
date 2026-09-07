@@ -46,6 +46,25 @@ def atualizar_status_pipeline(lote_id: str, campo: str, valor: bool):
     return True
 
 
+def _contar_validos(lote: dict) -> int:
+    """
+    Contagem de registros validos, com fallback de compatibilidade em
+    CASCATA para lotes anteriores a Sprint A2 - nunca confunde um campo
+    AUSENTE com valor zero (um .get(chave, 0) encadeado faria isso
+    quando total_valido E total_clientes estivessem ambos ausentes,
+    como em fixtures de teste anteriores a esta sprint):
+      1. total_valido, se o campo existir (mesmo que seja 0);
+      2. total_clientes, se o campo existir (mesmo que seja 0);
+      3. len(clientes) - ultimo recurso, sempre presente e correto,
+         pois "clientes" sempre significou "registros enviaveis".
+    """
+    if "total_valido" in lote:
+        return lote["total_valido"]
+    if "total_clientes" in lote:
+        return lote["total_clientes"]
+    return len(lote.get("clientes", []))
+
+
 def verificar_lotes_prontos() -> list:
     """
     Verifica todos os lotes e retorna quais já passaram do D+8
@@ -57,6 +76,14 @@ def verificar_lotes_prontos() -> list:
         pipeline = lote.get("status_pipeline", {})
         if pipeline.get("lote_criado") and not pipeline.get("disparo_whatsapp"):
             lote_completo = carregar_lote(lote["lote_id"])
+            # Sprint A2 - bloqueio de nivel 1 (listagem). Status e a
+            # regra principal - sempre prevalece e sempre bloqueia; a
+            # contagem (com fallback em cascata para lotes anteriores
+            # a Sprint A2) e defesa de consistencia.
+            if lote_completo.get("status") == "sem_registros_validos":
+                continue
+            if _contar_validos(lote_completo) == 0:
+                continue
             d8 = calcular_d8(lote_completo.get("criado_em", ""))
             if d8["pronto"]:
                 prontos.append({
@@ -82,10 +109,36 @@ def disparar_lote(lote_id: str) -> dict:
     """
     Percorre todos os clientes do lote e dispara o template D+8.
     Atualiza status_pipeline.disparo_whatsapp = True ao final.
+
+    Sprint A2 - bloqueio de nivel 2 (chamada direta): recusa
+    deterministicamente qualquer tentativa de disparo para um lote sem
+    nenhum registro valido, independentemente de como esta funcao foi
+    acionada - verificar_lotes_prontos nao e o unico guardiao. Status e
+    a regra principal; a contagem (mesmo fallback de compatibilidade) e
+    defesa de consistencia. A recusa nunca chama services.whatsapp,
+    nunca escreve em disco e nunca marca disparo_whatsapp/status como
+    concluido.
     """
+    lote = carregar_lote(lote_id)
+
+    # Status e a regra principal - sempre prevalece e sempre bloqueia;
+    # a contagem (fallback em cascata, ver _contar_validos) e defesa de
+    # consistencia.
+    if lote.get("status") == "sem_registros_validos":
+        return {
+            "lote_id": lote_id, "enviados": 0, "erros": 0,
+            "recusado": True,
+            "motivo": "lote sem nenhum registro valido - disparo recusado",
+        }
+    if _contar_validos(lote) == 0:
+        return {
+            "lote_id": lote_id, "enviados": 0, "erros": 0,
+            "recusado": True,
+            "motivo": "lote sem nenhum registro valido - disparo recusado",
+        }
+
     from services.whatsapp import enviar_template_d8
 
-    lote = carregar_lote(lote_id)
     clientes = lote.get("clientes", [])
     empresa = lote.get("empresa", "")
 

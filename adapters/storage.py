@@ -7,6 +7,7 @@ import csv
 import io
 import json
 import os
+import re
 import threading
 import uuid
 from datetime import datetime, timedelta
@@ -16,6 +17,116 @@ from config import Config
 
 
 CABECALHOS_CANONICOS_CSV = {"nome", "whatsapp", "produto"}
+
+# Codigos Nacionais destinados no Brasil conforme o Plano Geral de
+# Codigos Nacionais da Anatel (67 codigos). ADR-007 SS8 exige "DDD" -
+# nao apenas "2 digitos quaisquer": "55" + 2 digitos quaisquer + numero
+# local nao comprova que o DDD existe.
+DDDS_VALIDOS_BRASIL = {
+    11, 12, 13, 14, 15, 16, 17, 18, 19,
+    21, 22, 24, 27, 28,
+    31, 32, 33, 34, 35, 37, 38,
+    41, 42, 43, 44, 45, 46, 47, 48, 49,
+    51, 53, 54, 55,
+    61, 62, 63, 64, 65, 66, 67, 68, 69,
+    71, 73, 74, 75, 77, 79,
+    81, 82, 83, 84, 85, 86, 87, 88, 89,
+    91, 92, 93, 94, 95, 96, 97, 98, 99,
+}
+
+
+def _valor_ou_ausente(bruto) -> str | None:
+    """
+    ADR-007 SS8 / Decisao 3 (Sprint A2): ausencia e SOMENTE None
+    tecnico (defensivo - o caminho real via csv.reader nunca produz
+    isso, apenas strings, inclusive vazias), string vazia, ou string
+    composta somente por espacos. Textos literais "nan"/"none"/"null"
+    (em qualquer capitalizacao) NUNCA sao tratados como ausencia -
+    podem ser nomes ou produtos reais e sao preservados como conteudo.
+    """
+    if bruto is None:
+        return None
+    if isinstance(bruto, float) and pd.isna(bruto):
+        return None
+    texto = str(bruto).strip()
+    return None if texto == "" else texto
+
+
+def _normalizar_whatsapp(bruto: str) -> str:
+    """
+    Normalizacao TECNICA (ADR-007 SS8, Decisoes 4-8) - nunca valida,
+    apenas transforma. Remove espacos, '+', hifens e parenteses. O
+    codigo do pais e considerado presente ou ausente PELO COMPRIMENTO
+    do numero ja limpo, nunca por ele comecar com "55" isoladamente -
+    o DDD 55 (Santa Maria/RS) tornaria essa checagem ambigua.
+    """
+    apenas_digitos = re.sub(r"[\s\+\-\(\)]", "", bruto)
+    if not apenas_digitos.isdigit():
+        return apenas_digitos  # validacao seguinte rejeita com motivo especifico
+    if len(apenas_digitos) in (10, 11):
+        return "55" + apenas_digitos  # nacional sem codigo do pais
+    return apenas_digitos  # 12/13: assume-se codigo ja presente; qualquer
+                            # outro comprimento e devolvido sem alteracao
+
+
+def _validar_whatsapp(normalizado: str) -> str | None:
+    """
+    Cadeia de verificacao EXCLUSIVA - no maximo UM motivo por campo
+    whatsapp, nunca cascata (uma falha de caracteres nunca tambem gera
+    uma falha de comprimento decorrente dela). Valida o DDD contra o
+    conjunto explicito de codigos brasileiros reais (Anatel) - nunca
+    apenas "2 digitos quaisquer". NUNCA prova posse real de conta no
+    WhatsApp (ADR-007 SS8).
+    """
+    if not normalizado.isdigit():
+        return "whatsapp_caracteres_invalidos"
+    if len(normalizado) not in (12, 13):
+        return "whatsapp_comprimento_invalido"
+    if not normalizado.startswith("55"):
+        return "whatsapp_codigo_pais_invalido"
+    if int(normalizado[2:4]) not in DDDS_VALIDOS_BRASIL:
+        return "whatsapp_ddd_invalido"
+    return None
+
+
+def _validar_linha(nome_bruto, whatsapp_bruto, produto_bruto) -> dict:
+    """
+    Valida uma linha isoladamente (ADR-007 SS8, Decisao 11) - nunca
+    bloqueia por causa de outra linha. Uma linha pode acumular ate tres
+    motivos (um por campo), mas cada campo contribui com no maximo um.
+    Os valores brutos sao preservados EXATAMENTE como recebidos do
+    csv.reader, sem conversao (str(None) fabricaria o texto "None").
+    """
+    motivos = []
+
+    nome = _valor_ou_ausente(nome_bruto)
+    if nome is None:
+        motivos.append("nome_ausente")
+
+    produto = _valor_ou_ausente(produto_bruto)
+    if produto is None:
+        motivos.append("produto_ausente")
+
+    whatsapp_valor = _valor_ou_ausente(whatsapp_bruto)
+    telefone_normalizado = None
+    if whatsapp_valor is None:
+        motivos.append("whatsapp_ausente")
+    else:
+        telefone_normalizado = _normalizar_whatsapp(whatsapp_valor)
+        motivo_whatsapp = _validar_whatsapp(telefone_normalizado)
+        if motivo_whatsapp:
+            motivos.append(motivo_whatsapp)
+
+    return {
+        "valido": len(motivos) == 0,
+        "motivos": motivos,
+        "nome_bruto": nome_bruto,
+        "whatsapp_bruto": whatsapp_bruto,
+        "produto_bruto": produto_bruto,
+        "nome": nome,
+        "telefone": telefone_normalizado,
+        "produto": produto,
+    }
 
 
 def salvar_lote(arquivo, empresa="", nome="", data_inicio="", data_fim="") -> dict:
@@ -119,19 +230,42 @@ def salvar_lote(arquivo, empresa="", nome="", data_inicio="", data_fim="") -> di
     # bruto pelo parser proprio do pandas.
     df = pd.DataFrame(linhas_de_dados_validas, columns=colunas_normalizadas)
 
-    clientes = []
+    # Sprint A2: cada linha e validada isoladamente e separada entre
+    # validos e invalidos (ADR-007 SS8, Decisao 11) - a existencia de
+    # invalidos nunca bloqueia os validos. registro_coleta_id e gerado
+    # ANTES da validacao e preservado igualmente em ambos os grupos.
+    clientes_validos = []
+    clientes_invalidos = []
     for _, row in df.iterrows():
-        clientes.append({
-            "registro_coleta_id": str(uuid.uuid4()),
-            "nome":     str(row["nome"]).strip(),
-            "telefone": str(row["whatsapp"]).strip(),
-            "produto":  str(row["produto"]).strip(),
-            "resposta": "",
-        })
+        registro_coleta_id = str(uuid.uuid4())
+        resultado_linha = _validar_linha(row["nome"], row["whatsapp"], row["produto"])
+
+        if resultado_linha["valido"]:
+            clientes_validos.append({
+                "registro_coleta_id": registro_coleta_id,
+                "nome":     resultado_linha["nome"],
+                "telefone": resultado_linha["telefone"],
+                "produto":  resultado_linha["produto"],
+                "resposta": "",
+            })
+        else:
+            clientes_invalidos.append({
+                "registro_coleta_id": registro_coleta_id,
+                "nome_bruto":     resultado_linha["nome_bruto"],
+                "whatsapp_bruto": resultado_linha["whatsapp_bruto"],
+                "produto_bruto":  resultado_linha["produto_bruto"],
+                "motivos": resultado_linha["motivos"],
+            })
+
+    # Lote sem nenhum registro valido e criado e preservado normalmente
+    # - NUNCA tratado como erro de upload (o arquivo foi estruturalmente
+    # aceito). Recebe status proprio para que nunca fique elegivel a
+    # disparo (bloqueio implementado em core/scheduler.py).
+    status_lote = "sem_registros_validos" if len(clientes_validos) == 0 else "aguardando_d8"
 
     # Identidade e diretorio do lote so sao criados AQUI - depois que
     # toda a validacao estrutural e o parsing ja foram concluidos com
-    # sucesso (correcao vinculante desta rodada).
+    # sucesso (correcao vinculante da Sprint A1).
     lote_id = f"NSI-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:6].upper()}"
     lote_dir = Path(Config.LOTES_DIR) / lote_id
     lote_dir.mkdir(parents=True, exist_ok=True)
@@ -144,8 +278,14 @@ def salvar_lote(arquivo, empresa="", nome="", data_inicio="", data_fim="") -> di
         "data_final":       data_fim,
         "csv_original":     nome_arquivo,
         "criado_em":        datetime.now().isoformat(),
-        "total_clientes":   len(clientes),
-        "status":            "aguardando_d8",
+        # total_clientes: CAMPO LEGADO, mantido por compatibilidade com
+        # consumidores existentes - corresponde a total_valido, NUNCA
+        # ao total recebido.
+        "total_clientes":   len(clientes_validos),
+        "total_recebido":   len(clientes_validos) + len(clientes_invalidos),
+        "total_valido":     len(clientes_validos),
+        "total_invalido":   len(clientes_invalidos),
+        "status":            status_lote,
         "data_disparo":      (datetime.now() + timedelta(days=8)).isoformat(),
         "status_pipeline": {
             "upload":             True,
@@ -157,13 +297,22 @@ def salvar_lote(arquivo, empresa="", nome="", data_inicio="", data_fim="") -> di
             "dashboard":          False,
             "pdf":                False
         },
-        "clientes": clientes
+        "clientes": clientes_validos,
+        "clientes_invalidos": clientes_invalidos,
     }
 
     with open(lote_dir / "lote.json", "w", encoding="utf-8") as f:
         json.dump(meta, f, ensure_ascii=False, indent=2)
 
-    return {"lote_id": lote_id, "total_clientes": len(clientes), "mensagem": "lote_criado"}
+    return {
+        "lote_id": lote_id,
+        "total_clientes": len(clientes_validos),
+        "total_recebido": len(clientes_validos) + len(clientes_invalidos),
+        "total_valido": len(clientes_validos),
+        "total_invalido": len(clientes_invalidos),
+        "status": status_lote,
+        "mensagem": "lote_criado",
+    }
 
 
 def carregar_lote(lote_id: str) -> dict:
