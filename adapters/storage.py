@@ -315,6 +315,325 @@ def salvar_lote(arquivo, empresa="", nome="", data_inicio="", data_fim="") -> di
     }
 
 
+# ============================================================
+# Sprint A3 - fluxo de correcao append-only (ADR-007 SS9)
+#
+# Funcoes INTERNAS apenas - nenhuma rota HTTP e criada nesta sprint.
+# Rotas, autenticacao e MFA do Operador Interno pertencem a Sprint D.
+# ============================================================
+
+CABECALHOS_CANONICOS_CORRECAO = {"codigo_tecnico", "nome", "whatsapp", "produto"}
+PROCESSO_CORRECAO = "upload_correcao_csv"
+RECEBIDO_POR_PROVISORIO = "operador_interno_nao_autenticado"
+
+
+def _normalizar_codigo_tecnico(bruto: str) -> tuple[str | None, str | None]:
+    """
+    Valida e normaliza um codigo_tecnico ANTES de qualquer busca (local
+    ou global). Retorna (codigo_normalizado, None) em sucesso, ou
+    (None, motivo) em falha - "codigo_tecnico_ausente" ou
+    "codigo_tecnico_invalido". Um codigo ausente ou malformado nunca
+    dispara busca alguma - a invalidez e puramente sintatica.
+    """
+    valor = (bruto or "").strip()
+    if not valor:
+        return None, "codigo_tecnico_ausente"
+    try:
+        codigo_uuid = uuid.UUID(valor)
+    except (ValueError, AttributeError, TypeError):
+        return None, "codigo_tecnico_invalido"
+    if codigo_uuid.version != 4:
+        return None, "codigo_tecnico_invalido"
+    return str(codigo_uuid), None
+
+
+def _parsear_csv_correcao(conteudo_bruto) -> tuple[list, str | None]:
+    """
+    Parser INDEPENDENTE do CSV de correcao - nunca importa nem
+    reutiliza salvar_lote. Mesma disciplina da Sprint A1: csv.reader
+    UNICO sobre o conteudo completo, utf-8-sig para BOM, cabecalho
+    canonico exato em ordem livre, sem duplicatas nem colunas extras,
+    4 campos exatos por linha. Um CSV so com cabecalho (ou apenas
+    linhas em branco depois dele) e recusado com
+    "csv_correcao_sem_registros" - nenhuma tentativa de correcao
+    individual foi apresentada. Funcao PURA - nunca cria diretorio ou
+    arquivo, mesmo em falha estrutural.
+    """
+    if isinstance(conteudo_bruto, bytes):
+        try:
+            conteudo_texto = conteudo_bruto.decode("utf-8-sig")
+        except UnicodeDecodeError:
+            return [], "CSV de correcao nao pode ser interpretado como UTF-8"
+    else:
+        conteudo_texto = conteudo_bruto.lstrip(chr(0xFEFF))
+
+    if not conteudo_texto.strip():
+        return [], "CSV de correcao vazio - nenhum cabecalho encontrado"
+
+    try:
+        linhas_parseadas = list(csv.reader(io.StringIO(conteudo_texto)))
+    except csv.Error:
+        return [], "Nao foi possivel interpretar o CSV de correcao"
+
+    if not linhas_parseadas:
+        return [], "CSV de correcao vazio - nenhum cabecalho encontrado"
+
+    cabecalho_bruto, linhas_de_dados = linhas_parseadas[0], linhas_parseadas[1:]
+    colunas_normalizadas = [c.strip().lower() for c in cabecalho_bruto]
+
+    if len(colunas_normalizadas) != len(set(colunas_normalizadas)):
+        return [], "CSV de correcao contem cabecalhos duplicados"
+
+    if len(colunas_normalizadas) != 4 or set(colunas_normalizadas) != CABECALHOS_CANONICOS_CORRECAO:
+        faltando = sorted(CABECALHOS_CANONICOS_CORRECAO - set(colunas_normalizadas))
+        extras = sorted(set(colunas_normalizadas) - CABECALHOS_CANONICOS_CORRECAO)
+        detalhe = []
+        if faltando:
+            detalhe.append(f"faltando: {faltando}")
+        if extras:
+            detalhe.append(f"nao reconhecidos: {extras}")
+        return [], (f"CSV de correcao deve conter exatamente os cabecalhos "
+                     f"codigo_tecnico, nome, whatsapp, produto - {'; '.join(detalhe)}")
+
+    def _linha_em_branco(linha: list) -> bool:
+        return linha == [] or (len(linha) == 1 and linha[0].strip() == "")
+
+    linhas_de_dados_validas = [l for l in linhas_de_dados if not _linha_em_branco(l)]
+
+    if not linhas_de_dados_validas:
+        return [], "csv_correcao_sem_registros"
+
+    for numero_linha, linha in enumerate(linhas_de_dados_validas, start=2):
+        if len(linha) != 4:
+            return [], f"Linha {numero_linha} do CSV de correcao possui {len(linha)} campo(s), esperado exatamente 4"
+
+    idx = {nome: colunas_normalizadas.index(nome) for nome in CABECALHOS_CANONICOS_CORRECAO}
+
+    linhas = [
+        {
+            "codigo_tecnico": linha[idx["codigo_tecnico"]],
+            "nome": linha[idx["nome"]],
+            "whatsapp": linha[idx["whatsapp"]],
+            "produto": linha[idx["produto"]],
+        }
+        for linha in linhas_de_dados_validas
+    ]
+    return linhas, None
+
+
+def _buscar_em_clientes(lote: dict, registro_coleta_id: str) -> dict | None:
+    """
+    Usa .get("registro_coleta_id") - nunca c["registro_coleta_id"] -
+    para que a busca (inclusive a diagnostica em outros lotes, possivelmente
+    anteriores a Sprint A1) nunca lance KeyError ao atravessar registros
+    legados sem essa chave. Um cliente sem a chave simplesmente nunca
+    corresponde (comparado a None), sem quebrar a iteracao.
+    """
+    return next((c for c in lote.get("clientes", []) if c.get("registro_coleta_id") == registro_coleta_id), None)
+
+
+def _buscar_em_clientes_invalidos(lote: dict, registro_coleta_id: str) -> dict | None:
+    return next((c for c in lote.get("clientes_invalidos", []) if c.get("registro_coleta_id") == registro_coleta_id), None)
+
+
+def _existe_em_outro_lote(lote_id_atual: str, registro_coleta_id: str) -> bool:
+    """
+    Diagnostico secundario - le outros lotes SEM adquirir os locks
+    deles. NUNCA usado para aceitar uma correcao - somente para
+    distinguir "registro_de_outra_operacao" de "codigo_inexistente" na
+    mensagem de recusa. registro_coleta_id -> lote e uma associacao
+    imutavel desde a criacao (um codigo nunca migra de lote), entao a
+    ausencia de lock nesta leitura nao produz resultado incorreto -
+    apenas verifica presenca, nunca contagens ou estado. Atravessa
+    lotes legados sem registro_coleta_id sem lancar excecao (busca por
+    .get(), nunca por indexacao direta).
+    """
+    for item in listar_lotes():
+        if item["lote_id"] == lote_id_atual:
+            continue
+        outro = carregar_lote(item["lote_id"])
+        if _buscar_em_clientes(outro, registro_coleta_id) or _buscar_em_clientes_invalidos(outro, registro_coleta_id):
+            return True
+    return False
+
+
+def _inicializar_historico_se_necessario(lote: dict, registro_coleta_id: str, original: dict) -> None:
+    """
+    Materializa a v1 de um registro criado antes desta sprint (Sprint
+    A2). Distingue tres momentos, nunca confundidos:
+      - recebido_em: quando o registro ORIGINAL foi de fato recebido
+        (M0/criado_em do lote) - nunca "agora".
+      - representacao_historica_criada_em: quando esta materializacao
+        tardia foi de fato criada - sempre "agora".
+      - representacao_historica_reconstituida: True - esta v1 nao foi
+        criada no momento do upload original, foi reconstruida
+        retroativamente a partir de dados ja existentes.
+    A identidade de quem recebeu o upload original nunca foi
+    registrada pelo codigo da Sprint A1/A2 - "recebido_por" reflete
+    esse fato honestamente ("nao_registrado_legado"), em vez de
+    atribuir retroativamente uma identidade que so passou a existir
+    como conceito nesta sprint (A3).
+    """
+    historico = lote.setdefault("historico_versoes", {})
+    if registro_coleta_id in historico:
+        return
+    historico[registro_coleta_id] = [{
+        "registro_coleta_versao_id": str(uuid.uuid4()),
+        "numero_versao": 1,
+        "versao_anterior_id": None,
+        "status_versao": "invalida",
+        "processo": "upload_original",
+        "recebido_por": "nao_registrado_legado",
+        "recebido_em": lote["criado_em"],
+        "representacao_historica_criada_em": datetime.now().isoformat(),
+        "representacao_historica_reconstituida": True,
+        "nome_bruto": original["nome_bruto"],
+        "whatsapp_bruto": original["whatsapp_bruto"],
+        "produto_bruto": original["produto_bruto"],
+        "motivos": original["motivos"],
+    }]
+
+
+def _aplicar_versao_correcao(lote: dict, registro_coleta_id: str,
+                              nome_bruto, whatsapp_bruto, produto_bruto) -> dict:
+    """
+    Cria a proxima versao (append-only) a partir de uma correcao
+    RECEBIDA NESTA SPRINT - processo/recebido_por refletem isso
+    honestamente, distintos da v1 reconstruida (funcao acima). Nenhum
+    campo mutavel "corrente"/"substituida" - a versao corrente e
+    sempre a de maior numero_versao (ultima do array).
+    """
+    resultado = _validar_linha(nome_bruto, whatsapp_bruto, produto_bruto)
+    versoes = lote["historico_versoes"][registro_coleta_id]
+    versao = {
+        "registro_coleta_versao_id": str(uuid.uuid4()),
+        "numero_versao": len(versoes) + 1,
+        "versao_anterior_id": versoes[-1]["registro_coleta_versao_id"],
+        "status_versao": "valida" if resultado["valido"] else "invalida",
+        "processo": PROCESSO_CORRECAO,
+        "recebido_por": RECEBIDO_POR_PROVISORIO,
+        "recebido_em": datetime.now().isoformat(),
+        "representacao_historica_reconstituida": False,
+        "nome_bruto": nome_bruto,
+        "whatsapp_bruto": whatsapp_bruto,
+        "produto_bruto": produto_bruto,
+        "motivos": resultado["motivos"],
+    }
+    versoes.append(versao)
+
+    lote["clientes_invalidos"] = [c for c in lote["clientes_invalidos"] if c.get("registro_coleta_id") != registro_coleta_id]
+    lote["clientes"] = [c for c in lote["clientes"] if c.get("registro_coleta_id") != registro_coleta_id]
+    if resultado["valido"]:
+        lote["clientes"].append({
+            "registro_coleta_id": registro_coleta_id,
+            "nome": resultado["nome"],
+            "telefone": resultado["telefone"],
+            "produto": resultado["produto"],
+            "resposta": "",
+        })
+    else:
+        lote["clientes_invalidos"].append({
+            "registro_coleta_id": registro_coleta_id,
+            "nome_bruto": nome_bruto,
+            "whatsapp_bruto": whatsapp_bruto,
+            "produto_bruto": produto_bruto,
+            "motivos": resultado["motivos"],
+        })
+    return versao
+
+
+def _recalcular_contagens_e_status(lote: dict) -> None:
+    """total_recebido NUNCA e tocado aqui - permanece imutavel desde o
+    upload original (ADR-007 SS11)."""
+    lote["total_valido"] = len(lote["clientes"])
+    lote["total_invalido"] = len(lote["clientes_invalidos"])
+    lote["total_clientes"] = lote["total_valido"]
+    if lote["total_valido"] > 0:
+        lote["status"] = "aguardando_d8"
+    elif lote["total_invalido"] > 0:
+        lote["status"] = "sem_registros_validos"
+
+
+def _registrar_tentativa_rejeitada(lote_id: str, codigo_tecnico_bruto: str,
+                                     nome_bruto: str, whatsapp_bruto: str,
+                                     produto_bruto: str, motivo: str) -> None:
+    """
+    Auditoria PROVISORIA (sera substituida por persistencia real na
+    Sprint B). Um arquivo por tentativa (nome unico via UUID4) sob
+    Config.DATA_DIR - isolamento total em testes via tmp_path/monkeypatch.
+    Escrita atomica (tmp + os.replace). NUNCA altera lote.json. Preserva
+    o valor BRUTO do codigo_tecnico recebido, mesmo quando ausente ou
+    malformado.
+    """
+    pasta = Path(Config.DATA_DIR) / "correcoes_rejeitadas" / datetime.now().strftime("%Y-%m-%d")
+    pasta.mkdir(parents=True, exist_ok=True)
+    evento_id = str(uuid.uuid4())
+    caminho = pasta / f"{evento_id}.json"
+    caminho_tmp = caminho.with_suffix(".json.tmp")
+    dado = {
+        "evento_id": evento_id,
+        "recebido_em": datetime.now().isoformat(),
+        "processo": PROCESSO_CORRECAO,
+        "recebido_por": RECEBIDO_POR_PROVISORIO,
+        "lote_id_informado": lote_id,
+        "codigo_tecnico_informado": codigo_tecnico_bruto,
+        "nome_bruto": nome_bruto,
+        "whatsapp_bruto": whatsapp_bruto,
+        "produto_bruto": produto_bruto,
+        "motivo": motivo,
+    }
+    with open(caminho_tmp, "w", encoding="utf-8") as f:
+        json.dump(dado, f, ensure_ascii=False, indent=2)
+    os.replace(caminho_tmp, caminho)
+
+
+def gerar_relatorio_correcao_csv(lote_id: str) -> str:
+    """
+    Gera SOMENTE o conteudo CSV em memoria - nenhuma rota HTTP, nenhum
+    arquivo em disco (rotas ficam para a Sprint D, com autenticacao).
+    Usa csv.writer para tratar corretamente virgulas, aspas e quebras
+    de linha. Nunca inclui lote_id no conteudo.
+
+    Inclui SOMENTE registros atualmente invalidos que possuam um
+    codigo_tecnico UUID4 valido (reaproveita _normalizar_codigo_tecnico,
+    ja testada). Registros legados (anteriores a Sprint A1, sem
+    registro_coleta_id) sao OMITIDOS - nunca recebem um codigo inventado
+    ou atribuido retroativamente, e o acesso via .get() garante que a
+    ausencia da chave nunca lanca KeyError. Se nenhum invalido possuir
+    codigo, o CSV contem somente o cabecalho.
+    """
+    lote = carregar_lote(lote_id)
+    buffer = io.StringIO()
+    escritor = csv.writer(buffer, lineterminator="\n")
+    escritor.writerow(["codigo_tecnico", "nome", "whatsapp", "produto"])
+    for c in lote.get("clientes_invalidos", []):
+        codigo, motivo = _normalizar_codigo_tecnico(c.get("registro_coleta_id") or "")
+        if motivo is not None:
+            continue  # legado sem codigo tecnico valido - omitido, nunca inventado
+        escritor.writerow([
+            codigo,
+            c.get("nome_bruto", ""),
+            c.get("whatsapp_bruto", ""),
+            c.get("produto_bruto", ""),
+        ])
+    return buffer.getvalue()
+
+
+def _escrever_lote_em_disco(lote_id: str, lote: dict) -> None:
+    """
+    Escreve lote.json de forma atomica (tmp + os.replace) SEM adquirir
+    nenhum lock - pressupoe que o chamador ja detem
+    _obter_lock_lote(lote_id). Nunca chamar fora de uma secao critica
+    ja protegida (evita o deadlock de _obter_lock_lote readquirido -
+    threading.Lock nao e reentrante).
+    """
+    caminho = Path(Config.LOTES_DIR) / lote_id / "lote.json"
+    caminho_tmp = caminho.with_suffix(".json.tmp")
+    with open(caminho_tmp, "w", encoding="utf-8") as f:
+        json.dump(lote, f, ensure_ascii=False, indent=2)
+    os.replace(caminho_tmp, caminho)
+
+
 def carregar_lote(lote_id: str) -> dict:
     caminho = Path(Config.LOTES_DIR) / lote_id / "lote.json"
     if not caminho.exists():
@@ -390,13 +709,14 @@ def salvar_lote_atomico(lote_id: str, lote: dict) -> None:
     (atomico no SO), serializada por lote_id via _obter_lock_lote. Todo
     escritor de lote.json que precisar de escrita segura/atomica deve
     reutilizar esta funcao, em vez de abrir o arquivo diretamente.
+
+    CORRIGIDO na Sprint A3: a escrita em si foi extraida para
+    _escrever_lote_em_disco - chamadores que ja detem o lock (ex.:
+    processamento de correcao) devem chamar aquela funcao diretamente,
+    NUNCA esta, para evitar deadlock (threading.Lock nao e reentrante).
     """
-    caminho = Path(Config.LOTES_DIR) / lote_id / "lote.json"
     with _obter_lock_lote(lote_id):
-        caminho_tmp = caminho.with_suffix(".json.tmp")
-        with open(caminho_tmp, "w", encoding="utf-8") as f:
-            json.dump(lote, f, ensure_ascii=False, indent=2)
-        os.replace(caminho_tmp, caminho)
+        _escrever_lote_em_disco(lote_id, lote)
 
 
 def salvar_resposta_cliente(lote_id: str, telefone: str, texto: str) -> dict:

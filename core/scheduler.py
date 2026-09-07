@@ -10,14 +10,19 @@ from pathlib import Path
 from config import Config
 
 
-def calcular_d8(data_upload: str) -> dict:
+def calcular_d8(data_upload: str, agora: datetime | None = None) -> dict:
     """
     Recebe data de criação do lote (ISO format).
     Retorna informações do D+8.
+
+    'agora' e opcional (Sprint A3) - permite injetar um relogio
+    controlado para testes deterministas da fronteira exata M0+192h,
+    sem alterar o comportamento padrao: quando omitido, usa
+    datetime.now() exatamente como antes.
     """
     criado_em = datetime.fromisoformat(data_upload)
     data_disparo = criado_em + timedelta(days=8)
-    agora = datetime.now()
+    agora = agora if agora is not None else datetime.now()
     dias_restantes = (data_disparo - agora).days
     horas_restantes = int((data_disparo - agora).total_seconds() / 3600)
     pronto = agora >= data_disparo
@@ -172,3 +177,102 @@ def disparar_lote(lote_id: str) -> dict:
     atualizar_status_lote(lote_id, "disparado")
 
     return {"lote_id": lote_id, "enviados": enviados, "erros": erros}
+
+
+# ============================================================
+# Sprint A3 - orquestracao do fluxo de correcao append-only
+# (ADR-007 SS9). Funcoes INTERNAS apenas - nenhuma rota HTTP nesta
+# sprint; app.py permanece intocado. Rotas, autenticacao e MFA do
+# Operador Interno pertencem a Sprint D.
+# ============================================================
+
+def processar_uma_correcao(lote_id: str, codigo_tecnico_bruto: str,
+                            nome_bruto: str, whatsapp_bruto: str, produto_bruto: str,
+                            agora: datetime | None = None) -> dict:
+    """
+    Processa UMA linha do CSV de correcao. Codigo ausente/malformado
+    NUNCA dispara nenhuma busca (local ou global) e NUNCA adquire o
+    lock do lote - a invalidez e puramente sintatica, decidida antes
+    de tocar em qualquer lote.json. Resolucao restrita ao lote_id
+    informado (escopo da Operacao) - nunca busca global para ACEITAR.
+
+    'agora' e opcional (Sprint A3) - propagado a calcular_d8 para
+    testes deterministas da fronteira M0+192h; None usa o relogio real.
+    """
+    from adapters.storage import (
+        _normalizar_codigo_tecnico, carregar_lote, _obter_lock_lote, _escrever_lote_em_disco,
+        _buscar_em_clientes, _buscar_em_clientes_invalidos, _existe_em_outro_lote,
+        _inicializar_historico_se_necessario, _aplicar_versao_correcao,
+        _recalcular_contagens_e_status, _registrar_tentativa_rejeitada,
+    )
+
+    codigo_tecnico, motivo_codigo = _normalizar_codigo_tecnico(codigo_tecnico_bruto)
+    if motivo_codigo is not None:
+        _registrar_tentativa_rejeitada(lote_id, codigo_tecnico_bruto, nome_bruto, whatsapp_bruto, produto_bruto, motivo_codigo)
+        return {"codigo_tecnico": codigo_tecnico_bruto, "status": motivo_codigo, "motivos": []}
+
+    # UMA UNICA aquisicao do lock, por toda a secao critica - ler,
+    # validar, versionar e escrever ocorrem sob a mesma posse.
+    with _obter_lock_lote(lote_id):
+        try:
+            lote = carregar_lote(lote_id)
+        except FileNotFoundError:
+            _registrar_tentativa_rejeitada(lote_id, codigo_tecnico, nome_bruto, whatsapp_bruto, produto_bruto, "codigo_inexistente")
+            return {"codigo_tecnico": codigo_tecnico, "status": "codigo_inexistente", "motivos": []}
+
+        if _buscar_em_clientes(lote, codigo_tecnico) is not None:
+            _registrar_tentativa_rejeitada(lote_id, codigo_tecnico, nome_bruto, whatsapp_bruto, produto_bruto, "registro_ja_valido")
+            return {"codigo_tecnico": codigo_tecnico, "status": "registro_ja_valido", "motivos": []}
+
+        original = _buscar_em_clientes_invalidos(lote, codigo_tecnico)
+        if original is None:
+            motivo = "registro_de_outra_operacao" if _existe_em_outro_lote(lote_id, codigo_tecnico) else "codigo_inexistente"
+            _registrar_tentativa_rejeitada(lote_id, codigo_tecnico, nome_bruto, whatsapp_bruto, produto_bruto, motivo)
+            return {"codigo_tecnico": codigo_tecnico, "status": motivo, "motivos": []}
+
+        if calcular_d8(lote.get("criado_em", ""), agora=agora)["pronto"]:  # >= M0+192h ja e tardia
+            _registrar_tentativa_rejeitada(lote_id, codigo_tecnico, nome_bruto, whatsapp_bruto, produto_bruto, "correcao_tardia")
+            return {"codigo_tecnico": codigo_tecnico, "status": "correcao_tardia", "motivos": []}
+
+        _inicializar_historico_se_necessario(lote, codigo_tecnico, original)
+        versao = _aplicar_versao_correcao(lote, codigo_tecnico, nome_bruto, whatsapp_bruto, produto_bruto)
+        _recalcular_contagens_e_status(lote)
+        _escrever_lote_em_disco(lote_id, lote)  # NUNCA salvar_lote_atomico aqui dentro
+
+        status = "aceita" if versao["status_versao"] == "valida" else "ainda_invalida"
+        return {"codigo_tecnico": codigo_tecnico, "status": status, "motivos": versao["motivos"]}
+
+
+def processar_lote_correcoes(lote_id: str, linhas: list) -> dict:
+    """Processa cada linha independentemente - uma linha recusada
+    nunca bloqueia as demais."""
+    resultados = [
+        processar_uma_correcao(lote_id, l["codigo_tecnico"], l["nome"], l["whatsapp"], l["produto"])
+        for l in linhas
+    ]
+    recusados = {
+        "correcao_tardia", "codigo_inexistente", "registro_de_outra_operacao",
+        "registro_ja_valido", "codigo_tecnico_ausente", "codigo_tecnico_invalido",
+    }
+    return {
+        "total_recebido": len(resultados),
+        "total_aceito": sum(1 for r in resultados if r["status"] == "aceita"),
+        "total_ainda_invalido": sum(1 for r in resultados if r["status"] == "ainda_invalida"),
+        "total_recusado": sum(1 for r in resultados if r["status"] in recusados),
+        "resultados": resultados,
+    }
+
+
+def processar_correcao_csv(lote_id: str, conteudo_bruto) -> dict:
+    """
+    Ponto de entrada unico: parsing estrutural + processamento linha a
+    linha. Falha estrutural do CSV (cabecalho invalido, campo count
+    errado, ou "csv_correcao_sem_registros") retorna {"erro": ...} SEM
+    processar nenhuma linha, sem criar historico nem auditoria - nao
+    houve nenhuma tentativa de correcao individual apresentada.
+    """
+    from adapters.storage import _parsear_csv_correcao
+    linhas, erro = _parsear_csv_correcao(conteudo_bruto)
+    if erro:
+        return {"erro": erro}
+    return processar_lote_correcoes(lote_id, linhas)
