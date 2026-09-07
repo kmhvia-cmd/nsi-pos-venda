@@ -3,6 +3,8 @@
 NSI - adapters/storage.py
 Responsabilidade: salvar e carregar lotes e analises em disco
 """
+import csv
+import io
 import json
 import os
 import threading
@@ -13,31 +15,126 @@ import pandas as pd
 from config import Config
 
 
+CABECALHOS_CANONICOS_CSV = {"nome", "whatsapp", "produto"}
+
+
 def salvar_lote(arquivo, empresa="", nome="", data_inicio="", data_fim="") -> dict:
-    lote_id = f"NSI-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:6].upper()}"
-    lote_dir = Path(Config.LOTES_DIR) / lote_id
-    lote_dir.mkdir(parents=True, exist_ok=True)
+    """
+    ADR-007 Secao 6: o CSV original possui EXCLUSIVAMENTE tres campos -
+    nome, WhatsApp, produto. Apenas arquivos .csv sao aceitos (a decisao
+    aprovada fala em CSV, nao em Excel). Ordem das colunas e livre,
+    desde que os tres cabecalhos canonicos estejam presentes, sem
+    duplicatas e sem colunas extras - o mapeamento e sempre por NOME de
+    coluna, nunca por posicao (row.iloc[N]).
 
+    A entrada empresarial usa o cabecalho "whatsapp"; internamente o
+    campo permanece "telefone", preenchido a partir da coluna
+    "whatsapp" - e um MAPEAMENTO documentado, nao uma divergencia de
+    nomenclatura.
+
+    Sprint A1 (Parte 4 do plano de implementacao): apenas identidade
+    por linha e validacao ESTRUTURAL do cabecalho. Normalizacao de
+    whatsapp, validacao de conteudo, separacao de validos/invalidos e
+    versionamento pertencem as Sprints A2/A3 - nao implementadas aqui.
+
+    Nenhum diretorio de lote e criado antes de a validacao estrutural
+    do arquivo e do cabecalho ser concluida com sucesso - um arquivo
+    rejeitado (extensao errada, vazio, cabecalho invalido ou linha com
+    numero de campos incorreto) nunca deixa efeito persistente em disco.
+
+    UM UNICO PARSER e usado para interpretar o CSV: csv.reader (modulo
+    padrao), sobre o conteudo completo, respeitando aspas e virgulas
+    internas corretamente (nunca split(",") manual). O pandas e usado
+    apenas para construir o DataFrame a partir das linhas JA
+    interpretadas e validadas pelo csv.reader - nunca para reler o
+    texto bruto de forma independente. Isso elimina o risco,
+    comprovado empiricamente, de o pandas reinterpretar silenciosamente
+    uma linha com campo excedente como indice implicito, produzindo uma
+    leitura divergente da que foi validada.
+    """
     nome_arquivo = arquivo.filename
-    if nome_arquivo.endswith(".csv"):
-        df = pd.read_csv(arquivo, encoding="utf-8")
-    else:
-        df = pd.read_excel(arquivo)
+    if not nome_arquivo.lower().endswith(".csv"):
+        return {"erro": "Apenas arquivos .csv sao aceitos (ADR-007 SS6) - Excel nao e suportado nesta etapa"}
 
-    colunas = [c.lower().strip() for c in df.columns]
-    colunas_req = ["nome", "telefone"]
-    faltando = [c for c in colunas_req if c not in colunas]
-    if faltando:
-        return {"erro": f"Colunas ausentes no CSV: {faltando}"}
+    # Le o conteudo inteiro uma unica vez, com utf-8-sig - aceita tanto
+    # UTF-8 puro quanto UTF-8 com BOM (comum em exportacoes do Excel)
+    # sem que o BOM vire parte do nome da primeira coluna. Nenhum valor
+    # real e alterado - utf-8-sig apenas remove o marcador BOM quando
+    # presente, sem efeito quando ausente.
+    conteudo_bruto = arquivo.read()
+    if isinstance(conteudo_bruto, bytes):
+        try:
+            conteudo_texto = conteudo_bruto.decode("utf-8-sig")
+        except UnicodeDecodeError:
+            return {"erro": "CSV nao pode ser interpretado como UTF-8"}
+    else:
+        # arquivo.read() ja retornou str (texto) - o conteudo real e
+        # preservado integralmente; remove-se somente um eventual BOM
+        # inicial (U+FEFF), nunca qualquer outro caractere.
+        conteudo_texto = conteudo_bruto.lstrip(chr(0xFEFF))
+
+    if not conteudo_texto.strip():
+        return {"erro": "CSV vazio - nenhum cabecalho encontrado"}
+
+    try:
+        linhas_parseadas = list(csv.reader(io.StringIO(conteudo_texto)))
+    except csv.Error:
+        return {"erro": "Nao foi possivel interpretar o CSV"}
+
+    if not linhas_parseadas:
+        return {"erro": "CSV vazio - nenhum cabecalho encontrado"}
+
+    cabecalho_bruto, linhas_de_dados = linhas_parseadas[0], linhas_parseadas[1:]
+    colunas_normalizadas = [c.strip().lower() for c in cabecalho_bruto]
+
+    if len(colunas_normalizadas) != len(set(colunas_normalizadas)):
+        return {"erro": "CSV contem cabecalhos duplicados"}
+
+    if len(colunas_normalizadas) != 3 or set(colunas_normalizadas) != CABECALHOS_CANONICOS_CSV:
+        faltando = sorted(CABECALHOS_CANONICOS_CSV - set(colunas_normalizadas))
+        extras = sorted(set(colunas_normalizadas) - CABECALHOS_CANONICOS_CSV)
+        detalhe = []
+        if faltando:
+            detalhe.append(f"faltando: {faltando}")
+        if extras:
+            detalhe.append(f"nao reconhecidos: {extras}")
+        return {"erro": f"CSV deve conter exatamente os cabecalhos nome, whatsapp, produto - {'; '.join(detalhe)}"}
+
+    def _linha_em_branco(linha: list) -> bool:
+        return linha == [] or (len(linha) == 1 and linha[0].strip() == "")
+
+    linhas_de_dados_validas = [linha for linha in linhas_de_dados if not _linha_em_branco(linha)]
+
+    # Cada linha de dados precisa ter EXATAMENTE 3 campos. Uma linha com
+    # campo excedente (ou faltando) nunca e reinterpretada por nenhum
+    # mecanismo implicito - o upload inteiro e recusado de forma
+    # estrutural. A separacao linha a linha entre conteudo valido e
+    # invalido pertence a Sprint A2, nao a esta.
+    for numero_linha, linha in enumerate(linhas_de_dados_validas, start=2):
+        if len(linha) != 3:
+            return {"erro": f"Linha {numero_linha} do CSV possui {len(linha)} campo(s), esperado exatamente 3"}
+
+    # DataFrame construido a partir das MESMAS linhas ja interpretadas
+    # e validadas pelo csv.reader - nao ha uma segunda leitura do texto
+    # bruto pelo parser proprio do pandas.
+    df = pd.DataFrame(linhas_de_dados_validas, columns=colunas_normalizadas)
 
     clientes = []
     for _, row in df.iterrows():
         clientes.append({
-            "nome":     str(row.iloc[0]).strip(),
-            "telefone": str(row.iloc[1]).strip(),
-            "produto":  str(row.iloc[2]).strip() if len(row) > 2 else "",
-            "resposta": str(row.iloc[3]).strip() if len(row) > 3 else "",
+            "registro_coleta_id": str(uuid.uuid4()),
+            "nome":     str(row["nome"]).strip(),
+            "telefone": str(row["whatsapp"]).strip(),
+            "produto":  str(row["produto"]).strip(),
+            "resposta": "",
         })
+
+    # Identidade e diretorio do lote so sao criados AQUI - depois que
+    # toda a validacao estrutural e o parsing ja foram concluidos com
+    # sucesso (correcao vinculante desta rodada).
+    lote_id = f"NSI-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:6].upper()}"
+    lote_dir = Path(Config.LOTES_DIR) / lote_id
+    lote_dir.mkdir(parents=True, exist_ok=True)
 
     meta = {
         "lote_id":          lote_id,
