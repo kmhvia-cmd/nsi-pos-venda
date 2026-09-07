@@ -37,6 +37,8 @@
 
 🟡 ADR-007 — Implementação, Sprint B (persistência imutável, claims e idempotência): EM PLANEJAMENTO — roadmap completo das Sprints B a G, com objetivo, dependências, entregas, exclusões, critérios de aceite e condições de uso operacional por sprint, formalizado em `docs/implementation/ROADMAP-SPRINTS-B-G.md`. Nenhuma implementação de código, schema ou migration realizada até o momento.
 
+🟡 ADR-007 — Sprint B, Especificação Técnica (B1): REGISTRADA — `docs/implementation/SPRINT-B-ESPECIFICACAO-TECNICA.md` detalha o modelo de identidade (registro_coleta_id, claim_id, evento_id, agregado/versão contínua por registro), a proteção do token de posse (geração e hash em Python, nunca persistido em texto puro), a exclusividade e concorrência na criação de claim, a fronteira temporal exata de expiração, a idempotência persistente obrigatória para todo comando externo repetível, o consumo único da revisão de abandono, a especificação completa das seis funções `SECURITY DEFINER` e seu modelo de permissão em profundidade, e o plano de testes de integração PostgreSQL real. Detalha integralmente B2 e B3; declara B4 condicionada a decisão arquitetural formal do catálogo de eventos operacionais; declara B7 bloqueada até backup, teste de restauração, RPO, RTO e infraestrutura estarem definidos e aprovados. Nenhuma implementação de código, schema ou migration realizada nesta etapa.
+
 ---
 
 ## Componentes concluídos
