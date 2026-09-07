@@ -4,7 +4,7 @@
 
 **Subordinação:** integral à ADR-008 (APROVADA E CONGELADA) e ao `ROADMAP-SPRINTS-B-G.md`. Nenhuma frase deste documento pode contradizer a ADR-008; onde houver aparente tensão, a ADR-008 prevalece e este documento deve ser corrigido.
 
-**Status:** DOCUMENTO VIVO — **B1 (esta especificação) CONCLUÍDA**. B2–B7 pendentes, cada uma com autorização própria e separada.
+**Status:** DOCUMENTO VIVO — **B1 (esta especificação) CONCLUÍDA**; **B2 (Infraestrutura, Conexão e Migrations) CONCLUÍDA** (Seção 18). B3–B7 pendentes, cada uma com autorização própria e separada.
 
 **Autorização:** este documento, por si só, **não autoriza nenhuma implementação**. Cada subetapa (B2–B7) exige autorização própria, seguindo a mesma disciplina já usada nas Sprints A1–A3 (plano → aprovação → implementação → teste → diff → stage → commit → push). B7 exige autorização distinta de B5/B6 e está bloqueada por pré-requisitos próprios (Seção 14).
 
@@ -305,21 +305,33 @@ Consumo único decorre estruturalmente da combinação `(estado, claim_id)` na c
 | Subetapa | Conteúdo | Status |
 |---|---|---|
 | **B1** | Esta especificação técnica | **CONCLUÍDA** |
-| **B2** | Infraestrutura, conexão, Alembic configurado | pendente — detalhada abaixo |
-| **B3** | Log imutável de claims + projeção + funções + testes | pendente — detalhada abaixo |
+| **B2** | Infraestrutura, conexão, Alembic configurado | **CONCLUÍDA** — detalhada abaixo (B2.1/B2.2/B2.3) |
+| **B3** | Log imutável de claims + projeção + funções + testes | pendente — **não iniciada**; detalhada abaixo |
 | **B4** | Catálogo de eventos operacionais e projeções de negócio | **condicionada** à decisão arquitetural formal (Seção 9) |
 | **B5** | Importador e validação de migração, ambiente de teste/staging | pendente |
 | **B6** | Ensaio de corte completo, ambiente controlado | pendente — regras abaixo |
 | **B7** | Corte real + preservação dos JSONs, produção | **bloqueada** até Seção 14 estar satisfeita; autorização própria e separada de B5/B6 |
 
-### Detalhamento de B2
-- `psycopg` v3 síncrono em `requirements.txt`; Alembic standalone configurado.
-- Nova seção de configuração em `config.py` (Seção 13).
-- Provisionamento do schema/database conforme Seção 12 (ou banco de desenvolvimento/teste local, se a decisão de produção ainda não existir).
-- Nenhuma tabela de negócio criada — apenas fundação de conexão e esteira de migrations vazia e testável.
-- Critério de aceite: conexão de teste bem-sucedida; 213 testes continuam passando; nenhuma credencial em log.
+### Detalhamento de B2 — CONCLUÍDA
 
-### Detalhamento de B3
+**B2.1 — Dependências e configuração (concluída):** `psycopg[binary]==3.3.5` e `alembic==1.19.2` em `requirements.txt`; nova seção de configuração em `config.py` (`DATABASE_URL`, `TEST_DATABASE_URL`, `NSI_DATABASE_ENV`, `DATABASE_SSLMODE`, `resolver_url_banco()`, `mascarar_dsn()`, `DSNInvalida`) — nenhuma credencial ou DSN bruta exposta em exceção, log ou saída, inclusive em casos de DSN malformada (verificado por teste, com `__context__` genuinamente limpo). 30 testes unitários novos (`tests/unit/test_config_banco.py`), todos passando, sem exigir banco real.
+
+**B2.2 — Estrutura Alembic e scripts administrativos (concluída):** `alembic.ini` (URL nunca gravada, placeholder deliberado), `migrations/env.py` (resolve a URL via `resolver_url_banco()`; verifica — nunca cria — o schema `nsi_operacional`), `migrations/versions/0001_bootstrap_vazio.py` (revisão vazia, sem tabela de negócio), `scripts/postgres_local/provisionar_dev_teste.sql` e `desprovisionar_dev_teste.sql` (com `ON_ERROR_STOP`, verificação de identidade do servidor, confirmação textual obrigatória no desprovisionamento, sem senha em nenhum dos dois), `pytest.ini` e `tests/conftest.py` (marcador `pg_integration`, proteção fail-vs-skip), `tests/integration/test_alembic_postgres.py` (comprovação de identidade — banco, servidor, porta — dentro do próprio teste destrutivo, antes de qualquer chamada ao Alembic).
+
+**B2.3 — Provisionamento real e validação (concluída):** Provisionados manualmente, no PostgreSQL 17 local desta máquina (uso exclusivo de desenvolvimento/teste, nunca produção): os bancos `nsi_dev` e `nsi_test`; as roles de migração `nsi_dev_migrator` e `nsi_test_migrator` — **distintas das quatro roles funcionais já aprovadas para a Sprint B3** (`nsi_eventos_owner`, `nsi_aplicacao`, `nsi_expiracao`, `nsi_operador_restrito`), que permanecem exclusivas de B3; o schema `nsi_operacional` nos dois bancos. Senhas definidas interativamente via `\password`. As credenciais não são persistidas em código, logs automatizados ou Git. O `.env` foi configurado localmente pelo operador, é carregado pela aplicação durante a execução e permanece fora do versionamento.
+
+Aplicada `alembic upgrade head` (revisão `0001`) em `nsi_dev` e em `nsi_test` — em ambos, o único objeto criado em `nsi_operacional` foi `alembic_version`, confirmado por consulta direta ao catálogo (nenhuma tabela de negócio). Suíte de testes de integração PostgreSQL real (`pg_integration`) executada com sucesso: **3 de 3 aprovados, zero pulados** — os três, antes pulados por ausência de banco, agora rodam de fato contra `nsi_test`. Suíte completa do projeto: **246/246 aprovados** (213 legados + 30 de configuração + 3 de integração real).
+
+**Dois problemas reais, encontrados e corrigidos somente na execução real** (não previstos nesta especificação até então) — ambos em `migrations/env.py`:
+
+- **(a) Dialeto SQLAlchemy incorreto por padrão:** `create_engine()` do SQLAlchemy assume o dialeto `psycopg2` para qualquer URL `postgresql://` sem driver explícito — `psycopg2` nunca foi instalado neste projeto (Seção 3 já decide `psycopg` v3). Corrigido com `_url_para_sqlalchemy()`, que reescreve a URL para `postgresql+psycopg://` **somente dentro de `migrations/env.py`** — `Config.DATABASE_URL`/`TEST_DATABASE_URL` permanecem genéricas, usadas diretamente por `psycopg.connect()` no resto do projeto sem esse prefixo.
+- **(b) Transação "autobegin" do SQLAlchemy 2.0 consumida pela verificação de schema:** a consulta de leitura em `_verificar_schema_existe()` iniciava implicitamente uma transação na mesma conexão entregue ao Alembic logo em seguida; `context.begin_transaction()` herdava essa transação já aberta em vez de abrir e possuir a sua própria, e não comitava corretamente ao final — `alembic upgrade head` reportava sucesso, mas nada era persistido (nem `alembic_version`, nem o carimbo de revisão), confirmado por consulta direta ao banco (zero tabelas). Corrigido com `connection.rollback()` logo após a verificação (leitura pura, sem efeito a desfazer), garantindo que a transação do Alembic comece do zero e seja comitada corretamente.
+
+Nenhuma decisão já congelada na ADR-008 foi alterada por essas correções — ambas são exclusivamente de mecânica de conexão do Alembic/SQLAlchemy, sem tocar o modelo de identidade, claim, evento ou permissão já aprovado.
+
+**Critério de aceite: satisfeito integralmente.**
+
+### Detalhamento de B3 — NÃO INICIADA
 - Criação de `nsi_operacional.claims`, `nsi_operacional.eventos_claim`, `nsi_operacional.comandos_idempotentes` via migration Alembic.
 - Implementação das seis funções (Seção 15), com todas as regras de identidade (Seção 4.3), token (Seção 4.1), versão (Seção 6/15), idempotência (Seção 16) e fronteira temporal (Seção 7).
 - Aplicação integral do modelo de permissão (Seção 8): `REVOKE`/`GRANT` mínimos, `search_path` fixo, qualificação por schema, trigger defensiva `BEFORE UPDATE OR DELETE` em `eventos_claim`.
@@ -373,4 +385,8 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 
 ## 23. Status e Histórico de Revisão
 
-**B1: CONCLUÍDA.** Consolida o texto integral de todas as rodadas de correção desta sessão de planejamento. Subordinada à ADR-008 (APROVADA E CONGELADA) e ao `ROADMAP-SPRINTS-B-G.md`. Nenhuma implementação de código, schema, migration ou dependência foi realizada por este documento. Próxima revisão: ao final de cada subetapa (B2–B7), ou mediante nova decisão arquitetural (Seção 9).
+**B1: CONCLUÍDA.** Consolida o texto integral de todas as rodadas de correção desta sessão de planejamento. Subordinada à ADR-008 (APROVADA E CONGELADA) e ao `ROADMAP-SPRINTS-B-G.md`. Nenhuma implementação de código, schema, migration ou dependência foi realizada por este documento.
+
+**B2 (Infraestrutura, Conexão e Migrations): CONCLUÍDA.** Subetapas B2.1, B2.2 e B2.3 executadas e validadas integralmente (Seção 18) — dependências instaladas, esteira Alembic criada, PostgreSQL 17 local provisionado (`nsi_dev`, `nsi_test`, roles de migração, schema `nsi_operacional`), revisão `0001` aplicada em ambos os bancos (somente `alembic_version`, nenhuma tabela de negócio), suíte completa em 246/246, três testes de integração PostgreSQL real passando com zero pulados. Dois problemas reais de mecânica de conexão (dialeto SQLAlchemy; transação "autobegin") foram encontrados e corrigidos em `migrations/env.py` durante a validação — nenhuma decisão da ADR-008 foi alterada por isso. **Nenhuma implementação de tabela de negócio, evento, claim ou função `SECURITY DEFINER` foi realizada nesta subetapa — isso pertence integralmente à Sprint B3, ainda não iniciada.**
+
+Próxima revisão: ao final da subetapa B3, ou mediante nova decisão arquitetural (Seção 9).

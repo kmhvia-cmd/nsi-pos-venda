@@ -50,3 +50,8 @@ _catalogo.py
 *\ \(3\).md
 *\ \(1\).zip
 *\ \(2\).zip
+
+# Sprint B (ADR-008) - relatórios de teste de integração PostgreSQL (ex.:
+# b2_pg_integration.xml, gerados pelo comando de aceite da B2/B3) nunca
+# devem ficar como resíduo untracked no repositório.
+reports/

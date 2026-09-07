@@ -5,3 +5,9 @@ groq
 reportlab
 pandas
 openpyxl
+
+# Sprint B (B2.1) - persistencia operacional (ADR-008). O SQLAlchemy trazido
+# transitivamente pelo Alembic e uso INTERNO da propria ferramenta de
+# migration - a aplicacao NSI nao adota o ORM (ver SPRINT-B-ESPECIFICACAO-TECNICA.md).
+psycopg[binary]==3.3.5
+alembic==1.19.2
