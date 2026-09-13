@@ -4,7 +4,7 @@
 
 **Subordinação:** integral à ADR-008 (APROVADA E CONGELADA) e ao `ROADMAP-SPRINTS-B-G.md`. Nenhuma frase deste documento pode contradizer a ADR-008; onde houver aparente tensão, a ADR-008 prevalece e este documento deve ser corrigido.
 
-**Status:** DOCUMENTO VIVO — **B1 (esta especificação) CONCLUÍDA**; **B2 (Infraestrutura, Conexão e Migrations) CONCLUÍDA** (Seção 18). B3–B7 pendentes, cada uma com autorização própria e separada.
+**Status:** DOCUMENTO VIVO — **B1 (esta especificação) CONCLUÍDA**; **B2 (Infraestrutura, Conexão e Migrations) CONCLUÍDA** (Seção 18); **B3.1 (Provisionamento administrativo, roles e isolamento) CONCLUÍDA** (Seção 18). B3.2–B7 pendentes, cada uma com autorização própria e separada.
 
 **Autorização:** este documento, por si só, **não autoriza nenhuma implementação**. Cada subetapa (B2–B7) exige autorização própria, seguindo a mesma disciplina já usada nas Sprints A1–A3 (plano → aprovação → implementação → teste → diff → stage → commit → push). B7 exige autorização distinta de B5/B6 e está bloqueada por pré-requisitos próprios (Seção 14).
 
@@ -306,7 +306,10 @@ Consumo único decorre estruturalmente da combinação `(estado, claim_id)` na c
 |---|---|---|
 | **B1** | Esta especificação técnica | **CONCLUÍDA** |
 | **B2** | Infraestrutura, conexão, Alembic configurado | **CONCLUÍDA** — detalhada abaixo (B2.1/B2.2/B2.3) |
-| **B3** | Log imutável de claims + projeção + funções + testes | pendente — **não iniciada**; detalhada abaixo |
+| **B3.1** | Provisionamento administrativo, roles e isolamento | **CONCLUÍDA** — detalhada abaixo |
+| **B3.2** | Migration `0002` — tabelas, constraints, índices parciais e trigger defensiva | pendente — **não iniciada**; detalhada abaixo |
+| **B3.3** | Migration `0003` — exatamente as seis funções `SECURITY DEFINER` e seus `REVOKE`/`GRANT` | pendente — **não iniciada** |
+| **B3.4** | Testes finais e documentação de encerramento da Sprint B3 | pendente — **não iniciada** |
 | **B4** | Catálogo de eventos operacionais e projeções de negócio | **condicionada** à decisão arquitetural formal (Seção 9) |
 | **B5** | Importador e validação de migração, ambiente de teste/staging | pendente |
 | **B6** | Ensaio de corte completo, ambiente controlado | pendente — regras abaixo |
@@ -331,12 +334,39 @@ Nenhuma decisão já congelada na ADR-008 foi alterada por essas correções —
 
 **Critério de aceite: satisfeito integralmente.**
 
-### Detalhamento de B3 — NÃO INICIADA
-- Criação de `nsi_operacional.claims`, `nsi_operacional.eventos_claim`, `nsi_operacional.comandos_idempotentes` via migration Alembic.
-- Implementação das seis funções (Seção 15), com todas as regras de identidade (Seção 4.3), token (Seção 4.1), versão (Seção 6/15), idempotência (Seção 16) e fronteira temporal (Seção 7).
-- Aplicação integral do modelo de permissão (Seção 8): `REVOKE`/`GRANT` mínimos, `search_path` fixo, qualificação por schema, trigger defensiva `BEFORE UPDATE OR DELETE` em `eventos_claim`.
-- Não toca `lote.json` — mecanismo isolado, testável por si.
-- Critério de aceite: todos os testes da Seção 20 passando; suíte completa (213 + novos) sem regressão.
+### Detalhamento de B3 — divisão em subetapas B3.1–B3.4
+
+Formalizada nesta revisão do documento: a Sprint B3, tratada como bloco único nas revisões anteriores desta especificação, foi dividida em quatro subetapas fixas — decisão tomada numa rodada de planejamento posterior a este documento ("Parte 1 da B3", aprovada e encerrada) e agora incorporada aqui. `0002` e `0003` nunca são fundidas na mesma migration.
+
+- **B3.1** — provisionamento administrativo, roles e isolamento.
+- **B3.2** — migration `0002`: tabelas, constraints, índices parciais e trigger defensiva.
+- **B3.3** — migration `0003`: exatamente as seis funções `SECURITY DEFINER` e seus `REVOKE`/`GRANT`.
+- **B3.4** — testes finais e documentação de encerramento da Sprint B3.
+
+#### B3.1 — Provisionamento administrativo, roles e isolamento — CONCLUÍDA
+
+**Roles funcionais criadas, com atributos de segurança explícitos** (nunca apenas o default do PostgreSQL): `nsi_eventos_owner` (`NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS`, dona do schema e, nas subetapas seguintes, das tabelas/funções de negócio); `nsi_aplicacao`, `nsi_expiracao`, `nsi_operador_restrito` (`LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS`). Nenhuma das quatro pertence a nenhuma outra role (verificado por preflight e por pós-validação).
+
+**Provisionamento idempotente e seguro, em três fases** (`scripts/postgres_local/provisionar_b3_roles.sql`): Fase 1, somente leitura, valida antecipadamente as quatro roles (se já existirem: os seis atributos de segurança + ausência de membership inesperada), as duas memberships dos migrators (`nsi_dev_migrator`/`nsi_test_migrator` → `nsi_eventos_owner`, com `INHERIT FALSE, SET TRUE, ADMIN FALSE`) e a propriedade do schema `nsi_operacional` nos dois bancos — qualquer estado inesperado aborta aqui, sem nenhuma escrita e sem corrigir nada silenciosamente; Fase 2 executa exclusivamente o que a Fase 1 já autorizou (`CREATE ROLE`/`GRANT`/`ALTER SCHEMA` condicionais via `\if`; `GRANT`/`REVOKE` de `CONNECT`/`USAGE` sempre reaplicados, por serem ACLs declarativas naturalmente idempotentes); Fase 3 repete integralmente a validação a partir do zero — atributos, ausência de membership inesperada, as duas memberships dos migrators, `PUBLIC` sem `CONNECT` nos dois bancos, cada migrator com `CONNECT` somente no próprio banco, as três roles funcionais com `CONNECT` nos dois bancos, `owner` do schema nos dois bancos, `USAGE` correto, e `alembic_version` ainda pertencendo ao migrator correspondente (nunca ao owner). Limite estrutural documentado e aceito: o PostgreSQL não tem transação distribuída entre bancos diferentes, e `\c` fecha a conexão/transação anterior — a Fase 1 global elimina a classe de falha "já escrevi X, descobri que Y está incompatível, X fica órfão", mas não cria atomicidade entre `nsi_dev` e `nsi_test`; o script é seguro para reexecução (confirmado nesta subetapa: executado duas vezes, ambas concluindo com "Fase 3 (pós-validação completa) passou integralmente").
+
+**Isolamento de permissões:** `PUBLIC` sem `CONNECT` em `nsi_dev`/`nsi_test` (verificado via `aclexplode`/`grantee = 0` — nunca `has_database_privilege('public', ...)`, que trataria `'public'` como nome de role real, inexistente); cada migrator com `CONNECT` explícito apenas no próprio banco (nunca depende só de propriedade implícita de banco); as três roles funcionais com `CONNECT` explícito nos dois bancos locais; `USAGE` no schema `nsi_operacional` concedido aos dois migrators e às três roles funcionais; propriedade do schema transferida para `nsi_eventos_owner` nos dois bancos, sem afetar a propriedade de `alembic_version` (permanece com o respectivo migrator).
+
+**Reversão segura** (`scripts/postgres_local/desprovisionar_b3_roles.sql`, não executada nesta subetapa): exige revisão exatamente `'0001'` em `nsi_operacional.alembic_version` nos dois bancos antes de qualquer ação destrutiva — nunca usa "alembic downgrade base" como referência; verifica ausência de objetos residuais (`pg_class`/`pg_proc`) das quatro roles antes de qualquer `DROP ROLE`; exige confirmação textual exata; preserva o `CONNECT` explícito dos migrators (nunca revogado, sob risco de inutilizar B2); nunca restaura `CONNECT` a `PUBLIC` automaticamente; não contém senha.
+
+**Configuração (`config.py`):** `resolver_url_banco_papel()` — função única e tipada para as seis variáveis funcionais (`DATABASE_URL_NSI_APLICACAO`/`TEST_DATABASE_URL_NSI_APLICACAO`, e equivalentes para `nsi_expiracao`/`nsi_operador_restrito`), reaproveitando as proteções já existentes de `resolver_url_banco()`: papel fechado (`PapelBancoInvalido`), ambiente fechado sem fallback entre development/test nem entre papéis (`AmbienteBancoInvalido`, `ConfiguracaoBancoAusente`), banco exigido exato por ambiente (`nsi_dev`/`nsi_test`, `BancoFuncionalNaoPermitido`), usuário da URL exatamente igual ao papel solicitado — nunca `postgres`, um migrator ou outro papel funcional (`UsuarioBancoDivergente`), validação e ausência de conflito de `sslmode`, nenhuma credencial exposta em exceção, `repr`, `stdout`/`stderr`, `__context__` ou `__cause__`.
+
+**Execução real (procedimento manual, autorização separada):** senhas das três roles `LOGIN` definidas interativamente via `\password`; as seis URLs funcionais configuradas localmente no `.env` (fora do versionamento). `provisionar_b3_roles.sql` executado duas vezes contra o cluster PostgreSQL 17 local — a segunda execução comprovando a convergência idempotente, sem nenhuma alteração destrutiva — ambas concluindo com "Fase 3 (pós-validação completa) passou integralmente".
+
+**Testes:** estáticos do conteúdo/ordem/gates dos dois scripts (`tests/unit/test_scripts_b3_roles.py`); unitários de `resolver_url_banco_papel()` (`tests/unit/test_config_banco.py`); de integração real, exclusivamente leitura, nunca `CREATE`/`ALTER`/`GRANT`/`REVOKE`/`DROP` (`tests/integration/test_provisionamento_b3_roles.py`, marcado `pg_integration`) — **20 aprovados** contra o cluster real, após o provisionamento. Cenários destrutivos (role incompatível, desprovisionamento completo, revisão diferente de `0001`, prova de privilégio efetivo) permanecem exclusivamente manuais, documentados em `docs/implementation/PROCEDIMENTO-MANUAL-B3-DESTRUTIVO.md`, nunca executados contra `nsi_dev`/`nsi_test` — nenhum teste automatizado executa o provisionamento ou o desprovisionamento administrativo real. Suíte completa do projeto: **331/331 aprovados**, nenhuma falha, nenhum pulado.
+
+**Critério de aceite: satisfeito integralmente.**
+
+#### B3.2, B3.3, B3.4 — pendentes, não iniciadas
+
+- **B3.2** — Criação de `nsi_operacional.claims`, `nsi_operacional.eventos_claim`, `nsi_operacional.comandos_idempotentes` via migration Alembic `0002` (schema já aprovado na Parte 1 da B3: constraints, índices únicos parciais, FK composta diferível da revisão, trigger defensiva `BEFORE UPDATE OR DELETE` em `eventos_claim`, `REVOKE`/`GRANT` explícitos de DML para `PUBLIC` e as três roles funcionais). Não toca `lote.json` — mecanismo isolado, testável por si.
+- **B3.3** — Implementação das seis funções (Seção 15) via migration `0003`, com todas as regras de identidade (Seção 4.3), token (Seção 4.1), versão (Seção 6/15), idempotência (Seção 16) e fronteira temporal (Seção 7); aplicação integral do modelo de permissão restante (Seção 8): `search_path` fixo, qualificação por schema, `GRANT EXECUTE` restrito por role.
+- **B3.4** — testes finais de integração cobrindo B3.2+B3.3 em conjunto, e documentação de encerramento da Sprint B3.
+- Critério de aceite de B3 como um todo: todos os testes da Seção 20 passando; suíte completa sem regressão.
 
 ### B4, B5, B6, B7 — resumo
 - **B4:** aguarda decisão da Seção 9.
@@ -387,6 +417,8 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 
 **B1: CONCLUÍDA.** Consolida o texto integral de todas as rodadas de correção desta sessão de planejamento. Subordinada à ADR-008 (APROVADA E CONGELADA) e ao `ROADMAP-SPRINTS-B-G.md`. Nenhuma implementação de código, schema, migration ou dependência foi realizada por este documento.
 
-**B2 (Infraestrutura, Conexão e Migrations): CONCLUÍDA.** Subetapas B2.1, B2.2 e B2.3 executadas e validadas integralmente (Seção 18) — dependências instaladas, esteira Alembic criada, PostgreSQL 17 local provisionado (`nsi_dev`, `nsi_test`, roles de migração, schema `nsi_operacional`), revisão `0001` aplicada em ambos os bancos (somente `alembic_version`, nenhuma tabela de negócio), suíte completa em 246/246, três testes de integração PostgreSQL real passando com zero pulados. Dois problemas reais de mecânica de conexão (dialeto SQLAlchemy; transação "autobegin") foram encontrados e corrigidos em `migrations/env.py` durante a validação — nenhuma decisão da ADR-008 foi alterada por isso. **Nenhuma implementação de tabela de negócio, evento, claim ou função `SECURITY DEFINER` foi realizada nesta subetapa — isso pertence integralmente à Sprint B3, ainda não iniciada.**
+**B2 (Infraestrutura, Conexão e Migrations): CONCLUÍDA.** Subetapas B2.1, B2.2 e B2.3 executadas e validadas integralmente (Seção 18) — dependências instaladas, esteira Alembic criada, PostgreSQL 17 local provisionado (`nsi_dev`, `nsi_test`, roles de migração, schema `nsi_operacional`), revisão `0001` aplicada em ambos os bancos (somente `alembic_version`, nenhuma tabela de negócio), suíte completa em 246/246, três testes de integração PostgreSQL real passando com zero pulados. Dois problemas reais de mecânica de conexão (dialeto SQLAlchemy; transação "autobegin") foram encontrados e corrigidos em `migrations/env.py` durante a validação — nenhuma decisão da ADR-008 foi alterada por isso. **Nenhuma implementação de tabela de negócio, evento, claim ou função `SECURITY DEFINER` foi realizada nesta subetapa — isso pertence integralmente às subetapas B3.2/B3.3, ainda não iniciadas.**
 
-Próxima revisão: ao final da subetapa B3, ou mediante nova decisão arquitetural (Seção 9).
+**B3.1 (Provisionamento administrativo, roles e isolamento): CONCLUÍDA.** A Sprint B3 foi dividida em quatro subetapas fixas (B3.1–B3.4, Seção 18) numa rodada de planejamento posterior a este documento ("Parte 1 da B3", aprovada e encerrada), agora incorporada aqui. Provisionamento idempotente em três fases (preflight completo → convergência → pós-validação completa), executado manualmente duas vezes contra o cluster PostgreSQL 17 local, ambas as execuções concluindo com "Fase 3 (pós-validação completa) passou integralmente" — comprovando a convergência segura, sem nenhuma alteração destrutiva, na segunda execução. As quatro roles funcionais criadas com atributos de segurança explícitos; isolamento de `CONNECT` por banco (`PUBLIC` sem `CONNECT`, cada migrator restrito ao próprio banco, as três roles funcionais nos dois bancos locais); `USAGE` no schema e propriedade do schema transferida para `nsi_eventos_owner` nos dois bancos, sem afetar `alembic_version` (permanece com o migrator). `config.py` estendido com `resolver_url_banco_papel()` para as seis variáveis funcionais, reaproveitando integralmente as proteções já validadas em B2.1. Senhas das três roles `LOGIN` definidas interativamente via `\password`; as seis URLs configuradas localmente no `.env`, fora do versionamento — nenhuma credencial exposta em nenhum artefato deste repositório. Reversão administrativa (`desprovisionar_b3_roles.sql`) implementada e documentada, mas não executada nesta subetapa. Testes de integração real, exclusivamente leitura: **20/20 aprovados**; suíte completa do projeto: **331/331 aprovados**, nenhuma falha, nenhum pulado. **Nenhuma tabela de negócio, evento, claim ou função `SECURITY DEFINER` foi criada nesta subetapa — isso pertence integralmente a B3.2/B3.3, ainda não iniciadas.**
+
+Próxima revisão: ao final da subetapa B3.2, ou mediante nova decisão arquitetural (Seção 9).

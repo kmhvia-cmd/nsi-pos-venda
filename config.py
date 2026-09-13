@@ -43,6 +43,23 @@ class Config:
     DATABASE_URL      = os.getenv("DATABASE_URL", "")
     TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "")
 
+    # ============================================================
+    # Sprint B (B3.1) - identidades funcionais (ADR-008, Parte 1 da B3).
+    # Seis variaveis, uma por (papel x ambiente) - exclusivas do cluster
+    # PostgreSQL local desta sprint (nsi_dev/nsi_test), nunca de producao
+    # (Parte 1 da B3, Secao 3). Mesma disciplina do B2.1: nenhum fallback
+    # entre development/test, nenhum fallback entre papeis - ver
+    # resolver_url_banco_papel().
+    # ============================================================
+    DATABASE_URL_NSI_APLICACAO      = os.getenv("DATABASE_URL_NSI_APLICACAO", "")
+    TEST_DATABASE_URL_NSI_APLICACAO = os.getenv("TEST_DATABASE_URL_NSI_APLICACAO", "")
+
+    DATABASE_URL_NSI_EXPIRACAO      = os.getenv("DATABASE_URL_NSI_EXPIRACAO", "")
+    TEST_DATABASE_URL_NSI_EXPIRACAO = os.getenv("TEST_DATABASE_URL_NSI_EXPIRACAO", "")
+
+    DATABASE_URL_NSI_OPERADOR_RESTRITO      = os.getenv("DATABASE_URL_NSI_OPERADOR_RESTRITO", "")
+    TEST_DATABASE_URL_NSI_OPERADOR_RESTRITO = os.getenv("TEST_DATABASE_URL_NSI_OPERADOR_RESTRITO", "")
+
     # Unico nome de banco aceito quando NSI_DATABASE_ENV=test (Especificacao
     # Tecnica da Sprint B, protecao contra banco de producao). Qualquer outra
     # TEST_DATABASE_URL e recusada por resolver_url_banco().
@@ -59,6 +76,27 @@ class Config:
 
 
 _AMBIENTES_BANCO_VALIDOS = {"development", "test"}
+
+# Nome de banco exigido em modo "development" para as seis URLs funcionais
+# da Sprint B3 (resolver_url_banco_papel). Diferente de
+# Config.NOME_BANCO_TESTE_PERMITIDO (que tambem vale para
+# resolver_url_banco() generico) - este e exclusivo das seis variaveis
+# funcionais, que so existem para o cluster local desta sprint (Parte 1 da
+# B3, Secao 3). resolver_url_banco() (migrator) nao aplica esta checagem
+# em modo development porque DATABASE_URL pode, em outro contexto de uso,
+# apontar para um banco de desenvolvimento com outro nome - as seis
+# variaveis funcionais nao tem esse uso mais amplo.
+_NOME_BANCO_DESENVOLVIMENTO_PERMITIDO = "nsi_dev"
+
+# Mapa fechado papel -> (variavel de desenvolvimento, variavel de teste).
+# Unica fonte de verdade de quais variaveis de ambiente existem para cada
+# papel - resolver_url_banco_papel() e a UNICA funcao de resolucao para as
+# tres identidades funcionais, nunca seis funcoes separadas.
+_MAPA_URLS_POR_PAPEL = {
+    "nsi_aplicacao":         ("DATABASE_URL_NSI_APLICACAO",         "TEST_DATABASE_URL_NSI_APLICACAO"),
+    "nsi_expiracao":         ("DATABASE_URL_NSI_EXPIRACAO",         "TEST_DATABASE_URL_NSI_EXPIRACAO"),
+    "nsi_operador_restrito": ("DATABASE_URL_NSI_OPERADOR_RESTRITO", "TEST_DATABASE_URL_NSI_OPERADOR_RESTRITO"),
+}
 
 # Mesmo conjunto de valores reconhecido pela libpq/psycopg para sslmode.
 _SSLMODES_VALIDOS = {"disable", "allow", "prefer", "require", "verify-ca", "verify-full"}
@@ -83,6 +121,28 @@ class BancoDeTesteNaoPermitido(RuntimeError):
     Config.NOME_BANCO_TESTE_PERMITIDO. Protecao contra banco de producao
     (Especificacao Tecnica da Sprint B) - lista de permissao fechada, nunca
     uma comparacao frouxa entre DATABASE_URL e TEST_DATABASE_URL."""
+
+
+class PapelBancoInvalido(RuntimeError):
+    """'papel' fora do conjunto fechado {nsi_aplicacao, nsi_expiracao,
+    nsi_operador_restrito} - as tres roles funcionais aprovadas na Parte 1
+    da B3. Nunca aceita nome de variavel de ambiente diretamente."""
+
+
+class BancoFuncionalNaoPermitido(RuntimeError):
+    """Uma das seis variaveis DATABASE_URL_NSI_*/TEST_DATABASE_URL_NSI_*
+    aponta para um banco diferente do exigido pelo ambiente ativo
+    (Config._NOME_BANCO_DESENVOLVIMENTO_PERMITIDO em development,
+    Config.NOME_BANCO_TESTE_PERMITIDO em test). Estas seis variaveis sao
+    exclusivas do cluster local desta sprint (Parte 1 da B3, Secao 3),
+    nunca de producao."""
+
+
+class UsuarioBancoDivergente(RuntimeError):
+    """O usuario presente na URL de conexao de uma das seis variaveis
+    funcionais nao e exatamente o papel solicitado - protecao contra uma
+    URL apontando, por engano, para 'postgres', para um migrator ou para
+    outro papel funcional, mesmo que o banco esteja correto."""
 
 
 class SSLModeInvalido(RuntimeError):
@@ -149,6 +209,17 @@ def _extrair_nome_banco(url: str) -> str:
     inteiro - somente os caminhos que efetivamente usam banco sao afetados.
     """
     return _parsear_dsn_com_seguranca(url).get("dbname", "") or ""
+
+
+def _extrair_usuario(url: str) -> str:
+    """
+    Extrai o usuario (role) de uma URL/DSN de conexao usando o parser
+    compartilhado (_parsear_dsn_com_seguranca) - nunca regex artesanal.
+    Usada exclusivamente por resolver_url_banco_papel() para comprovar que
+    a URL de uma variavel funcional realmente autentica como o papel
+    esperado, nunca como 'postgres', um migrator ou outro papel.
+    """
+    return _parsear_dsn_com_seguranca(url).get("user", "") or ""
 
 
 def resolver_url_banco(ambiente: str | None = None) -> str:
@@ -260,3 +331,85 @@ def verificar_conflito_sslmode(url: str, sslmode_configurado: str) -> None:
             f"sslmode={sslmode_na_url!r}, mas DATABASE_SSLMODE="
             f"{sslmode_configurado!r}. Defina o sslmode em uma unica fonte."
         )
+
+
+def resolver_url_banco_papel(papel: str, ambiente: str | None = None) -> str:
+    """
+    Funcao UNICA e tipada de resolucao das seis URLs funcionais da Sprint
+    B3 (Parte 1 da B3, Secao 3: nsi_aplicacao, nsi_expiracao,
+    nsi_operador_restrito) - nunca seis funcoes separadas. Reaproveita
+    integralmente o mesmo mecanismo/protecoes de resolver_url_banco():
+    selecao fechada por ambiente (Config.NSI_DATABASE_ENV, sem fallback
+    entre development/test), nenhum fallback entre papeis, parser oficial
+    do psycopg via _parsear_dsn_com_seguranca (DSNInvalida sem segredo).
+
+    Validacoes, nesta ordem - nenhuma delas expoe a DSN/segredo em texto
+    puro em nenhuma mensagem de excecao:
+
+    1. 'papel' pertence ao conjunto fechado de _MAPA_URLS_POR_PAPEL
+       (PapelBancoInvalido).
+    2. 'ambiente' (ou Config.NSI_DATABASE_ENV, se None) pertence a
+       {"development", "test"} (AmbienteBancoInvalido).
+    3. a variavel de ambiente correta para (papel, ambiente) esta definida
+       - nenhum fallback para a URL do outro ambiente nem de outro papel
+       (ConfiguracaoBancoAusente).
+    4. a URL e sintaticamente valida (DSNInvalida, propagada por
+       _extrair_nome_banco/_extrair_usuario via _parsear_dsn_com_seguranca).
+    5. o banco referenciado e exatamente o exigido pelo ambiente ativo -
+       nsi_dev em development, nsi_test em test (BancoFuncionalNaoPermitido).
+       As seis variaveis desta funcao sao exclusivas do cluster local desta
+       sprint, nunca usadas para producao (Parte 1 da B3, Secao 3).
+    6. o usuario referenciado na URL e exatamente igual a 'papel' - uma URL
+       apontando para 'postgres', para um migrator ou para outro papel
+       funcional e sempre rejeitada, mesmo com o banco correto
+       (UsuarioBancoDivergente).
+    7. Config.DATABASE_SSLMODE e sintaticamente valido e nao conflita com
+       um eventual sslmode ja embutido na URL (SSLModeInvalido, via
+       validar_sslmode/verificar_conflito_sslmode - mesmas funcoes ja
+       usadas pelo restante do modulo).
+    """
+    if papel not in _MAPA_URLS_POR_PAPEL:
+        raise PapelBancoInvalido(
+            f"papel={papel!r} invalido - valores permitidos: {sorted(_MAPA_URLS_POR_PAPEL)}"
+        )
+
+    ambiente_resolvido = ambiente if ambiente is not None else Config.NSI_DATABASE_ENV
+    if ambiente_resolvido not in _AMBIENTES_BANCO_VALIDOS:
+        raise AmbienteBancoInvalido(
+            f"NSI_DATABASE_ENV={ambiente_resolvido!r} invalido - "
+            f"valores permitidos: {sorted(_AMBIENTES_BANCO_VALIDOS)}"
+        )
+
+    nome_var_dev, nome_var_test = _MAPA_URLS_POR_PAPEL[papel]
+    nome_var = nome_var_dev if ambiente_resolvido == "development" else nome_var_test
+
+    url = getattr(Config, nome_var)
+    if not url:
+        raise ConfiguracaoBancoAusente(
+            f"NSI_DATABASE_ENV={ambiente_resolvido!r} exige {nome_var} definida "
+            f"para o papel {papel!r} - nenhum fallback e permitido"
+        )
+
+    nome_banco_esperado = (
+        _NOME_BANCO_DESENVOLVIMENTO_PERMITIDO if ambiente_resolvido == "development"
+        else Config.NOME_BANCO_TESTE_PERMITIDO
+    )
+    nome_banco_real = _extrair_nome_banco(url)
+    if nome_banco_real != nome_banco_esperado:
+        raise BancoFuncionalNaoPermitido(
+            f"{nome_var} aponta para o banco {nome_banco_real!r}, esperado "
+            f"exatamente {nome_banco_esperado!r} para NSI_DATABASE_ENV={ambiente_resolvido!r}"
+        )
+
+    usuario_real = _extrair_usuario(url)
+    if usuario_real != papel:
+        raise UsuarioBancoDivergente(
+            f"{nome_var} aponta para o usuario {usuario_real!r}, esperado "
+            f"exatamente {papel!r} - uma URL de outro papel, de um migrator "
+            f"ou de 'postgres' nunca e aceita aqui, mesmo com o banco correto"
+        )
+
+    validar_sslmode(Config.DATABASE_SSLMODE)
+    verificar_conflito_sslmode(url, Config.DATABASE_SSLMODE)
+
+    return url
