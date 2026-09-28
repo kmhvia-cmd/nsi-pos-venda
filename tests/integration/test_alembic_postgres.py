@@ -30,6 +30,16 @@ pytestmark = pytest.mark.pg_integration
 
 NOME_SCHEMA = "nsi_operacional"
 
+# Sete tabelas de negocio existentes no head atual (0004, ADR-008/ADR-009)
+# - tres da B3 (migration 0002) mais quatro da B4 (migration 0004).
+# Corrigido nesta rodada: quando este arquivo foi escrito (B2.2), o head
+# nao criava nenhuma tabela de negocio - isso deixou de ser verdade a
+# partir da migration 0002 e permanece assim no head atual.
+TABELAS_DE_NEGOCIO_HEAD_0004 = {
+    "claims", "eventos_claim", "comandos_idempotentes",
+    "lotes", "registros_coleta", "eventos_lote", "eventos_registro_coleta",
+}
+
 
 def _executar_alembic(*args: str, env: dict) -> "subprocess.CompletedProcess[str]":
     return subprocess.run(
@@ -41,14 +51,36 @@ def _executar_alembic(*args: str, env: dict) -> "subprocess.CompletedProcess[str
 
 
 def _listar_tabelas_do_schema(url: str) -> set:
+    """pg_catalog.pg_tables - NUNCA information_schema.tables. A segunda
+    filtra linhas por PRIVILEGIO do usuario corrente (SELECT/INSERT/
+    UPDATE/DELETE/...) sobre cada tabela - e o migrator (nsi_test_migrator)
+    nao tem NENHUM privilegio direto nas tabelas de negocio (pertencem a
+    nsi_eventos_owner; membership do migrator e WITH INHERIT FALSE -
+    B3.1). Corrigido nesta rodada: essa troca ficou mascarada desde a
+    B2.2 porque, na epoca, o head realmente nao criava tabela de negocio
+    nenhuma - o defeito so se tornou visivel quando o inventario
+    esperado deixou de ser vazio. pg_catalog.pg_tables lista relacoes
+    por CATALOGO, sem filtro de privilegio - reflete a existencia
+    estrutural real, independente de DML ou de search_path (mesmo
+    padrao ja usado em test_migration_0002/0004_upgrade_downgrade.py)."""
     with psycopg.connect(url) as conn:
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT table_name FROM information_schema.tables "
-                "WHERE table_schema = %s",
+                "SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname = %s",
                 (NOME_SCHEMA,),
             )
             return {linha[0] for linha in cur.fetchall()}
+
+
+def _consultar_revisao_atual(url: str) -> str | None:
+    """Le o carimbo de revisao atual, sem presumir nada a partir da
+    saida de nenhum comando do Alembic - usado exclusivamente pela
+    recuperacao obrigatoria do ciclo destrutivo (B4.2)."""
+    with psycopg.connect(url) as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT version_num FROM nsi_operacional.alembic_version")
+            linha = cur.fetchone()
+            return linha[0] if linha else None
 
 
 def _comprovar_identidade_banco_teste(url: str) -> None:
@@ -90,7 +122,7 @@ def test_identidade_do_banco_de_teste_e_comprovada(url_banco_teste):
     _comprovar_identidade_banco_teste(url_banco_teste)
 
 
-def test_upgrade_downgrade_upgrade_sem_tabela_de_negocio(url_banco_teste):
+def test_upgrade_downgrade_upgrade_com_inventario_do_head(url_banco_teste):
     """
     Ciclo completo exigido pelo comando de aceite: upgrade -> downgrade ->
     novo upgrade, com verificacao do CONJUNTO EXATO de objetos em cada
@@ -99,41 +131,99 @@ def test_upgrade_downgrade_upgrade_sem_tabela_de_negocio(url_banco_teste):
     aqui, no momento em que o teste roda de fato, nao assumido no
     planejamento).
 
+    Renomeado nesta rodada (B4.2): o nome antigo
+    ('..._sem_tabela_de_negocio') so era verdade na B2.2, quando o head
+    nao criava nenhuma tabela de negocio. Desde a migration 0002, o head
+    sempre cria tabelas de negocio reais - o nome e a verificacao agora
+    refletem exatamente o inventario esperado no head atual (0004).
+
     A identidade do banco (nsi_test, servidor local, porta 5432) e
     comprovada aqui dentro, ANTES de qualquer chamada ao Alembic - inclusive
     antes do primeiro upgrade, nunca apenas antes do downgrade. Se a
     comprovacao falhar, o teste falha imediatamente e nenhuma acao do
-    Alembic (nem upgrade, nem downgrade) chega a ser executada.
+    Alembic (nem upgrade, nem downgrade) chega a ser executada. O gate
+    e repetido explicitamente tambem imediatamente antes do downgrade.
+
+    RECUPERACAO OBRIGATORIA (B4.2): todo o ciclo destrutivo roda dentro
+    de um try/finally. O finally repete o gate completo de identidade,
+    consulta a revisao atual e executa somente 'alembic upgrade head'
+    se nsi_test nao estiver no head - nunca contra nsi_dev - confirmando
+    ao final que o head resolvido e exatamente '0004' (o head atual do
+    projeto nesta rodada; este teste continua validando 'head'/'base'
+    semanticamente, nunca fixado em '0004' como alvo literal do ciclo
+    em si). Se ja houver uma excecao original em andamento, uma falha
+    da propria recuperacao nunca a mascara - e apenas reportada via
+    'print', sem DSN nem credenciais.
     """
     _comprovar_identidade_banco_teste(url_banco_teste)
 
     env = {**os.environ, "NSI_DATABASE_ENV": "test"}
 
-    resultado_upgrade_1 = _executar_alembic("upgrade", "head", env=env)
-    assert resultado_upgrade_1.returncode == 0, resultado_upgrade_1.stderr
-    assert url_banco_teste not in resultado_upgrade_1.stdout
-    assert url_banco_teste not in resultado_upgrade_1.stderr
+    try:
+        resultado_upgrade_1 = _executar_alembic("upgrade", "head", env=env)
+        assert resultado_upgrade_1.returncode == 0, resultado_upgrade_1.stderr
+        assert url_banco_teste not in resultado_upgrade_1.stdout
+        assert url_banco_teste not in resultado_upgrade_1.stderr
 
-    tabelas_pos_upgrade = _listar_tabelas_do_schema(url_banco_teste)
-    assert "alembic_version" in tabelas_pos_upgrade
-    assert tabelas_pos_upgrade - {"alembic_version"} == set(), (
-        "B2 nao cria nenhuma tabela de negocio - encontradas: "
-        f"{tabelas_pos_upgrade - {'alembic_version'}}"
-    )
+        tabelas_pos_upgrade = _listar_tabelas_do_schema(url_banco_teste)
+        assert tabelas_pos_upgrade == ({"alembic_version"} | TABELAS_DE_NEGOCIO_HEAD_0004), (
+            "Apos 'upgrade head', o inventario precisa ser exatamente alembic_version "
+            f"mais as sete tabelas de negocio do head atual (0004) - encontrado: {tabelas_pos_upgrade}"
+        )
 
-    resultado_downgrade = _executar_alembic("downgrade", "base", env=env)
-    assert resultado_downgrade.returncode == 0, resultado_downgrade.stderr
-    assert url_banco_teste not in resultado_downgrade.stdout
-    assert url_banco_teste not in resultado_downgrade.stderr
+        # GATE OBRIGATORIO antes de qualquer downgrade.
+        _comprovar_identidade_banco_teste(url_banco_teste)
 
-    tabelas_pos_downgrade = _listar_tabelas_do_schema(url_banco_teste)
-    assert tabelas_pos_downgrade - {"alembic_version"} == set()
+        resultado_downgrade = _executar_alembic("downgrade", "base", env=env)
+        assert resultado_downgrade.returncode == 0, resultado_downgrade.stderr
+        assert url_banco_teste not in resultado_downgrade.stdout
+        assert url_banco_teste not in resultado_downgrade.stderr
 
-    resultado_upgrade_2 = _executar_alembic("upgrade", "head", env=env)
-    assert resultado_upgrade_2.returncode == 0, resultado_upgrade_2.stderr
+        tabelas_pos_downgrade = _listar_tabelas_do_schema(url_banco_teste)
+        assert tabelas_pos_downgrade == {"alembic_version"}, (
+            "Apos 'downgrade base', o inventario precisa ser exatamente alembic_version, "
+            f"sem nenhuma tabela de negocio - encontrado: {tabelas_pos_downgrade}"
+        )
 
-    tabelas_finais = _listar_tabelas_do_schema(url_banco_teste)
-    assert tabelas_finais - {"alembic_version"} == set()
+        resultado_upgrade_2 = _executar_alembic("upgrade", "head", env=env)
+        assert resultado_upgrade_2.returncode == 0, resultado_upgrade_2.stderr
+
+        tabelas_finais = _listar_tabelas_do_schema(url_banco_teste)
+        assert tabelas_finais == ({"alembic_version"} | TABELAS_DE_NEGOCIO_HEAD_0004), (
+            "Apos o segundo 'upgrade head', o inventario precisa ser exatamente "
+            f"alembic_version mais as sete tabelas de negocio - encontrado: {tabelas_finais}"
+        )
+    finally:
+        excecao_original_em_andamento = sys.exc_info()[0] is not None
+
+        # Gate completo repetido antes de qualquer acao de recuperacao.
+        _comprovar_identidade_banco_teste(url_banco_teste)
+
+        revisao_atual = _consultar_revisao_atual(url_banco_teste)
+        if revisao_atual != "0004":
+            resultado_recuperacao = _executar_alembic("upgrade", "head", env=env)
+            assert url_banco_teste not in resultado_recuperacao.stdout
+            assert url_banco_teste not in resultado_recuperacao.stderr
+            revisao_atual = _consultar_revisao_atual(url_banco_teste)
+
+        inventario_recuperado = _listar_tabelas_do_schema(url_banco_teste)
+        recuperacao_completa = (
+            revisao_atual == "0004"
+            and inventario_recuperado == ({"alembic_version"} | TABELAS_DE_NEGOCIO_HEAD_0004)
+        )
+
+        if not recuperacao_completa:
+            mensagem = (
+                "Recuperacao para o head (0004) nao foi confirmada apos o teste - "
+                f"revisao encontrada: {revisao_atual!r}, inventario encontrado: "
+                f"{inventario_recuperado!r} (sem DSN/credenciais)."
+            )
+            if excecao_original_em_andamento:
+                # Nunca mascara a excecao original - so acrescenta
+                # informacao segura sobre a falha de recuperacao.
+                print(f"AVISO (nao mascara a falha original): {mensagem}")
+            else:
+                pytest.fail(mensagem)
 
 
 def test_dsn_mascarada_nunca_contem_usuario_ou_senha(url_banco_teste):

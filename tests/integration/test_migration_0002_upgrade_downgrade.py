@@ -2,18 +2,24 @@
 """
 NSI - tests/integration/test_migration_0002_upgrade_downgrade.py
 (Sprint B, B3.2 - ADR-008, Parte 1 da B3 e correcoes de seguranca;
-ciclo estendido ao head 0003 na B3.4, sem reabrir o gate nem o piso
-0001 ja aprovados na B3.2)
+ciclo estendido ao head 0003 na B3.4 e ao head 0004 nesta rodada da
+B4.2, sem reabrir o gate nem o piso 0001 ja aprovados na B3.2)
 
 Testes de integracao REAIS contra PostgreSQL - nunca SQLite, nunca mock -
 do ciclo completo de downgrade/upgrade entre a revisao 0001 e o head
-atual (0003), exclusivamente contra nsi_test (nunca nsi_dev - ver
+atual (0004), exclusivamente contra nsi_test (nunca nsi_dev - ver
 docs/implementation/SPRINT-B-ESPECIFICACAO-TECNICA.md, plano de
-execucao da B3.2/B3.4).
+execucao da B3.2/B3.4/B4.2).
 
-Revisoes EXPLICITAS em toda chamada ao Alembic (`upgrade 0003`,
+Revisoes EXPLICITAS em toda chamada ao Alembic (`upgrade 0004`,
 `downgrade 0001`) - nunca `head`: identificador explicito evita
 qualquer ambiguidade caso uma revisao futura mude o head novamente.
+
+RECUPERACAO OBRIGATORIA (correcao desta rodada, B4.2): todo o ciclo
+destrutivo roda dentro de um try/finally - o finally repete o gate
+completo de identidade, consulta a revisao atual e forca `alembic
+upgrade 0004` somente se necessario, sem nunca mascarar uma excecao
+original do proprio teste (ver docstring da funcao de teste).
 
 Nenhum teste deste arquivo chama pytest nem executa a suite completa
 internamente - a unica invocacao externa e ao proprio Alembic, via
@@ -68,7 +74,12 @@ pytestmark = pytest.mark.pg_integration
 NOME_SCHEMA = "nsi_operacional"
 USUARIO_MIGRATOR_ESPERADO = "nsi_test_migrator"
 
-TABELAS_DE_NEGOCIO_0002 = {"claims", "eventos_claim", "comandos_idempotentes"}
+TABELAS_DE_NEGOCIO_0004 = {
+    # B3 (migration 0002)
+    "claims", "eventos_claim", "comandos_idempotentes",
+    # B4 (migration 0004, ADR-009)
+    "lotes", "registros_coleta", "eventos_lote", "eventos_registro_coleta",
+}
 
 
 def _executar_alembic(*args: str, env: dict) -> "subprocess.CompletedProcess[str]":
@@ -185,12 +196,12 @@ def test_identidade_do_banco_de_teste_e_comprovada(request):
     _comprovar_identidade_antes_de_destrutivo(url)
 
 
-def test_ciclo_downgrade_0001_upgrade_0003(request):
+def test_ciclo_downgrade_0001_upgrade_0004(request):
     """
-    Ciclo completo, adaptado na B3.4 para o head atual: estado inicial
-    0003 (aplicado manualmente pelo operador antes desta suite rodar) ->
+    Ciclo completo, adaptado na B4.2 para o head atual: estado inicial
+    0004 (aplicado manualmente pelo operador antes desta suite rodar) ->
     (gate de identidade) -> downgrade 0001 -> confirma inventario ->
-    upgrade 0003 -> terminando OBRIGATORIAMENTE em 0003. O piso 0001 e o
+    upgrade 0004 -> terminando OBRIGATORIAMENTE em 0004. O piso 0001 e o
     gate de identidade sao exatamente os aprovados na B3.2 - nao foram
     reabertos.
 
@@ -198,58 +209,95 @@ def test_ciclo_downgrade_0001_upgrade_0003(request):
     nsi_test_migrator) e comprovada ANTES do downgrade - unica chamada
     destrutiva deste ciclo. A URL e obtida internamente, nunca como
     parametro nomeado da funcao de teste.
+
+    RECUPERACAO OBRIGATORIA (B4.2): todo o trecho destrutivo roda dentro
+    de um try/finally. O finally repete o gate completo de identidade,
+    consulta a revisao atual e executa somente 'alembic upgrade 0004'
+    se nsi_test nao estiver la - nunca contra nsi_dev. Se ja houver uma
+    excecao original em andamento (o proprio corpo do teste falhou), o
+    finally nunca levanta uma NOVA falha por cima dela: uma falha da
+    propria recuperacao, nesse caso, e apenas reportada via 'print'
+    (sem DSN nem credenciais), preservando a excecao original intacta.
+    Sem excecao original em andamento, uma falha de recuperacao faz o
+    teste falhar explicitamente.
     """
     url = request.getfixturevalue("url_banco_teste")
     env = {**os.environ, "NSI_DATABASE_ENV": "test"}
 
-    # Estado inicial: 0003 (head) - o fluxo real aprovado aplica 'alembic
-    # upgrade 0003' MANUALMENTE antes de rodar esta suite (ordem de
-    # execucao da B3.4); este teste nunca faz o primeiro upgrade ele
-    # mesmo. Nunca presumido, sempre confirmado antes de qualquer acao.
-    estado_inicial = _consultar_estado(url)
-    assert estado_inicial["versao"] == "0003", (
-        f"Estado inicial inesperado: alembic_version={estado_inicial['versao']!r}, "
-        "esperado '0003' antes deste teste rodar - o fluxo aprovado exige "
-        "'alembic upgrade 0003' aplicado manualmente antes da suite."
-    )
-    assert estado_inicial["tabelas"] == ({"alembic_version"} | TABELAS_DE_NEGOCIO_0002), (
-        "Inventario inicial precisa ser exatamente alembic_version mais as "
-        f"tres tabelas de negocio - encontrado: {estado_inicial['tabelas']}"
-    )
-    assert estado_inicial["owner_claims"] == "nsi_eventos_owner"
-    assert estado_inicial["owner_alembic_version"] == USUARIO_MIGRATOR_ESPERADO
+    try:
+        # Estado inicial: 0004 (head) - o fluxo real aprovado aplica
+        # 'alembic upgrade 0004' MANUALMENTE antes de rodar esta suite
+        # (ordem de execucao da B4.2); este teste nunca faz o primeiro
+        # upgrade ele mesmo. Nunca presumido, sempre confirmado antes
+        # de qualquer acao.
+        estado_inicial = _consultar_estado(url)
+        assert estado_inicial["versao"] == "0004", (
+            f"Estado inicial inesperado: alembic_version={estado_inicial['versao']!r}, "
+            "esperado '0004' antes deste teste rodar - o fluxo aprovado exige "
+            "'alembic upgrade 0004' aplicado manualmente antes da suite."
+        )
+        assert estado_inicial["tabelas"] == ({"alembic_version"} | TABELAS_DE_NEGOCIO_0004), (
+            "Inventario inicial precisa ser exatamente alembic_version mais as "
+            f"sete tabelas de negocio (B3+B4) - encontrado: {estado_inicial['tabelas']}"
+        )
+        assert estado_inicial["owner_claims"] == "nsi_eventos_owner"
+        assert estado_inicial["owner_alembic_version"] == USUARIO_MIGRATOR_ESPERADO
 
-    # GATE OBRIGATORIO antes do downgrade.
-    _comprovar_identidade_antes_de_destrutivo(url)
+        # GATE OBRIGATORIO antes do downgrade.
+        _comprovar_identidade_antes_de_destrutivo(url)
 
-    # downgrade 0001 - unica acao destrutiva deste ciclo.
-    resultado_downgrade = _executar_alembic("downgrade", "0001", env=env)
-    assert resultado_downgrade.returncode == 0, resultado_downgrade.stderr
-    _assert_saida_alembic_sem_dsn(url, resultado_downgrade.stdout, "downgrade 0001 - stdout")
-    _assert_saida_alembic_sem_dsn(url, resultado_downgrade.stderr, "downgrade 0001 - stderr")
+        # downgrade 0001 - unica acao destrutiva deste ciclo.
+        resultado_downgrade = _executar_alembic("downgrade", "0001", env=env)
+        assert resultado_downgrade.returncode == 0, resultado_downgrade.stderr
+        _assert_saida_alembic_sem_dsn(url, resultado_downgrade.stdout, "downgrade 0001 - stdout")
+        _assert_saida_alembic_sem_dsn(url, resultado_downgrade.stderr, "downgrade 0001 - stderr")
 
-    estado_pos_downgrade = _consultar_estado(url)
-    assert estado_pos_downgrade["versao"] == "0001"
-    assert estado_pos_downgrade["tabelas"] == {"alembic_version"}, (
-        "Downgrade precisa remover exatamente as tres tabelas de negocio, "
-        f"sem residuo - encontrado: {estado_pos_downgrade['tabelas']}"
-    )
+        estado_pos_downgrade = _consultar_estado(url)
+        assert estado_pos_downgrade["versao"] == "0001"
+        assert estado_pos_downgrade["tabelas"] == {"alembic_version"}, (
+            "Downgrade precisa remover exatamente as sete tabelas de negocio (B3+B4), "
+            f"sem residuo - encontrado: {estado_pos_downgrade['tabelas']}"
+        )
 
-    # upgrade 0003 - o ciclo TERMINA aplicado em 0003 (head), exigencia
-    # explicita da B3.4.
-    resultado_upgrade = _executar_alembic("upgrade", "0003", env=env)
-    assert resultado_upgrade.returncode == 0, resultado_upgrade.stderr
-    _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stdout, "upgrade 0003 - stdout")
-    _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stderr, "upgrade 0003 - stderr")
+        # upgrade 0004 - o ciclo TERMINA aplicado em 0004 (head),
+        # exigencia explicita desta rodada da B4.2 - nunca 'head'.
+        resultado_upgrade = _executar_alembic("upgrade", "0004", env=env)
+        assert resultado_upgrade.returncode == 0, resultado_upgrade.stderr
+        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stdout, "upgrade 0004 - stdout")
+        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stderr, "upgrade 0004 - stderr")
 
-    estado_final = _consultar_estado(url)
-    assert estado_final["versao"] == "0003", (
-        "O ciclo de testes precisa terminar com nsi_test novamente em 0003 - "
-        f"estado final encontrado: {estado_final['versao']!r}"
-    )
-    assert estado_final["tabelas"] == ({"alembic_version"} | TABELAS_DE_NEGOCIO_0002)
-    assert estado_final["owner_claims"] == "nsi_eventos_owner"
-    assert estado_final["owner_alembic_version"] == USUARIO_MIGRATOR_ESPERADO
+        estado_final = _consultar_estado(url)
+        assert estado_final["versao"] == "0004", (
+            "O ciclo de testes precisa terminar com nsi_test novamente em 0004 - "
+            f"estado final encontrado: {estado_final['versao']!r}"
+        )
+        assert estado_final["tabelas"] == ({"alembic_version"} | TABELAS_DE_NEGOCIO_0004)
+        assert estado_final["owner_claims"] == "nsi_eventos_owner"
+        assert estado_final["owner_alembic_version"] == USUARIO_MIGRATOR_ESPERADO
+    finally:
+        excecao_original_em_andamento = sys.exc_info()[0] is not None
+
+        # Gate completo repetido antes de qualquer acao de recuperacao.
+        _comprovar_identidade_antes_de_destrutivo(url)
+
+        estado_para_recuperacao = _consultar_estado(url)
+        if estado_para_recuperacao["versao"] != "0004":
+            resultado_recuperacao = _executar_alembic("upgrade", "0004", env=env)
+            _assert_saida_alembic_sem_dsn(url, resultado_recuperacao.stdout, "recuperacao final - stdout")
+            _assert_saida_alembic_sem_dsn(url, resultado_recuperacao.stderr, "recuperacao final - stderr")
+            estado_para_recuperacao = _consultar_estado(url)
+
+        if estado_para_recuperacao["versao"] != "0004":
+            mensagem = (
+                "Recuperacao para 0004 nao foi confirmada apos o teste - revisao "
+                f"encontrada: {estado_para_recuperacao['versao']!r} (sem DSN/credenciais)."
+            )
+            if excecao_original_em_andamento:
+                # Nunca mascara a excecao original - so acrescenta
+                # informacao segura sobre a falha de recuperacao.
+                print(f"AVISO (nao mascara a falha original): {mensagem}")
+            else:
+                pytest.fail(mensagem)
 
 
 def test_dsn_mascarada_nunca_contem_usuario_ou_senha(request):
