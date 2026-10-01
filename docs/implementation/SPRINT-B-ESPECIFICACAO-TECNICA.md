@@ -4,7 +4,7 @@
 
 **Subordinação:** integral à ADR-008 (APROVADA E CONGELADA) e ao `ROADMAP-SPRINTS-B-G.md`. Nenhuma frase deste documento pode contradizer a ADR-008; onde houver aparente tensão, a ADR-008 prevalece e este documento deve ser corrigido.
 
-**Status:** DOCUMENTO VIVO — **B1 (esta especificação) CONCLUÍDA**; **B2 (Infraestrutura, Conexão e Migrations) CONCLUÍDA** (Seção 18); **B3.1 (Provisionamento administrativo, roles e isolamento) CONCLUÍDA** (Seção 18); **B3.2 (Migration `0002` — tabelas, constraints, índices e trigger defensiva) CONCLUÍDA** (Seção 18); **B3.3 (Migration `0003` — seis funções `SECURITY DEFINER`) CONCLUÍDA** (Seção 18); **B3.4 (Testes finais e documentação de encerramento da Sprint B3) CONCLUÍDA** (Seção 18). **Sprint B3 (B3.1–B3.4) integralmente CONCLUÍDA.** B4–B7 pendentes, cada uma com autorização própria e separada.
+**Status:** DOCUMENTO VIVO — **B1 (esta especificação) CONCLUÍDA**; **B2 (Infraestrutura, Conexão e Migrations) CONCLUÍDA** (Seção 18); **B3.1 (Provisionamento administrativo, roles e isolamento) CONCLUÍDA** (Seção 18); **B3.2 (Migration `0002` — tabelas, constraints, índices e trigger defensiva) CONCLUÍDA** (Seção 18); **B3.3 (Migration `0003` — seis funções `SECURITY DEFINER`) CONCLUÍDA** (Seção 18); **B3.4 (Testes finais e documentação de encerramento da Sprint B3) CONCLUÍDA** (Seção 18). **Sprint B3 (B3.1–B3.4) integralmente CONCLUÍDA.** **B4.1 (decisão arquitetural do catálogo de eventos operacionais — ADR-009) CONCLUÍDA** (Seção 18); **B4.2 (Migration `0004` — schema relacional de lotes, registros de coleta e eventos operacionais) CONCLUÍDA** (Seção 18); **B4.3 (role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER`) ESPECIFICADA — implementação ainda não autorizada** (Seção 18). B5–B7 pendentes, cada uma com autorização própria e separada.
 
 **Autorização:** este documento, por si só, **não autoriza nenhuma implementação**. Cada subetapa (B2–B7) exige autorização própria, seguindo a mesma disciplina já usada nas Sprints A1–A3 (plano → aprovação → implementação → teste → diff → stage → commit → push). B7 exige autorização distinta de B5/B6 e está bloqueada por pré-requisitos próprios (Seção 14).
 
@@ -219,6 +219,8 @@ GRANT EXECUTE ON FUNCTION nsi_operacional.fn_registrar_revisao_abandono(...),
 
 A ADR-008 aprova apenas o modelo geral de evento imutável/projeção corrente (§6) e fecha exclusivamente o catálogo de eventos de **claim** (§11). Esta especificação **não inventa** catálogo, semântica, agregado, payload mínimo, identidade idempotente ou versão para eventos de lote, registro de coleta ou correção. **B4 permanece formalmente condicionada** a uma decisão arquitetural própria (evolução da ADR-008 ou ADR complementar), cobrindo exatamente esses pontos. Sem essa decisão, B4 não pode iniciar.
 
+**Condição satisfeita (2026-09-16):** a decisão arquitetural exigida por esta seção foi tomada pela **ADR-009 — Catálogo de Eventos Operacionais de Lote, Registro de Coleta e Correção (APROVADA E CONGELADA)**, registrada como Subetapa B4.1 (Seção 18). O texto acima é preservado como registro histórico da condição; o catálogo, o agregado, o payload, a identidade idempotente e os papéis de cada evento são os da ADR-009 — esta especificação não os redefine, apenas os traduz em desenho técnico (Seção 18, Detalhamento de B4).
+
 ## 10. Registros Legados Sem Identidade Técnica
 
 Preservação integral, nunca invenção nem omissão. Classificação candidata "legado sem identidade técnica", referenciada por `lote_id` de origem + localização/índice original + checksum do conteúdo bruto — nunca apresentada como identidade técnica nascida no passado. Permanecem auditáveis; nunca enviáveis automaticamente; nunca recebem claim (exclusão estrutural — invariante a testar); nunca confundidos com registros A1+; exigem tratamento humano ou política formal futura. Nome final da classificação pendente da decisão da Seção 9.
@@ -310,7 +312,9 @@ Consumo único decorre estruturalmente da combinação `(estado, claim_id)` na c
 | **B3.2** | Migration `0002` — tabelas, constraints, índices parciais e trigger defensiva | **CONCLUÍDA** — detalhada abaixo |
 | **B3.3** | Migration `0003` — exatamente as seis funções `SECURITY DEFINER` e seus `REVOKE`/`GRANT` | **CONCLUÍDA** — detalhada abaixo |
 | **B3.4** | Testes finais e documentação de encerramento da Sprint B3 | **CONCLUÍDA** — detalhada abaixo |
-| **B4** | Catálogo de eventos operacionais e projeções de negócio | **condicionada** à decisão arquitetural formal (Seção 9) |
+| **B4.1** | Decisão arquitetural formal do catálogo de eventos operacionais (ADR-009) | **CONCLUÍDA** — detalhada abaixo |
+| **B4.2** | Migration `0004` — tabelas `lotes`, `registros_coleta`, `eventos_lote`, `eventos_registro_coleta`, triggers defensivas e ampliação de `comandos_idempotentes` | **CONCLUÍDA** — detalhada abaixo |
+| **B4.3** | Provisionamento administrativo da role `nsi_congelamento` e Migration `0005` — exatamente as cinco funções `SECURITY DEFINER` do catálogo da ADR-009 e seus `REVOKE`/`GRANT` | **ESPECIFICADA** — implementação aguarda autorização própria; detalhada abaixo |
 | **B5** | Importador e validação de migração, ambiente de teste/staging | pendente |
 | **B6** | Ensaio de corte completo, ambiente controlado | pendente — regras abaixo |
 | **B7** | Corte real + preservação dos JSONs, produção | **bloqueada** até Seção 14 estar satisfeita; autorização própria e separada de B5/B6 |
@@ -395,8 +399,214 @@ Formalizada nesta revisão do documento: a Sprint B3, tratada como bloco único 
 
 **Critério de aceite: satisfeito integralmente.**
 
+### Detalhamento de B4 — subetapas B4.1–B4.3
+
+A Seção 9 condicionava B4 a uma decisão arquitetural própria. Essa decisão foi tomada (B4.1) e a B4 passou a ser executada em subetapas, no mesmo padrão da B3: decisão/arquitetura → schema → funções. `0004` e `0005` nunca são fundidas na mesma migration. Esta especificação registra as subetapas B4.1 a B4.3; uma eventual subetapa posterior de encerramento da B4 não está definida por este documento.
+
+#### B4.1 — Decisão arquitetural do catálogo de eventos operacionais — CONCLUÍDA
+
+**Entrega** (`docs/architecture/ADR-009-catalogo-eventos-operacionais.md`, APROVADA E CONGELADA em 2026-09-16, commit `bd2ab47`): modelo híbrido de persistência (eventos imutáveis como fonte de transições e auditoria; tabelas de estado corrente como fonte dos valores pessoais e operacionais atuais — não é event sourcing integral); catálogo fechado de exatamente cinco eventos (`lote_criado`, `lote_congelado_d8`, `disparo_confirmado`, `correcao_registrada`, `tentativa_correcao_nao_resolvida`); proibição de valor pessoal bruto em qualquer evento; payload seguro da tentativa não resolvida; localização do checksum e natureza correlacionável do `payload_hash`; identidade técnica por `session_user`; matriz de papéis, incluindo a nova role `NOLOGIN` `nsi_congelamento`; idempotência determinística do congelamento.
+
+**Nenhuma implementação de código, schema, migration ou role foi realizada nesta subetapa** — exclusivamente documental. Satisfaz integralmente a condição da Seção 9.
+
+#### B4.2 — Migration `0004` — schema relacional de lotes, registros e eventos operacionais — CONCLUÍDA
+
+**Objetos criados** (`migrations/versions/0004_lotes_registros_eventos_operacionais.py`, commit `41e49f9`), executando integralmente como `nsi_eventos_owner` (`SET LOCAL ROLE`, `RESET ROLE` explícito e autoverificação de `current_user`, mesmo padrão de `0002`/`0003`):
+
+- `nsi_operacional.lotes` — estado corrente do lote: totais, `total_valido_congelado`, `status` (`aguardando_d8` | `sem_registros_validos` | `aguardando_confirmacao_disparo` | `disparo_confirmado`), `horario_conceitual_congelamento` (exatamente `recebido_em` + 691200 s), dados do congelamento e da confirmação, `versao_eventos_atual`; `CHECK`s de totais, de coerência por status, de congelamento nunca antecipado e de `atrasado` correto; índice único parcial `lotes_lote_id_legado_unico` e índice parcial `lotes_aguardando_congelamento`.
+- `nsi_operacional.registros_coleta` — estado corrente do registro: `nome`, `produto`, `whatsapp`, `valido`, `motivos_invalidez` (vocabulário fechado de sete motivos, sem duplicata), `numero_versao_dados`, `versao_eventos_atual`; `CHECK` de coerência entre validade, valores e motivos; índices `registros_coleta_lote_id` e `registros_coleta_invalidos_por_lote`.
+- `nsi_operacional.eventos_lote` — log imutável dos quatro eventos de agregado `lote`, com colunas relacionais tipadas e `CHECK` condicional de payload por tipo (nenhum `JSONB` genérico); `UNIQUE (aggregate_id, aggregate_version)`; índices únicos parciais `eventos_lote_criado_unico`, `eventos_lote_congelado_unico`, `eventos_lote_disparo_confirmado_unico`.
+- `nsi_operacional.eventos_registro_coleta` — log imutável de `correcao_registrada`, com `resultado` (`aplicada_valida` | `aplicada_ainda_invalida` | `recusada_ja_valido` | `recusada_tardia`) e `numero_versao_dados` presente somente nos resultados de aplicação; `UNIQUE (aggregate_id, aggregate_version)`.
+- Funções de trigger `fn_bloquear_alteracao_eventos_lote` e `fn_bloquear_alteracao_eventos_registro_coleta`, com as triggers `eventos_lote_bloqueia_alteracao` e `eventos_registro_coleta_bloqueia_alteracao` (`BEFORE UPDATE OR DELETE`, bloqueiam inclusive o owner).
+- Ampliação aditiva do `CHECK` `ck_comandos_idempotentes_comando`, que passa a aceitar também `registrar_lote`, `registrar_congelamento`, `confirmar_disparo`, `registrar_correcao` e `registrar_tentativa_nao_resolvida` — nenhuma outra coluna de `comandos_idempotentes` é alterada.
+- `REVOKE ALL` de `PUBLIC` e das três roles funcionais já existentes em cada tabela, e de `PUBLIC` em cada função de trigger. Nenhuma coluna de checksum. Não toca `lote.json`.
+
+**Máquina de estados de `lotes.status` fixada pela `0004`:** criação sempre em `aguardando_d8`, inclusive com `total_valido = 0`; antes do congelamento, correções alteram `registros_coleta` e os totais do lote sem mudar o status; no congelamento, a contagem real do instante decide `sem_registros_validos` (terminal) ou `aguardando_confirmacao_disparo`; a confirmação leva a `disparo_confirmado`. `numero_versao_dados` (só avança em correção aplicada) e `versao_eventos_atual` (avança inclusive em recusa) são contadores independentes.
+
+**Downgrade com preflight obrigatório:** `0004 → 0003` aborta a transação inteira, sem remover nenhum objeto, se existir qualquer recibo de um dos cinco comandos da B4 em `comandos_idempotentes`. Essa regra tem consequência direta sobre os testes da B4.3 (ver "Critérios de rollback", abaixo).
+
+**Não criado nesta subetapa:** nenhuma função `SECURITY DEFINER`; nenhuma referência ou concessão a `nsi_congelamento`, que ainda não existe. Ambos pertencem à B4.3.
+
+**Testes entregues no mesmo commit:** `test_migration_0004_upgrade_downgrade.py`, `test_schema_b4_constraints.py`, `test_schema_b4_unicidade_e_fk.py`, `test_trigger_imutabilidade_eventos_lote.py`, `test_trigger_imutabilidade_eventos_registro_coleta.py`, `test_comandos_idempotentes_compatibilidade_b4.py`, e ajustes em `test_alembic_postgres.py` e `test_migration_0002_upgrade_downgrade.py`.
+
+**Registro de execução real não consolidado neste documento:** as contagens da suíte e a revisão corrente de `nsi_test` e `nsi_dev` após a `0004` não foram registradas aqui no encerramento da B4.2. Sua confirmação, por leitura, é pré-requisito da B4.3 (ver "Dependências", abaixo) — este documento não afirma números que não verificou.
+
+#### B4.3 — Role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER` — ESPECIFICADA
+
+**Status:** especificação técnica. Não autoriza implementação — a B4.3 segue a mesma disciplina das subetapas anteriores (plano → aprovação → implementação → teste → diff → stage → commit → push).
+
+##### Objetivo
+
+Tornar gravável, exclusivamente por função `SECURITY DEFINER`, o catálogo fechado de cinco eventos da ADR-009 sobre as tabelas já criadas pela `0004`: cada função grava o evento imutável e atualiza a projeção corrente na mesma transação, com idempotência persistente, identidade técnica por `session_user` e menor privilégio por role.
+
+##### Escopo
+
+**Dentro:**
+- Provisionamento administrativo da role `nsi_congelamento` (`NOLOGIN`), no padrão de três fases da B3.1.
+- Migration `0005`: exatamente cinco funções `SECURITY DEFINER`, seus `REVOKE EXECUTE ... FROM PUBLIC` e seus `GRANT EXECUTE` por role.
+- Definição do algoritmo concreto de `payload_hash` de cada comando.
+- Testes unitários dos scripts administrativos e testes de integração PostgreSQL real das cinco funções.
+
+**Fora, sem exceção:**
+- Qualquer alteração em `0001`–`0004`, em tabelas, constraints, índices ou triggers já criados.
+- Qualquer alteração em `adapters/storage.py`, `core/scheduler.py`, `app.py`, `integration/`, `services/` — a troca do backend da aplicação não pertence à B4.3.
+- Mecanismo de detecção automática do M0+192h (worker/cron) — Sprint D. A B4.3 entrega somente a função que o mecanismo futuro invocará.
+- Funções de leitura/consulta e qualquer `GRANT SELECT` — as roles funcionais continuam sem DML e sem leitura direta nas quatro tabelas.
+- Envio, `wamid`, webhook (Sprint C); autenticação, MFA, rotas e `operador_humano_id` preenchido (Sprint D); importação de dados legados (B5); ensaio e corte (B6/B7).
+- Sexto evento, sexta função de negócio ou helper auxiliar — a especificação técnica não amplia o catálogo da ADR-009.
+- Tabela de histórico de valores pessoais anteriores e qualquer coluna de checksum (ADR-009, Seções 5 e 9).
+
+##### Dependências
+
+1. ADR-009 aprovada e congelada (B4.1) — satisfeita.
+2. Migration `0004` (B4.2) aplicada — **a confirmar por leitura**, antes de qualquer ação: revisão corrente de `nsi_test` e de `nsi_dev`, e suíte completa do projeto passando sobre a `0004`.
+3. B3.1 provisionada (`nsi_eventos_owner`, `nsi_aplicacao`, `nsi_expiracao`, `nsi_operador_restrito`; memberships dos migrators) — satisfeita.
+4. Role `nsi_congelamento` existente **antes** da `0005` — a migration falha, sem criar nada, se a role não existir (mesmo tipo de pré-requisito que `0002`/`0003`/`0004` têm em relação a `nsi_eventos_owner`). A ordem interna da B4.3 é, portanto, fixa: provisionamento da role → migration `0005`.
+5. Autorização humana própria para a implementação da B4.3 e, separadamente, para a execução real do provisionamento administrativo.
+
+##### Arquivos previstos
+
+Nomes candidatos, a confirmar na rodada de plano. Nenhum deles existe hoje.
+
+| Arquivo | Natureza |
+|---|---|
+| `scripts/postgres_local/provisionar_b4_role_congelamento.sql` | novo — preflight somente leitura → convergência → pós-validação completa |
+| `scripts/postgres_local/desprovisionar_b4_role_congelamento.sql` | novo — reversão administrativa, não executada na subetapa |
+| `migrations/versions/0005_cinco_funcoes_eventos_operacionais.py` | novo — as cinco funções e sua matriz de `EXECUTE` |
+| `tests/unit/test_scripts_b4_role_congelamento.py` | novo — testes estáticos de conteúdo, ordem e gates dos dois scripts |
+| `tests/integration/test_provisionamento_b4_role_congelamento.py` | novo — somente leitura |
+| `tests/integration/test_fn_registrar_lote.py` | novo |
+| `tests/integration/test_fn_registrar_congelamento.py` | novo |
+| `tests/integration/test_fn_confirmar_disparo.py` | novo |
+| `tests/integration/test_fn_registrar_correcao.py` | novo |
+| `tests/integration/test_fn_registrar_tentativa_nao_resolvida.py` | novo |
+| `tests/integration/test_idempotencia_e_permissoes_b4_3.py` | novo |
+| `tests/integration/test_migration_0005_upgrade_downgrade.py` | novo |
+| `tests/integration/test_alembic_postgres.py`, `test_migration_0002_upgrade_downgrade.py`, `test_migration_0004_upgrade_downgrade.py` | ajuste — somente o necessário para o novo head `0005`, sem reabrir nenhuma regra já aprovada |
+| `docs/implementation/PROCEDIMENTO-MANUAL-B3-DESTRUTIVO.md` ou documento equivalente próprio da B4 | a decidir na rodada de plano — cenários destrutivos da role continuam exclusivamente manuais |
+| Este documento, `ROADMAP-SPRINTS-B-G.md`, `PROJECT_STATUS.md` | atualização de status ao encerramento |
+
+`config.py` não é alterado: `nsi_congelamento` é `NOLOGIN` e não possui URL de conexão.
+
+##### Provisionamento da role `nsi_congelamento`
+
+Regido pela ADR-009 (Seção 11): a criação da role é administrativa, nunca responsabilidade automática de uma migration Alembic.
+
+- Atributos explícitos: `NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS`; sem senha; sem pertencer a nenhuma outra role.
+- `USAGE` no schema `nsi_operacional`, nos dois bancos locais. Nenhum `CONNECT` próprio (não é role de conexão).
+- Membership `nsi_aplicacao` → `nsi_congelamento` com `INHERIT FALSE, SET TRUE, ADMIN FALSE` — a conexão `nsi_aplicacao` só exerce o papel por `SET ROLE` explícito, nunca por herança.
+- Fase 1 (somente leitura) valida o estado inteiro antes de qualquer escrita e aborta sem corrigir nada silenciosamente; Fase 2 executa apenas o que a Fase 1 autorizou; Fase 3 revalida tudo a partir do zero. Idempotente e seguro para reexecução.
+- O script não cria, altera nem remove nenhuma das quatro roles da B3.1, nem os migrators.
+
+**Ponto a decidir na rodada de plano — onde fica o `GRANT EXECUTE` da função de congelamento.** A função só existe depois da `0005`; a role precisa existir antes dela. Proposta desta especificação: o `GRANT EXECUTE ... TO nsi_congelamento` é emitido pela própria `0005`, pelo owner, exatamente como a `0003` fez para as roles da B3.1; e a comprovação exigida pela ADR-009 (Seção 11) é feita por inspeção somente leitura pós-migration (teste de integração de leitura + reexecução da Fase 3 do script). A alternativa — um segundo passo administrativo posterior à migration — não é adotada por padrão e exige decisão explícita se preferida.
+
+##### Regras transversais às cinco funções
+
+- `LANGUAGE plpgsql`, `SECURITY DEFINER`, owner `nsi_eventos_owner`, `SET search_path = pg_catalog, nsi_operacional, pg_temp`, toda referência interna qualificada por schema — mesmo padrão da `0003`.
+- `evento_id` sempre gerado dentro da função (`gen_random_uuid()`); nunca recebido como parâmetro.
+- `executado_por_login` = `session_user`, sempre. `current_user` nunca é usado como identidade do chamador. Nenhuma função recebe nome, rótulo ou identificador humano; nenhuma recebe parâmetro para `operador_humano_id`.
+- PostgreSQL é a autoridade temporal: `recebido_em`, `occurred_at`, `horario_real_execucao` e `disparo_confirmado_em` vêm de `now()`. Nenhuma função aceita parâmetro de relógio. Testes de fronteira usam o artifício da Seção 7 (setup e chamada na mesma transação).
+- Versão de evento obtida por `UPDATE ... SET versao_eventos_atual = versao_eventos_atual + 1 RETURNING versao_eventos_atual` na linha do agregado — nunca por `MAX(aggregate_version) + 1`. A `UNIQUE (aggregate_id, aggregate_version)` permanece como rede de segurança, não como mecanismo primário.
+- Evento e projeção são gravados na mesma transação. Nenhuma função executa `UPDATE` ou `DELETE` sobre evento já gravado.
+- Envelope de idempotência idêntico ao da `0003`: reserva em `comandos_idempotentes` com `INSERT ... ON CONFLICT (comando, aggregate_id, chave_idempotencia) DO NOTHING`; mesma chave com mesmo `payload_hash` devolve o `resultado` persistido (replay), sem novo evento; mesma chave com `payload_hash` divergente levanta `conflito_de_idempotencia` com `SQLSTATE 22023` e mensagem fixa, sem interpolar chave, hash ou valor.
+- **Ordem de bloqueio fixa:** toda função que toca `lotes` e `registros_coleta` na mesma transação adquire primeiro a linha do lote, depois a do registro. É essa ordem que serializa correção contra congelamento e elimina deadlock entre as duas. O mecanismo concreto de aquisição (preferencialmente o próprio `UPDATE` condicional) é detalhado na rodada de plano.
+- `resultado` (retorno `JSONB` e recibo de idempotência) nunca contém nome, WhatsApp, produto, valor corrigido, token, segredo ou DSN — apenas identificadores, enums, contadores e timestamps.
+- Recusa de negócio é retorno estruturado (`sucesso: false`, `motivo` de vocabulário fechado), nunca exceção. Exceção é reservada a conflito de idempotência e a violação estrutural.
+
+##### As cinco funções
+
+Nomes derivados dos cinco valores de `comando` já fixados pela `0004`. Assinaturas são candidatas; papéis, eventos e efeitos são os da ADR-009 (Seção 6) e não são reabertos.
+
+| | `fn_registrar_lote` | `fn_registrar_congelamento` | `fn_confirmar_disparo` | `fn_registrar_correcao` | `fn_registrar_tentativa_nao_resolvida` |
+|---|---|---|---|---|---|
+| **`comando`** | `registrar_lote` | `registrar_congelamento` | `confirmar_disparo` | `registrar_correcao` | `registrar_tentativa_nao_resolvida` |
+| **Executa** | `nsi_aplicacao` | `nsi_congelamento` (via `SET ROLE` a partir de `nsi_aplicacao`) | `nsi_operador_restrito` | `nsi_aplicacao` | `nsi_aplicacao` |
+| **Evento** | `lote_criado` | `lote_congelado_d8` | `disparo_confirmado` | `correcao_registrada` (sempre, quando o registro pertence ao lote) | `tentativa_correcao_nao_resolvida` |
+| **Agregado** | `lote` | `lote` | `lote` | `registro_coleta` | `lote` |
+| **Parâmetros** | `lote_id`, `lote_id_legado` (opcional), registros (cada um: `registro_coleta_id`, `nome`, `whatsapp`, `produto`, `valido`, `motivos_invalidez`), chave, `payload_hash` | `lote_id` — somente | `lote_id`, `total_esperado`, chave, `payload_hash` | `registro_coleta_id`, `nome`, `whatsapp`, `produto`, `valido`, `motivos_invalidez`, chave, `payload_hash` | `lote_id`, `motivo`, `codigo_tecnico_normalizado` (`UUID` ou nulo), chave, `payload_hash` |
+| **Chave de idempotência** | por tentativa de upload | determinística: o próprio `lote_id`, derivada dentro da função | por tentativa de confirmação | por tentativa de correção — nunca o `registro_coleta_id` | por tentativa |
+| **Precondição** | nenhum `lote_criado` anterior para o `lote_id` | lote em `aguardando_d8` e `now() >= horario_conceitual_congelamento` | lote em `aguardando_confirmacao_disparo` e `total_esperado = total_valido_congelado` | registro existente | lote existente; código não resolve a registro deste lote |
+| **Projeção** | cria a linha em `lotes` (`aguardando_d8`, `versao_eventos_atual = 1`) e uma linha por registro em `registros_coleta` | `total_valido_congelado`, `horario_real_congelamento`, `congelamento_atrasado`, `status` | `status = disparo_confirmado`, `disparo_confirmado_em`, `disparo_confirmado_por_login`, `total_confirmado_para_disparo` | somente nos resultados de aplicação: valores pessoais, `valido`, `motivos_invalidez`, `numero_versao_dados`; e os totais do lote | nenhuma, além do avanço de `versao_eventos_atual` do lote |
+| **Retorno** | `lote_id`, totais, `recebido_em` | `status` resultante, `horario_real_execucao`, `atrasado` | `disparo_confirmado_em`, `total_confirmado` | `resultado`, `numero_versao_dados` quando aplicada | `evento_id` |
+
+**`fn_registrar_lote`.** Os totais (`total_recebido`, `total_valido`, `total_invalido`) são contados pela função a partir dos registros recebidos, nunca informados pelo chamador. A classificação de cada registro (`valido`, `motivos_invalidez`) e a normalização do WhatsApp continuam sendo responsabilidade da validação Python já existente (Sprint A2); as `CHECK`s de `registros_coleta` são a rede de segurança. Lote sem nenhum registro válido é criado normalmente em `aguardando_d8`, nunca recusado. Como `recebido_em` é `now()`, esta função não serve para registrar lotes com M0 no passado — a importação de lotes legados é assunto da B5 e não é resolvida aqui.
+
+**`fn_registrar_congelamento`.** Não recebe chave nem `payload_hash`: ambos são derivados dentro da função a partir do `lote_id` (SHA-256 nativo do PostgreSQL, sem extensão), o que garante estruturalmente a regra da ADR-009 (Seção 12) — duas execuções do mesmo lote em instantes diferentes produzem replay, nunca conflito. A contagem é a real do instante (`COUNT` de registros válidos do lote), nunca a do upload: zero leva a `sem_registros_validos`, maior que zero a `aguardando_confirmacao_disparo`. **Chamada antes do instante conceitual, ou sobre lote inexistente, não grava evento nem recibo de idempotência** — com chave determinística, um recibo de recusa persistido tornaria a recusa permanente e impediria o congelamento legítimo posterior.
+
+**`fn_confirmar_disparo`.** `total_esperado` é a precondição fornecida pelo chamador prevista pela ADR-009 (Seção 6): a confirmação só vale para a composição definitiva que foi apresentada. `operador_humano_id` é gravado `NULL`. A função não envia, não agenda e não autoriza nenhum envio técnico — apenas registra o fato; o `occurred_at` do evento é o T0 da Coleta (ADR-005, Princípio 1).
+
+**`fn_registrar_correcao`.** `codigo_tecnico` da ADR-009 é o próprio `registro_coleta_id` (o CSV de correção da Sprint A3 já usa o `registro_coleta_id` como código técnico), por isso `eventos_registro_coleta` o representa em `aggregate_id`, sem coluna separada. Ordem de decisão, preservando a da Sprint A3 (`core/scheduler.py::processar_uma_correcao`):
+1. registro já válido → `recusada_ja_valido`;
+2. `now() >= horario_conceitual_congelamento` do lote, ou lote fora de `aguardando_d8` → `recusada_tardia` (correção exatamente na fronteira é tardia, mesmo que o congelamento técnico ainda não tenha sido executado);
+3. caso contrário, aplica: `aplicada_valida` ou `aplicada_ainda_invalida`, conforme a classificação recebida.
+
+Nas recusas, nenhum valor pessoal, total ou `numero_versao_dados` é alterado; apenas `versao_eventos_atual` do registro avança. Na aplicação, o valor anterior é sobrescrito (nenhum histórico de valores — ADR-009, Seção 5) e os totais do lote são ajustados na mesma transação, sem evento de lote e sem mudança de status. Registro inexistente não gera `correcao_registrada`: é caso de `fn_registrar_tentativa_nao_resolvida`.
+
+**`fn_registrar_tentativa_nao_resolvida`.** A função impõe a coerência que a `CHECK` da tabela não impõe: `codigo_tecnico_normalizado` nulo se e somente se `motivo` ∈ {`codigo_ausente`, `codigo_invalido`}. O parâmetro é do tipo `UUID`, o que torna impossível gravar um código bruto sintaticamente inválido. Não existe parâmetro de texto livre, nome, telefone ou produto.
+
+##### `payload_hash`
+
+- SHA-256 em hexadecimal minúsculo (64 caracteres, conforme `ck_comandos_idempotentes_payload_hash_sha256`) sobre a serialização canônica da entrada semântica do chamador: JSON com chaves ordenadas, UTF-8, sem espaços, com um discriminador do comando.
+- Composição por comando exatamente como a ADR-009 (Seção 6): upload canônico; `lote_id`; `lote_id` + `total_esperado`; `registro_coleta_id` + valores corrigidos normalizados; `lote_id` + `motivo` + código normalizado (ou nulo).
+- Nenhum valor gerado pelo servidor entra no hash. A chave de idempotência nunca entra no hash.
+- Calculado pelo chamador para quatro funções; pela própria função no congelamento.
+- O hash de `registrar_lote` e de `registrar_correcao` cobre conteúdo pessoal e é, por isso, potencialmente correlacionável (ADR-009, Seção 9) — vive somente em `comandos_idempotentes`, nunca em evento.
+- **A confirmar na rodada de plano:** se o cálculo canônico em Python entra na B4.3 como módulo de produção ou permanece, nesta subetapa, apenas como utilitário de teste, ficando o módulo de produção para a etapa de troca do backend.
+
+##### Critérios de segurança
+
+- `PUBLIC` sem `EXECUTE` em nenhuma das cinco funções (`REVOKE` explícito, obrigatório).
+- Matriz de `EXECUTE` exatamente a da ADR-009 (Seção 11): `nsi_aplicacao` em `fn_registrar_lote`, `fn_registrar_correcao`, `fn_registrar_tentativa_nao_resolvida`; `nsi_operador_restrito` somente em `fn_confirmar_disparo`; `nsi_congelamento` somente em `fn_registrar_congelamento`; `nsi_expiracao` em nenhuma.
+- `nsi_aplicacao` sem `EXECUTE` direto em `fn_registrar_congelamento` — só alcança a função por `SET ROLE nsi_congelamento` explícito.
+- `nsi_congelamento` sem nenhum `SELECT`/`INSERT`/`UPDATE`/`DELETE` em nenhuma tabela e sem `EXECUTE` em qualquer outra função, inclusive as seis de claim.
+- Nenhuma role funcional ganha DML ou leitura direta em `lotes`, `registros_coleta`, `eventos_lote`, `eventos_registro_coleta` ou `comandos_idempotentes`.
+- A autorização decorre exclusivamente de `GRANT EXECUTE`; nenhum valor de parâmetro concede privilégio.
+- Nenhum valor pessoal em evento, em `resultado`, em mensagem de exceção ou em saída de teste. Valores pessoais trafegam apenas como parâmetros vinculados, nunca interpolados em SQL.
+- Nenhuma DSN, senha ou hash reutilizável em exceção, log, `repr` ou saída capturada — mesmo endurecimento dos testes da B3.
+- Os scripts administrativos não contêm senha e verificam a identidade do servidor antes de qualquer escrita.
+
+##### Estratégia de testes
+
+Mesma separação da Seção 20: unitários em Python puro; integração somente contra PostgreSQL real (`pg_integration`), sem SQLite e sem mock; nenhum teste usa banco ou credencial de produção.
+
+- **Scripts administrativos (unitários, estáticos):** ordem das três fases, gates, ausência de senha, ausência de comando destrutivo fora da reversão.
+- **Provisionamento (integração, somente leitura):** atributos da role, ausência de membership inesperada, membership de `nsi_aplicacao` com `INHERIT FALSE`, `USAGE` no schema nos dois bancos.
+- **Por função:** caminho de sucesso; cada recusa de negócio; conteúdo exato do evento gravado e da projeção resultante; `executado_por_login` igual ao `session_user` real.
+- **Fronteira temporal, sem espera real:** congelamento e correção um microssegundo antes, exatamente em, e um microssegundo depois de `horario_conceitual_congelamento`.
+- **Congelamento:** `atrasado` correto; contagem real do instante divergindo da contagem do upload após correções; lote sem válidos → `sem_registros_validos`; chamada prematura sem evento e sem recibo, seguida de chamada legítima bem-sucedida; dois workers concorrentes reais → um evento, o outro replay.
+- **Concorrência real (duas conexões):** correção contra congelamento na fronteira; duas correções simultâneas ao mesmo registro, sem perda de atualização e com versões sem lacuna; dois uploads com o mesmo `lote_id`; duas confirmações do mesmo lote.
+- **Idempotência:** replay sem novo evento, inclusive em nova conexão; mesma chave com payload diferente → `SQLSTATE 22023` com mensagem fixa; recibo original intocado; `resultado` inspecionado, sem valor pessoal.
+- **Privacidade:** varredura das colunas de `eventos_lote` e `eventos_registro_coleta` e de `comandos_idempotentes.resultado`, confirmando ausência dos valores pessoais usados no teste.
+- **Permissão:** cada role tentando cada função fora da sua matriz → falha; `nsi_aplicacao` chamando a função de congelamento sem `SET ROLE` → falha; DML direto por qualquer role funcional → falha; `PUBLIC` sem `EXECUTE`.
+- **Imutabilidade:** nenhuma das cinco funções provoca `UPDATE`/`DELETE` em evento; triggers da `0004` continuam ativas.
+- **Migration:** ciclo `0005 → 0004 → 0005` exclusivamente em `nsi_test`, com o gate obrigatório de identidade; inventário somente leitura confirmando exatamente cinco funções novas, owner, `SECURITY DEFINER`, `search_path` e matriz de `EXECUTE`.
+- **Regressão:** suíte completa do projeto, sem exclusões, sem falhas e sem pulados.
+
+##### Critérios de aceite
+
+1. Role `nsi_congelamento` provisionada pelo script de três fases, executado duas vezes, ambas concluindo com a pós-validação completa aprovada.
+2. `0005` cria exatamente as cinco funções acima e nada mais — nenhuma tabela, coluna, constraint, índice, trigger ou helper.
+3. As cinco funções têm owner `nsi_eventos_owner`, `SECURITY DEFINER` e `search_path` fixo, comprovados por inspeção somente leitura.
+4. Matriz de `EXECUTE` idêntica à da ADR-009 (Seção 11), comprovada por inspeção somente leitura.
+5. Cada um dos cinco eventos é gravado com o payload exato da ADR-009 e a projeção correspondente, na mesma transação.
+6. Replay e conflito de idempotência comprovados para as cinco funções; replay do congelamento comprovado sob concorrência real.
+7. Nenhum valor pessoal em evento, recibo, exceção ou saída de teste.
+8. `0005` aplicada primeiro em `nsi_test`; depois em `nsi_dev`, somente por `upgrade`, com identidade confirmada antes de qualquer ação. Ambos terminam em `0005 (head)`.
+9. Suíte específica da B4.3 e suíte completa do projeto aprovadas integralmente.
+10. `0001`–`0004`, `adapters/`, `core/`, `app.py`, `integration/` e `services/` sem nenhuma alteração.
+11. Documentação de encerramento registrada neste documento, no `ROADMAP-SPRINTS-B-G.md` e no `PROJECT_STATUS.md`.
+
+##### Critérios de rollback
+
+- **Migration:** o `downgrade` da `0005` remove exatamente as cinco funções, na ordem inversa da criação, com `SET LOCAL ROLE`/`RESET ROLE` e autoverificação. Não toca tabelas, dados, recibos nem a role.
+- **Onde o downgrade é permitido:** somente em `nsi_test`, com o gate de identidade (banco, servidor, porta, `nsi_test_migrator`) confirmado antes. Nenhum `downgrade` é executado em `nsi_dev` — mesma regra de toda a Sprint B3.
+- **Dados não são revertidos:** eventos são imutáveis inclusive para o owner. Reverter a `0005` retira a capacidade de gravar novos eventos; nunca apaga os já gravados.
+- **Interação com o preflight da `0004`:** qualquer recibo dos cinco comandos da B4 em `comandos_idempotentes` faz o downgrade `0004 → 0003` abortar. Testes da B4.3 que exigem commit real deixam recibos e linhas permanentes em `nsi_test`. O tratamento disso — limpeza explícita dos recibos pelos próprios testes, ou adaptação dos testes de ciclo destrutivo já existentes — **deve ser decidido na rodada de plano, sem reabrir nem enfraquecer a regra de preflight da `0004`** e sem que nenhum recibo seja removido silenciosamente.
+- **Role:** a reversão administrativa exige a função de congelamento já ausente (revisão `0004` ou anterior nos dois bancos), verifica ausência de privilégios e objetos residuais antes de qualquer `DROP ROLE`, exige confirmação textual exata e não contém senha. Implementada e documentada, mas não executada na subetapa.
+- **Critério de interrupção:** se a implementação revelar defeito na `0004` ou tensão com a ADR-009, a B4.3 para e o ponto é levado à decisão — nunca corrigido de forma silenciosa dentro da `0005`. `nsi_dev` só recebe a `0005` depois de a suíte completa passar em `nsi_test`.
+
 ### B4, B5, B6, B7 — resumo
-- **B4:** aguarda decisão da Seção 9.
+- **B4:** B4.1 e B4.2 concluídas; B4.3 especificada, aguardando autorização (detalhamento acima).
 - **B5:** script de importação em ambiente de teste/staging; validação de paridade contra os 213 cenários existentes; nunca toca produção.
 - **B6:** ver Seção 19.
 - **B7:** ver Seção 14; produção, autorização própria.
@@ -437,6 +647,13 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 6. Nomes físicos definitivos de coluna (candidatos nesta especificação) e prefixo de ambiente para as roles conceituais aprovadas (Seção 5).
 7. Confirmação, subetapa a subetapa, de necessidade de dados reais em B6 (Seção 19).
 8. Eventual evolução futura para HMAC com pepper no token (Seção 4.1) — não bloqueante, decisão técnica formal própria quando/se necessária.
+9. B4.3 — local do `GRANT EXECUTE` da função de congelamento a `nsi_congelamento`: na própria `0005` (proposta) ou em passo administrativo posterior (Seção 18).
+10. B4.3 — tratamento dos recibos e linhas permanentes deixados em `nsi_test` por testes com commit real, frente ao preflight de downgrade da `0004` (Seção 18).
+11. B4.3 — cálculo canônico de `payload_hash` em Python como módulo de produção ou apenas utilitário de teste nesta subetapa (Seção 18).
+12. B4.3 — confirmação, por leitura, da revisão corrente de `nsi_test`/`nsi_dev` e da suíte completa sobre a `0004`, antes de qualquer ação (Seção 18).
+13. Registro de lotes legados com M0 no passado — não atendido por `fn_registrar_lote`; pertence à B5.
+
+**Item 1 resolvido:** a decisão arquitetural do catálogo de eventos operacionais foi tomada pela ADR-009 (B4.1) e deixou de bloquear a B4.
 
 **Não são mais pendências:** algoritmo de hash do token (decidido: SHA-256 simples, Seção 4.1); comportamento em caso de resposta perdida na criação/reatribuição (decidido: fail-safe, Seção 4.2); identidade do executor (decidido: `session_user` + rótulo informativo, Seção 4.3); nomes de schema/tabelas/funções/roles conceituais (decididos, Seção 5).
 
@@ -454,4 +671,10 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 
 **B3.4 (Testes finais e documentação de encerramento da Sprint B3): CONCLUÍDA.** `tests/integration/test_migration_0002_upgrade_downgrade.py` atualizado para o ciclo destrutivo compatível com o head atual (`0003 → 0001 → 0003`), exclusivamente contra `nsi_test`, preservando integralmente o piso `0001`, o gate obrigatório de identidade e as verificações de segurança já aprovados na B3.2 — nenhuma regra reaberta; teste de ciclo renomeado para `test_ciclo_downgrade_0001_upgrade_0003`. Execução real: suíte específica do ciclo — **3 passed em 3.82s**; suíte completa do projeto, sem exclusões ou filtros — **491 passed em 35.22s**, zero falhas. `nsi_test` terminou em `0003 (head)`; `nsi_dev` confirmado por leitura, também em `0003 (head)` — nenhum `downgrade` executado em `nsi_dev` em nenhum momento da Sprint B3. **Sprint B3 (B3.1–B3.4) integralmente CONCLUÍDA — nenhum item pendente.**
 
-Próxima revisão: ao início da Sprint B4, mediante a decisão arquitetural formal do catálogo de eventos operacionais (Seção 9).
+**B4.1 (Decisão arquitetural do catálogo de eventos operacionais): CONCLUÍDA.** ADR-009 aprovada e congelada em 2026-09-16 (commit `bd2ab47`): modelo híbrido, catálogo fechado de cinco eventos, privacidade, identidade técnica, papéis (incluindo a nova role `nsi_congelamento`) e idempotência determinística do congelamento. Exclusivamente documental — satisfaz a condição da Seção 9.
+
+**B4.2 (Migration `0004` — schema relacional de lotes, registros e eventos operacionais): CONCLUÍDA.** Criadas `lotes`, `registros_coleta`, `eventos_lote` e `eventos_registro_coleta`, com suas `CHECK`s, índices, triggers defensivas de imutabilidade e `REVOKE`s; ampliado o `CHECK` de `comando` em `comandos_idempotentes` com os cinco comandos da B4 (commit `41e49f9`). Nenhuma função `SECURITY DEFINER` e nenhuma referência a `nsi_congelamento` — ambos pertencem à B4.3. As contagens de execução real e a revisão corrente dos bancos não foram consolidadas neste documento no encerramento da subetapa; sua confirmação por leitura é pré-requisito da B4.3 (Seção 18).
+
+**B4.3 (Role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER`): ESPECIFICADA.** Objetivo, escopo, dependências, arquivos previstos, funções, critérios de segurança, estratégia de testes, critérios de aceite e de rollback registrados na Seção 18. **Nenhuma implementação de código, script, migration, role ou função foi realizada** — a implementação aguarda autorização própria, e quatro pontos permanecem para decisão na rodada de plano (Seção 22, itens 9 a 12).
+
+Próxima revisão: ao encerramento da B4.3.
