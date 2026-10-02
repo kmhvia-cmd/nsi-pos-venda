@@ -500,7 +500,7 @@ Regida pela ADR-009 (Seção 11): a criação da role é administrativa, nunca r
 - **Uso:** a conexão `nsi_aplicacao` assume `nsi_congelamento` por `SET ROLE` com escopo de transação, invoca a função e o papel se desfaz ao fim da transação. Como `SET ROLE` não altera `session_user`, o evento registra `executado_por_login = nsi_aplicacao`; o que prova o caminho de autorização exercido é o próprio tipo do evento (ADR-009, Seção 10).
 - **Script de provisionamento:** Fase 1 (somente leitura) valida o estado inteiro antes de qualquer escrita e aborta sem corrigir nada silenciosamente; Fase 2 executa apenas o que a Fase 1 autorizou; Fase 3 revalida tudo a partir do zero. Idempotente e seguro para reexecução. Não cria, altera nem remove nenhuma das quatro roles da B3.1, nem os migrators.
 
-**Ponto aguardando confirmação explícita — onde fica o `GRANT EXECUTE` da função de congelamento.** A função só existe depois da `0005`; a role precisa existir antes dela. Proposta desta especificação: o `GRANT EXECUTE ... TO nsi_congelamento` é emitido pela própria `0005`, pelo owner, exatamente como a `0003` fez para as roles da B3.1; e a comprovação exigida pela ADR-009 (Seção 11) é feita por inspeção somente leitura pós-migration (teste de integração de leitura + reexecução da Fase 3 do script). A alternativa — um segundo passo administrativo posterior à migration — não é adotada por padrão e exige decisão explícita se preferida.
+**Divisão de responsabilidades entre o script administrativo e a `0005`.** A role `nsi_congelamento` é criada exclusivamente pelo script administrativo de provisionamento, que também concede o `USAGE` no schema e a membership de `nsi_aplicacao`. A `0005` assume que a role já existe e nunca a cria, altera ou remove. Todos os `REVOKE` e `GRANT EXECUTE` das cinco funções — inclusive o `GRANT EXECUTE` de `fn_registrar_congelamento` a `nsi_congelamento` — são aplicados dentro da própria `0005`, pelo owner, como a `0003` fez para as roles da B3.1, de modo que as permissões estejam completas ao final da migration, sem passo administrativo posterior. A comprovação exigida pela ADR-009 (Seção 11) é feita por inspeção somente leitura pós-migration (teste de integração de leitura e reexecução da Fase 3 do script).
 
 ##### Regras comuns às cinco funções
 
@@ -744,12 +744,14 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 6. Nomes físicos definitivos de coluna (candidatos nesta especificação) e prefixo de ambiente para as roles conceituais aprovadas (Seção 5).
 7. Confirmação, subetapa a subetapa, de necessidade de dados reais em B6 (Seção 19).
 8. Eventual evolução futura para HMAC com pepper no token (Seção 4.1) — não bloqueante, decisão técnica formal própria quando/se necessária.
-9. B4.3 — local do `GRANT EXECUTE` da função de congelamento a `nsi_congelamento`: na própria `0005` (proposta) ou em passo administrativo posterior (Seção 18) — aguarda confirmação explícita.
+9. B4.3 — local do `GRANT EXECUTE` da função de congelamento a `nsi_congelamento`: na própria `0005` ou em passo administrativo posterior (Seção 18).
 10. B4.3 — confirmação, por leitura, da revisão corrente de `nsi_test`/`nsi_dev` e da suíte completa sobre a `0004`, antes de qualquer ação (Seção 18).
 11. B4.3 — verificações anteriores à implementação: se o upload atual aceita CSV sem nenhuma linha de dados (define se `fn_registrar_lote` aceita lista vazia); e ausência de trigger que impeça remoção em `comandos_idempotentes` (premissa da limpeza de recibos de teste).
 12. Registro de lotes legados com M0 no passado — não atendido por `fn_registrar_lote`; pertence à B5.
 
 **Item 1 resolvido:** a decisão arquitetural do catálogo de eventos operacionais foi tomada pela ADR-009 (B4.1) e deixou de bloquear a B4.
+
+**Item 9 resolvido:** a role `nsi_congelamento` é criada exclusivamente pelo script administrativo; a `0005` assume sua existência e aplica todos os `REVOKE` e `GRANT EXECUTE` das cinco funções, deixando as permissões completas ao final da migration (Seção 18).
 
 **Não são pendências da B4.3:** o contrato das cinco funções, o bloqueio da linha do lote, o módulo de `payload_hash`, a limpeza dos recibos de teste e o tratamento do estado impossível estão decididos e registrados na Seção 18.
 
@@ -773,6 +775,6 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 
 **B4.2 (Migration `0004` — schema relacional de lotes, registros e eventos operacionais): CONCLUÍDA.** Criadas `lotes`, `registros_coleta`, `eventos_lote` e `eventos_registro_coleta`, com suas `CHECK`s, índices, triggers defensivas de imutabilidade e `REVOKE`s; ampliado o `CHECK` de `comando` em `comandos_idempotentes` com os cinco comandos da B4 (commit `41e49f9`). Nenhuma função `SECURITY DEFINER` e nenhuma referência a `nsi_congelamento` — ambos pertencem à B4.3. As contagens de execução real e a revisão corrente dos bancos não foram consolidadas neste documento no encerramento da subetapa; sua confirmação por leitura é pré-requisito da B4.3 (Seção 18).
 
-**B4.3 (Role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER`): ESPECIFICADA.** Especificação técnica aprovada e congelada, registrada integralmente na Seção 18. **Nenhuma implementação de código, script, migration, role ou função foi realizada** — a implementação aguarda autorização própria; permanecem um ponto aguardando confirmação e as verificações prévias (Seção 22, itens 9 a 11).
+**B4.3 (Role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER`): ESPECIFICADA.** Especificação técnica aprovada e congelada, registrada integralmente na Seção 18. **Nenhuma implementação de código, script, migration, role ou função foi realizada** — a implementação aguarda autorização própria; permanecem apenas as verificações prévias à implementação (Seção 22, itens 10 e 11).
 
 Próxima revisão: ao encerramento da B4.3.
