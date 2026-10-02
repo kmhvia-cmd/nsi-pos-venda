@@ -485,7 +485,7 @@ Nenhum deles existe hoje. Os nomes de arquivo são candidatos, a fixar na implem
 | `tests/integration/test_idempotencia_e_permissoes_b4_3.py` | novo |
 | `tests/integration/test_migration_0005_upgrade_downgrade.py` | novo |
 | `tests/integration/test_alembic_postgres.py`, `test_migration_0002_upgrade_downgrade.py`, `test_migration_0004_upgrade_downgrade.py` | ajuste — somente o necessário para o novo head `0005`, sem reabrir nenhuma regra já aprovada |
-| `docs/implementation/PROCEDIMENTO-MANUAL-B3-DESTRUTIVO.md` ou documento equivalente próprio da B4 | a decidir — cenários destrutivos da role continuam exclusivamente manuais |
+| Documento operacional próprio do procedimento manual destrutivo da role `nsi_congelamento` | novo — cenários destrutivos da role continuam exclusivamente manuais; este documento apenas o referencia, e `PROCEDIMENTO-MANUAL-B3-DESTRUTIVO.md` não é alterado |
 | Este documento, `ROADMAP-SPRINTS-B-G.md`, `PROJECT_STATUS.md` | atualização de status ao encerramento |
 
 `config.py` não é alterado: `nsi_congelamento` é `NOLOGIN` e não possui URL de conexão.
