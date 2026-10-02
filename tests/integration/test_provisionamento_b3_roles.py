@@ -49,10 +49,10 @@ operador, seguindo o mesmo padrao de consulta usado aqui.
 import pytest
 
 from config import mascarar_dsn
+from tests.regra_membership_b3_1 import QUATRO_ROLES_FUNCIONAIS, memberships_sao_aceitas
 
 pytestmark = pytest.mark.pg_integration
 
-QUATRO_ROLES_FUNCIONAIS = ["nsi_eventos_owner", "nsi_aplicacao", "nsi_expiracao", "nsi_operador_restrito"]
 TRES_ROLES_LOGIN = ["nsi_aplicacao", "nsi_expiracao", "nsi_operador_restrito"]
 
 
@@ -92,18 +92,48 @@ def test_role_existe_com_atributos_de_seguranca_corretos(url_banco_teste, nome_r
 
 @pytest.mark.parametrize("nome_role", QUATRO_ROLES_FUNCIONAIS)
 def test_role_nao_pertence_a_nenhuma_membership_inesperada(url_banco_teste, nome_role):
+    """
+    Regra geral da B3.1: nenhuma role funcional pertence a nenhuma outra
+    role. Excecao unica, formalizada na ADR-009 (Secao 21): nsi_aplicacao
+    pode ser membro de nsi_congelamento, exclusivamente com INHERIT FALSE,
+    SET TRUE e ADMIN FALSE - qualquer outra membership continua inesperada.
+
+    Para nsi_aplicacao, DOIS estados sao aceitos: sem nenhuma membership,
+    ou com exatamente a membership formalizada. Essa dupla aceitacao existe
+    APENAS para preservar a compatibilidade entre ambientes anteriores e
+    posteriores a B4.3 (role nsi_congelamento ainda nao provisionada, ou ja
+    provisionada) - nao e uma tolerancia geral. Este teste nao exige que a
+    membership exista; isso pertence ao teste de provisionamento da propria
+    role nsi_congelamento (B4.3, Etapa 1).
+
+    A decisao e tomada por tests/regra_membership_b3_1.py - a mesma funcao
+    provada, com listas sinteticas, em
+    tests/unit/test_regra_membership_b3_1.py. A comparacao e por igualdade
+    da lista COMPLETA de memberships (grupo + as tres opcoes), nunca por
+    contagem: todas as linhas sao lidas, sem agrupar.
+    """
     import psycopg
 
     with psycopg.connect(url_banco_teste) as conn:
         with conn.cursor() as cur:
             cur.execute(
-                "SELECT count(*) FROM pg_auth_members m "
-                "JOIN pg_roles r ON r.oid = m.member WHERE r.rolname = %s",
+                "SELECT g.rolname, m.inherit_option, m.set_option, m.admin_option "
+                "FROM pg_auth_members m "
+                "JOIN pg_roles r ON r.oid = m.member "
+                "JOIN pg_roles g ON g.oid = m.roleid "
+                "WHERE r.rolname = %s "
+                "ORDER BY g.rolname",
                 (nome_role,),
             )
-            (total,) = cur.fetchone()
+            memberships = cur.fetchall()
 
-    assert total == 0, f"{nome_role} pertence a {total} role(s) inesperada(s) - esperado zero."
+    assert memberships_sao_aceitas(nome_role, memberships), (
+        f"{nome_role} possui membership inesperada: {memberships!r} "
+        "(role-grupo, inherit_option, set_option, admin_option). Regra da "
+        "B3.1: nenhuma membership - unica excecao, ADR-009 Secao 21: "
+        "nsi_aplicacao em nsi_congelamento com INHERIT FALSE, SET TRUE, "
+        "ADMIN FALSE."
+    )
 
 
 @pytest.mark.parametrize("nome_migrator,nome_banco", [
