@@ -363,3 +363,38 @@ Com a arquitetura completa registrada nas Seções 1 a 19 — precedida por múl
 
 **Origem desta decisão:**
 - Consolidação aprovada do catálogo de eventos operacionais de lote, registro de coleta e correção para a Subetapa B4.1 (2026-09-16), após múltiplas rodadas de verificação somente leitura e aprovação explícita de cada correção.
+
+---
+
+## 21. Formalização da Exceção Única à Regra de Membership da B3.1
+
+Esta seção formaliza uma consequência arquitetural já implícita nas Seções 6.2 e 11 desta ADR. Ela não altera nenhuma decisão já congelada nas Seções 1 a 20: apenas torna explícita a relação entre a membership que a Seção 11 já exige e uma regra anterior, da Subetapa B3.1.
+
+### A regra da B3.1
+
+A Subetapa B3.1 estabeleceu que nenhuma das quatro roles funcionais (`nsi_eventos_owner`, `nsi_aplicacao`, `nsi_expiracao`, `nsi_operador_restrito`) pertence a nenhuma outra role — registrado em `SPRINT-B-ESPECIFICACAO-TECNICA.md` (Seção 18, detalhamento da B3.1) e verificado por `scripts/postgres_local/provisionar_b3_roles.sql` e por seus testes. A finalidade declarada dessa regra é impedir que uma role funcional herde privilégio de outra role.
+
+### A exceção resultante da aplicação desta ADR
+
+As Seções 6.2 e 11 desta ADR exigem que uma conexão `nsi_aplicacao` assuma `nsi_congelamento` por `SET ROLE` explícito, o que pressupõe a membership de `nsi_aplicacao` em `nsi_congelamento`. Fica registrado que:
+
+- **A regra geral da B3.1 permanece válida.** Nenhuma role funcional pertence a outra role, salvo a exceção única abaixo.
+- **A aplicação desta ADR resulta em uma única exceção documentada:** a membership de `nsi_aplicacao` em `nsi_congelamento`, concedida com `INHERIT FALSE`, `SET TRUE` e `ADMIN FALSE`, com a finalidade exclusiva de permitir a operação de `nsi_congelamento` via `SET ROLE` explícito.
+- **A exceção não altera o princípio de menor privilégio da B3.1.** A membership ocorre sem herança automática (`INHERIT FALSE` — efeito NOINHERIT), exatamente como a Seção 11 já define: `nsi_aplicacao` não recebe, por pertencer a `nsi_congelamento`, nenhum privilégio em sua operação normal; só exerce o papel quando o assume explicitamente, e o papel assumido tem apenas `USAGE` no schema e `EXECUTE` na função de congelamento. A finalidade da regra da B3.1 — impedir herança de privilégio — continua integralmente atendida.
+
+### Limites da exceção
+
+- A exceção é única e fechada: membro `nsi_aplicacao`, role `nsi_congelamento`, com exatamente as três opções acima.
+- Nenhuma outra membership é autorizada por esta seção — nem de `nsi_eventos_owner`, `nsi_expiracao` ou `nsi_operador_restrito` em qualquer role, nem de `nsi_aplicacao` em qualquer outra role, nem de `nsi_congelamento` em qualquer role.
+- Qualquer membership fora desta exceção continua sendo uma membership inesperada, no sentido da B3.1.
+- Uma segunda exceção exige nova evolução arquitetural formalmente documentada.
+
+### O que não mudou
+
+- Nenhuma frase das Seções 1 a 20 é alterada, reinterpretada ou substituída.
+- A matriz de papéis da Seção 11, o privilégio estritamente mínimo de `nsi_congelamento` e a natureza administrativa de sua criação permanecem exatamente como congelados.
+- As memberships dos migrators em `nsi_eventos_owner`, já aprovadas na B3.1, não são afetadas.
+- Esta seção não define como os artefatos da B3.1 que hoje verificam literalmente "zero memberships" passam a reconhecer a exceção — isso pertence à especificação técnica e à implementação, não a esta ADR.
+
+**Origem desta decisão:**
+- Conflito identificado durante o planejamento da Etapa 1 da Subetapa B4.3 (2026-10-01), entre a verificação de membership da B3.1 e a membership exigida pela Seção 11 desta ADR; resolvido por registro explícito da exceção, sem alteração de nenhuma decisão anterior.
