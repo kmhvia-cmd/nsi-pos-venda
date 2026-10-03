@@ -205,7 +205,7 @@ def test_fase_2_nao_usa_nenhuma_variavel_de_cliente(fases):
     codigo = _linhas_de_codigo(fases["fase_2"])
     assert "\\gset" not in codigo
     assert "\\if" not in codigo
-    assert not re.search(r":'?\w+'?", _sem_literais(codigo).replace("::", "")), (
+    assert not re.search(r":(?:'\w+'|\"\w+\"|[A-Za-z_]\w*)", codigo.replace("::", "")), (
         "A Fase 2 nao pode interpolar variavel de cliente - cada acao le o estado por conta propria."
     )
 
