@@ -314,7 +314,7 @@ Consumo único decorre estruturalmente da combinação `(estado, claim_id)` na c
 | **B3.4** | Testes finais e documentação de encerramento da Sprint B3 | **CONCLUÍDA** — detalhada abaixo |
 | **B4.1** | Decisão arquitetural formal do catálogo de eventos operacionais (ADR-009) | **CONCLUÍDA** — detalhada abaixo |
 | **B4.2** | Migration `0004` — tabelas `lotes`, `registros_coleta`, `eventos_lote`, `eventos_registro_coleta`, triggers defensivas e ampliação de `comandos_idempotentes` | **CONCLUÍDA** — detalhada abaixo |
-| **B4.3** | Provisionamento administrativo da role `nsi_congelamento` e Migration `0005` — exatamente as cinco funções `SECURITY DEFINER` do catálogo da ADR-009 e seus `REVOKE`/`GRANT` | **ESPECIFICADA** — implementação aguarda autorização própria; detalhada abaixo |
+| **B4.3** | Provisionamento administrativo da role `nsi_congelamento` e Migration `0005` — exatamente as cinco funções `SECURITY DEFINER` do catálogo da ADR-009 e seus `REVOKE`/`GRANT` | **CONCLUÍDA** — detalhada abaixo |
 | **B5** | Importador e validação de migração, ambiente de teste/staging | pendente |
 | **B6** | Ensaio de corte completo, ambiente controlado | pendente — regras abaixo |
 | **B7** | Corte real + preservação dos JSONs, produção | **bloqueada** até Seção 14 estar satisfeita; autorização própria e separada de B5/B6 |
@@ -431,9 +431,9 @@ A Seção 9 condicionava B4 a uma decisão arquitetural própria. Essa decisão 
 
 **Registro de execução real não consolidado neste documento:** as contagens da suíte e a revisão corrente de `nsi_test` e `nsi_dev` após a `0004` não foram registradas aqui no encerramento da B4.2. Sua confirmação, por leitura, é pré-requisito da B4.3 (ver "Dependências", abaixo) — este documento não afirma números que não verificou.
 
-#### B4.3 — Role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER` — ESPECIFICADA
+#### B4.3 — Role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER` — CONCLUÍDA
 
-**Status:** especificação técnica aprovada e congelada. Não autoriza implementação — a B4.3 segue a mesma disciplina das subetapas anteriores (plano → aprovação → implementação → teste → diff → stage → commit → push), e a implementação aguarda autorização própria.
+**Status:** concluída sobre a especificação técnica aprovada e congelada abaixo, que não foi reaberta. O texto das subseções "Objetivo" a "Critérios de rollback" é o da especificação; o resultado da implementação, as decisões tomadas dentro dela e a situação de cada critério de aceite estão em "Registro de implementação", ao final desta subetapa. Todos os onze critérios de aceite estão satisfeitos.
 
 ##### Objetivo
 
@@ -459,14 +459,14 @@ Tornar gravável, exclusivamente por função `SECURITY DEFINER`, o catálogo fe
 ##### Dependências
 
 1. ADR-009 aprovada e congelada (B4.1) — satisfeita.
-2. Migration `0004` (B4.2) aplicada — **a confirmar por leitura**, antes de qualquer ação: revisão corrente de `nsi_test` e de `nsi_dev`, e suíte completa do projeto passando sobre a `0004`.
+2. Migration `0004` (B4.2) aplicada — **a confirmar por leitura**, antes de qualquer ação: revisão corrente de `nsi_test` e de `nsi_dev`, e suíte completa do projeto passando sobre a `0004`. *(Satisfeita: confirmada por leitura no início da implementação — ver "Registro de implementação".)*
 3. B3.1 provisionada (`nsi_eventos_owner`, `nsi_aplicacao`, `nsi_expiracao`, `nsi_operador_restrito`; memberships dos migrators) — satisfeita.
 4. Role `nsi_congelamento` existente **antes** da `0005` — a migration falha, sem criar nada, se a role não existir (mesmo tipo de pré-requisito que `0002`/`0003`/`0004` têm em relação a `nsi_eventos_owner`). A ordem interna da B4.3 é, portanto, fixa: provisionamento da role → migration `0005`.
 5. Autorização humana própria para a implementação da B4.3 e, separadamente, para a execução real do provisionamento administrativo.
 
 ##### Arquivos previstos
 
-Nenhum deles existe hoje. Os nomes de arquivo são candidatos, a fixar na implementação.
+Tabela da especificação, mantida como aprovada. Os nomes finais, todos já existentes, estão em "Registro de implementação".
 
 | Arquivo | Natureza |
 |---|---|
@@ -710,8 +710,92 @@ Mesma separação da Seção 20: unitários em Python puro; integração somente
 - **Role:** a reversão administrativa exige a função de congelamento já ausente (revisão exatamente `0004` nos dois bancos), verifica ausência de privilégios e objetos residuais antes de qualquer `DROP ROLE`, exige confirmação textual exata e não contém senha. Implementada e documentada, mas não executada na subetapa.
 - **Critério de interrupção:** se a implementação revelar defeito na `0004` ou tensão com a ADR-009, a B4.3 para e o ponto é levado à decisão — nunca corrigido de forma silenciosa dentro da `0005`. `nsi_dev` só recebe a `0005` depois de a suíte completa passar em `nsi_test`.
 
+##### Registro de implementação
+
+**Commits** (todos em `main`): `0c82df1` (adaptação da validação de membership da B3.1 à exceção da ADR-009), `319e24f` (script de provisionamento da role e seus testes estáticos), `c5d7176` (script de desprovisionamento), `f3e51fd` (sincronização dos critérios de rollback para a revisão `0004`), `cfb57bc` (migration `0005`, módulo de `payload_hash` e suíte de testes) e `c665cda` (correção de um detector estático do teste do provisionamento).
+
+**Arquivos entregues** — nomes finais dos candidatos de "Arquivos previstos":
+
+| Arquivo | Natureza |
+|---|---|
+| `scripts/postgres_local/provisionar_b4_role_congelamento.sql` | novo |
+| `scripts/postgres_local/desprovisionar_b4_role_congelamento.sql` | novo — não executado |
+| `migrations/versions/0005_cinco_funcoes_eventos_operacionais.py` | novo |
+| `core/payload_hash.py` | novo — o módulo de produção do `payload_hash`, puro, sem acesso a banco |
+| `tests/unit/test_payload_hash.py`, `tests/unit/test_scripts_b4_role_congelamento.py` | novos |
+| `tests/integration/test_provisionamento_b4_role_congelamento.py`, os cinco `test_fn_*.py`, `test_idempotencia_e_permissoes_b4_3.py`, `test_migration_0005_upgrade_downgrade.py` | novos |
+| `tests/apoio_b4_3.py` | novo — apoio comum aos testes de integração da B4.3 (identificadores, registros sintéticos, criação de lote pela própria função, posicionamento na fronteira temporal e espera de bloqueio em concorrência real) |
+| `tests/regra_membership_b3_1.py`, `tests/unit/test_regra_membership_b3_1.py` | novos — regra de membership da B3.1 com a exceção única da ADR-009, Seção 21 |
+| `tests/integration/test_provisionamento_b3_roles.py` | ajuste — passa a aceitar somente a exceção da ADR-009 |
+| `tests/integration/test_alembic_postgres.py`, `test_migration_0002_upgrade_downgrade.py`, `test_migration_0004_upgrade_downgrade.py` | ajuste — somente o novo head `0005` |
+| `docs/implementation/PROCEDIMENTO-MANUAL-B4-ROLE-CONGELAMENTO-DESTRUTIVO.md` | novo — cenários destrutivos da role, exclusivamente manuais, não executados |
+
+**Decisões tomadas dentro da especificação** — nenhuma amplia o catálogo, a matriz de papéis ou o contrato das cinco funções:
+
+- **Contrato de erro.** Recusa de negócio continua sendo retorno estruturado. As exceções têm mensagem fixa, sem `DETAIL` e sem nenhum valor: `conflito_de_idempotencia` (`SQLSTATE 22023`); `entrada_estrutural_invalida` (`SQLSTATE 22000`); `violacao_de_constraint` (`SQLSTATE` nativo da classe 23); e `invariante_violada` (`SQLSTATE` próprio `NS001`, o erro de estado impossível do congelamento). A violação de constraint repassa o **nome** da constraint, para diagnóstico, e nunca a linha, cujo detalhe nativo traria nome e WhatsApp.
+- **Validação da chave e do hash antes da reserva.** Chave de idempotência fora de 1 a 200 caracteres, ou `payload_hash` fora do formato SHA-256, é `entrada_estrutural_invalida` antes de qualquer escrita. Sem isso, a `CHECK` de `comandos_idempotentes` seria violada na reserva, e seu detalhe nativo exporia a linha com o hash.
+- **Lote sem nenhum registro é recusado.** Lista de registros vazia é `entrada_estrutural_invalida` (`22000`), sem lote, evento ou recibo. Decisão humana da B4.3, que resolve a Seção 22, item 11. Não se confunde com o lote sem nenhum registro **válido**, que continua sendo criado normalmente.
+- **`registro_coleta_id` já gravado por outro lote concorrente** também é `entrada_estrutural_invalida`: a mesma classificação do registro já existente detectado sem corrida.
+- **Ordem de avaliação em `fn_registrar_lote`.** O PostgreSQL avalia as `CHECK`s de `lotes` antes do teste de conflito do `ON CONFLICT`. Um segundo upload do mesmo `lote_id` com `lote_id_legado` fora do formato recebe, por isso, `violacao_de_constraint`, e não `lote_ja_existe`. Comportamento documentado na migration e fixado por teste.
+- **Nível de isolamento.** As cinco funções exigem `READ COMMITTED`, o padrão do PostgreSQL e do projeto: replay do congelamento concorrente, correção tardia pela regra do status e segunda confirmação recusada dependem de o `FOR UPDATE` reler a linha já confirmada pela transação concorrente. Sob `REPEATABLE READ` ou `SERIALIZABLE`, os mesmos cenários terminariam em falha de serialização (`40001`).
+- **Serialização canônica do `payload_hash`.** `sha256` sobre o JSON com o discriminador `comando` e os campos da composição, chaves ordenadas, separadores sem espaço, UTF-8 sem escape, e UUIDs canônicos em minúsculas. O hash do congelamento calculado no SQL é idêntico ao do módulo, comprovado em integração.
+
+**Execução real:**
+
+- Dependência 2 confirmada por leitura antes de qualquer ação: `nsi_test` e `nsi_dev` em `0004`.
+- Provisionamento administrativo da role executado pelo operador humano, com credencial própria do superusuário local (nunca acessada pela automação), concluindo com a pós-validação completa aprovada. Primeira execução reportada em 2026-10-03, com os dois bancos em `0004`. Segunda execução em 2026-10-03, já com os dois bancos em `0005`: a Fase 1 reconheceu o estado previsto, as quatro ações da Fase 2 responderam "ja presente, nada a fazer" (convergência idempotente, sem nenhuma alteração real) e a Fase 3 passou integralmente nos itens 3.1 a 3.7.
+- `0005` aplicada primeiro em `nsi_test`, com o gate de identidade (banco, servidor local, porta 5432, `nsi_test_migrator`) confirmado antes de cada `downgrade`. O ciclo `0005 → 0004 → 0005` foi executado mais de uma vez em `nsi_test`, durante a implementação e após as correções da auditoria.
+- `0005` aplicada em `nsi_dev` em 2026-10-03, **somente por `upgrade`**, depois da suíte completa aprovada em `nsi_test` e com a identidade confirmada antes (banco `nsi_dev`, servidor local, porta 5432, `nsi_dev_migrator`, revisão `0004`). Nenhum `downgrade` foi executado em `nsi_dev`.
+- Inspeção somente leitura de `nsi_dev` após o upgrade: exatamente as cinco funções, com definição idêntica à de `nsi_test`; owner `nsi_eventos_owner`; `SECURITY DEFINER`; `search_path` fixo; `PUBLIC` sem `EXECUTE`; matriz de `EXECUTE` idêntica à da ADR-009; zero linhas nas tabelas operacionais e zero recibos da B4.
+- `nsi_test` e `nsi_dev` terminam ambos em `0005 (head)`.
+- O script de desprovisionamento não foi executado.
+
+**Testes** (contagens na suíte final): 355 testes da B4.3, sendo 150 unitários (`test_scripts_b4_role_congelamento.py`: 111; `test_payload_hash.py`: 39) e 205 de integração real. Os de integração se distribuem assim:
+
+| Arquivo | Testes |
+|---|---|
+| `test_fn_registrar_lote.py` | 34 |
+| `test_fn_registrar_congelamento.py` | 15 |
+| `test_fn_confirmar_disparo.py` | 15 |
+| `test_fn_registrar_correcao.py` | 22 |
+| `test_fn_registrar_tentativa_nao_resolvida.py` | 26 |
+| `test_idempotencia_e_permissoes_b4_3.py` | 76 |
+| `test_migration_0005_upgrade_downgrade.py` | 4 |
+| `test_provisionamento_b4_role_congelamento.py` | 13 |
+
+Suíte completa do projeto, com integração real obrigatória: **1013 de 1013 aprovados, nenhuma falha, nenhum pulado**. Sem `pg_integration`: 478 coletados, 535 desmarcados.
+
+**Auditoria anterior ao commit.** Uma auditoria técnica crítica encontrou um bloqueador e seis pontos menores, todos corrigidos e cobertos por teste antes do commit, sem reabrir a especificação:
+
+- O bloqueador: um `payload_hash` malformado atingia a `CHECK` de `comandos_idempotentes`, cujo detalhe nativo expunha o hash.
+- Os pontos menores:
+  - a corrida entre lotes com o mesmo `registro_coleta_id` era classificada como violação de constraint;
+  - a violação de constraint não trazia o nome da constraint;
+  - o lote com lista vazia não tinha decisão;
+  - a ordem entre `CHECK` e `ON CONFLICT` não estava documentada;
+  - o contrato de isolamento não estava documentado;
+  - a folga de relógio real do único teste que depende dele estava curta.
+
+**Resíduo de teste.** Os testes com commit real removem, ao final, os recibos que criaram, pelas próprias chaves e nunca por remoção em massa. Assim, o teste de ciclo confirma zero recibos da B4 antes do downgrade, e a regra de preflight da `0004` não foi enfraquecida. Lotes, registros e eventos desses testes ficam como resíduo sintético em `nsi_test`, nunca em `nsi_dev`, até o ciclo destrutivo da própria suíte (`downgrade base`) remover as tabelas da `0004`.
+
+**Situação dos critérios de aceite:**
+
+| # | Critério | Situação |
+|---|---|---|
+| 1 | Provisionamento executado duas vezes, ambas com pós-validação aprovada | satisfeito — duas execuções, ambas com "Fase 3 (pós-validação completa) passou integralmente" |
+| 2 | Exatamente as cinco funções, nada mais | satisfeito |
+| 3 | Owner, `SECURITY DEFINER` e `search_path` comprovados por leitura | satisfeito, nos dois bancos |
+| 4 | Matriz de `EXECUTE` comprovada por leitura | satisfeito, nos dois bancos |
+| 5 | Cinco eventos com payload exato e projeção na mesma transação | satisfeito |
+| 6 | Replay e conflito nas cinco funções; replay do congelamento sob concorrência real | satisfeito |
+| 7 | Nenhum valor pessoal em evento, recibo, exceção ou saída de teste | satisfeito |
+| 8 | `nsi_test` primeiro; `nsi_dev` só por `upgrade`; ambos em `0005 (head)` | satisfeito |
+| 9 | Suíte da B4.3 e suíte completa aprovadas | satisfeito — 1013 de 1013 |
+| 10 | `0001`–`0004` e arquivos existentes de produção intocados; único arquivo novo de produção fora de `migrations/` e `scripts/` é o módulo de `payload_hash` | satisfeito — `core/payload_hash.py` |
+| 11 | Documentação de encerramento neste documento, no ROADMAP e no `PROJECT_STATUS.md` | satisfeito por esta revisão |
+
 ### B4, B5, B6, B7 — resumo
-- **B4:** B4.1 e B4.2 concluídas; B4.3 especificada, aguardando autorização (detalhamento acima).
+- **B4:** B4.1 e B4.2 concluídas; B4.3 concluída (detalhamento acima).
 - **B5:** script de importação em ambiente de teste/staging; validação de paridade contra os 213 cenários existentes; nunca toca produção.
 - **B6:** ver Seção 19.
 - **B7:** ver Seção 14; produção, autorização própria.
@@ -761,6 +845,10 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 
 **Item 9 resolvido:** a role `nsi_congelamento` é criada exclusivamente pelo script administrativo; a `0005` assume sua existência e aplica todos os `REVOKE` e `GRANT EXECUTE` das cinco funções, deixando as permissões completas ao final da migration (Seção 18).
 
+**Item 10 resolvido:** `nsi_test` e `nsi_dev` foram confirmados por leitura em `0004` antes de qualquer ação da implementação da B4.3 (Seção 18, "Registro de implementação").
+
+**Item 11 resolvido:** lote com lista de registros vazia é recusado por `fn_registrar_lote` como entrada estruturalmente inválida (`SQLSTATE 22000`), por decisão humana da B4.3. Nenhuma trigger impede remoção em `comandos_idempotentes`, e a limpeza dos recibos de teste pelas próprias chaves funciona como especificado (Seção 18, "Registro de implementação").
+
 **Não são pendências da B4.3:** o contrato das cinco funções, o bloqueio da linha do lote, o módulo de `payload_hash`, a limpeza dos recibos de teste e o tratamento do estado impossível estão decididos e registrados na Seção 18.
 
 **Não são mais pendências:** algoritmo de hash do token (decidido: SHA-256 simples, Seção 4.1); comportamento em caso de resposta perdida na criação/reatribuição (decidido: fail-safe, Seção 4.2); identidade do executor (decidido: `session_user` + rótulo informativo, Seção 4.3); nomes de schema/tabelas/funções/roles conceituais (decididos, Seção 5).
@@ -783,6 +871,15 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 
 **B4.2 (Migration `0004` — schema relacional de lotes, registros e eventos operacionais): CONCLUÍDA.** Criadas `lotes`, `registros_coleta`, `eventos_lote` e `eventos_registro_coleta`, com suas `CHECK`s, índices, triggers defensivas de imutabilidade e `REVOKE`s; ampliado o `CHECK` de `comando` em `comandos_idempotentes` com os cinco comandos da B4 (commit `41e49f9`). Nenhuma função `SECURITY DEFINER` e nenhuma referência a `nsi_congelamento` — ambos pertencem à B4.3. As contagens de execução real e a revisão corrente dos bancos não foram consolidadas neste documento no encerramento da subetapa; sua confirmação por leitura é pré-requisito da B4.3 (Seção 18).
 
-**B4.3 (Role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER`): ESPECIFICADA.** Especificação técnica aprovada e congelada, registrada integralmente na Seção 18. **Nenhuma implementação de código, script, migration, role ou função foi realizada** — a implementação aguarda autorização própria; permanecem apenas as verificações prévias à implementação (Seção 22, itens 10 e 11).
+**B4.3 (Role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER`): CONCLUÍDA.**
 
-Próxima revisão: ao encerramento da B4.3.
+- A role `nsi_congelamento` foi provisionada pelo script administrativo de três fases, executado duas vezes, ambas aprovadas na pós-validação completa; a segunda comprovou a convergência idempotente, sem nenhuma alteração real.
+- A `0005` foi aplicada primeiro em `nsi_test`, onde o ciclo `0005 → 0004 → 0005` passou com gate de identidade, e depois em `nsi_dev`, somente por `upgrade`. Ambos terminam em `0005 (head)`, com definições idênticas.
+- Foram criadas exatamente as cinco funções `SECURITY DEFINER` da ADR-009, com owner `nsi_eventos_owner`, `search_path` fixo, `PUBLIC` sem `EXECUTE` e matriz de `EXECUTE` comprovada por leitura nos dois bancos.
+- `core/payload_hash.py` é o único arquivo novo de produção fora de `migrations/` e `scripts/`. Nenhum arquivo existente de produção nem as migrations `0001`–`0004` foram alterados.
+- A suíte completa aprovou **1013 de 1013**, sem falhas e sem pulados. Desses, 355 testes são da B4.3.
+- O script de desprovisionamento foi implementado e não foi executado. Os cenários destrutivos da role seguem exclusivamente manuais, em `PROCEDIMENTO-MANUAL-B4-ROLE-CONGELAMENTO-DESTRUTIVO.md`.
+- A Seção 22, itens 10 e 11, está resolvida.
+- **Os onze critérios de aceite estão satisfeitos. B4.3 integralmente CONCLUÍDA — nenhum item pendente.**
+
+Próxima revisão: ao início da B5.
