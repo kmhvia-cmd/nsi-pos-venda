@@ -398,3 +398,26 @@ As Seções 6.2 e 11 desta ADR exigem que uma conexão `nsi_aplicacao` assuma `n
 
 **Origem desta decisão:**
 - Conflito identificado durante o planejamento da Etapa 1 da Subetapa B4.3 (2026-10-01), entre a verificação de membership da B3.1 e a membership exigida pela Seção 11 desta ADR; resolvido por registro explícito da exceção, sem alteração de nenhuma decisão anterior.
+
+---
+
+## 22. Formalização: Lotes de Origem Legada
+
+Esta seção formaliza a consequência, sobre esta ADR, da decisão aprovada e congelada na ADR-010 (Importação do Legado Operacional em JSON, Seção 11.2). Ela não altera nenhuma decisão já congelada nas Seções 1 a 21.
+
+### A regra
+
+Todo lote da projeção nasce de `lote_criado` (fluxo nativo, Seção 6.1) **ou** de uma promoção de legado registrada pela ADR-010.
+
+### O lote promovido
+
+- O lote promovido não tem `lote_criado`. Sua criação no sistema novo foi um ato técnico de importação, provado pelo registro técnico de importação da ADR-010, e não um upload presenciado pelo sistema novo.
+- O catálogo de cinco eventos (Seção 6), suas regras e seus papéis (Seção 11) valem integralmente para o lote promovido a partir da promoção.
+
+### O que não mudou
+
+- Nenhuma frase das Seções 1 a 21 é alterada.
+- O catálogo continua fechado em cinco eventos: nenhum sexto evento é criado, e a importação nunca grava nenhum dos cinco.
+
+**Origem desta decisão:**
+- Subetapa B5.1 da Sprint B (2026-10-03): formalização exigida pela ADR-010 (Seção 11.2), aprovada junto com o congelamento daquela ADR.
