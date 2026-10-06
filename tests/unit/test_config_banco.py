@@ -371,7 +371,7 @@ def test_development_aceita_exatamente_nsi_dev(monkeypatch):
     assert resolver_url_banco_papel("nsi_aplicacao", "development") == "postgresql://nsi_aplicacao:s@localhost:5432/nsi_dev"
 
 
-def test_test_aceita_exatamente_nsi_test(monkeypatch):
+def test_test_aceita_exatamente_nsi_test_para_papel(monkeypatch):
     _limpar_todas_as_seis_variaveis(monkeypatch)
     monkeypatch.setattr(Config, "TEST_DATABASE_URL_NSI_APLICACAO", "postgresql://nsi_aplicacao:s@localhost:5432/nsi_test")
     assert resolver_url_banco_papel("nsi_aplicacao", "test") == "postgresql://nsi_aplicacao:s@localhost:5432/nsi_test"
@@ -488,3 +488,146 @@ def test_resolver_url_banco_papel_nunca_retorna_valor_com_segredo_de_outro_papel
     assert "segredo_aplicacao" in url_aplicacao
     assert "segredo_expiracao" not in url_aplicacao
     assert "segredo_operador" not in url_aplicacao
+
+
+# ============================================================
+# resolver_url_banco_papel - papel nsi_importacao (Sprint B, B5.3 -
+# ADR-010, Secao 16; Especificacao Tecnica, B5.2, item 4). Mesma funcao
+# unica e as MESMAS protecoes das seis variaveis da B3.1: papel fechado,
+# sem fallback entre ambientes nem entre papeis, banco e usuario exatos.
+# ============================================================
+
+_PAPEL_IMPORTACAO = "nsi_importacao"
+_VAR_DEV_IMPORTACAO = "DATABASE_URL_NSI_IMPORTACAO"
+_VAR_TEST_IMPORTACAO = "TEST_DATABASE_URL_NSI_IMPORTACAO"
+
+
+def _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch):
+    """Isolamento: as seis variaveis da B3.1 e as duas da importacao."""
+    _limpar_todas_as_seis_variaveis(monkeypatch)
+    monkeypatch.setattr(Config, _VAR_DEV_IMPORTACAO, "")
+    monkeypatch.setattr(Config, _VAR_TEST_IMPORTACAO, "")
+
+
+def test_importacao_e_um_papel_do_conjunto_fechado(monkeypatch):
+    """O papel existe; a falha, sem URL definida, e de configuracao
+    ausente - nunca de papel invalido."""
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    with pytest.raises(ConfiguracaoBancoAusente):
+        resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test")
+
+
+def test_importacao_test_usa_exclusivamente_a_propria_variavel(monkeypatch):
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    monkeypatch.setattr(Config, _VAR_TEST_IMPORTACAO, "postgresql://nsi_importacao:senha@localhost:5432/nsi_test")
+    assert resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test") == "postgresql://nsi_importacao:senha@localhost:5432/nsi_test"
+
+
+def test_importacao_development_usa_exclusivamente_a_propria_variavel(monkeypatch):
+    """A resolucao e uniforme para os dois ambientes; que a role nao tenha
+    CONNECT em nsi_dev e garantia do provisionamento, nao de config.py."""
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    monkeypatch.setattr(Config, _VAR_DEV_IMPORTACAO, "postgresql://nsi_importacao:senha@localhost:5432/nsi_dev")
+    assert resolver_url_banco_papel(_PAPEL_IMPORTACAO, "development") == "postgresql://nsi_importacao:senha@localhost:5432/nsi_dev"
+
+
+def test_importacao_test_ausente_falha_sem_fallback_para_development(monkeypatch):
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    monkeypatch.setattr(Config, _VAR_DEV_IMPORTACAO, "postgresql://nsi_importacao:s@localhost:5432/nsi_dev")
+    with pytest.raises(ConfiguracaoBancoAusente):
+        resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test")
+
+
+def test_importacao_development_ausente_falha_sem_fallback_para_test(monkeypatch):
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    monkeypatch.setattr(Config, _VAR_TEST_IMPORTACAO, "postgresql://nsi_importacao:s@localhost:5432/nsi_test")
+    with pytest.raises(ConfiguracaoBancoAusente):
+        resolver_url_banco_papel(_PAPEL_IMPORTACAO, "development")
+
+
+@pytest.mark.parametrize("papel_alheio", _TRES_PAPEIS)
+def test_importacao_nao_cai_para_variavel_de_outro_papel(papel_alheio, monkeypatch):
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    _, var_test_alheia = _VARS_POR_PAPEL[papel_alheio]
+    monkeypatch.setattr(Config, var_test_alheia, f"postgresql://{papel_alheio}:s@localhost:5432/nsi_test")
+    with pytest.raises(ConfiguracaoBancoAusente):
+        resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test")
+
+
+@pytest.mark.parametrize("papel", _TRES_PAPEIS)
+def test_outros_papeis_nao_caem_para_a_variavel_da_importacao(papel, monkeypatch):
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    monkeypatch.setattr(Config, _VAR_TEST_IMPORTACAO, "postgresql://nsi_importacao:s@localhost:5432/nsi_test")
+    with pytest.raises(ConfiguracaoBancoAusente):
+        resolver_url_banco_papel(papel, "test")
+
+
+def test_importacao_test_recusa_banco_diferente_de_nsi_test(monkeypatch):
+    """Inclusive nsi_dev: a URL de teste da importacao nunca aponta para
+    o banco de desenvolvimento."""
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    for banco in ("nsi_dev", "outro_banco", "postgres"):
+        monkeypatch.setattr(Config, _VAR_TEST_IMPORTACAO, f"postgresql://nsi_importacao:s@localhost:5432/{banco}")
+        with pytest.raises(BancoFuncionalNaoPermitido):
+            resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test")
+
+
+@pytest.mark.parametrize("usuario_errado", [
+    "postgres", "nsi_test_migrator", "nsi_dev_migrator", "nsi_aplicacao", "nsi_operador_restrito", "nsi_eventos_owner",
+])
+def test_importacao_usuario_divergente_falha_mesmo_com_banco_correto(usuario_errado, monkeypatch):
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    monkeypatch.setattr(Config, _VAR_TEST_IMPORTACAO, f"postgresql://{usuario_errado}:s@localhost:5432/nsi_test")
+    with pytest.raises(UsuarioBancoDivergente):
+        resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test")
+
+
+def test_importacao_conflito_de_sslmode_na_url_falha(monkeypatch):
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    monkeypatch.setattr(
+        Config, _VAR_TEST_IMPORTACAO,
+        "postgresql://nsi_importacao:s@localhost:5432/nsi_test?sslmode=require",
+    )
+    monkeypatch.setattr(Config, "DATABASE_SSLMODE", "prefer")
+    with pytest.raises(SSLModeInvalido):
+        resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test")
+
+
+@pytest.mark.parametrize("dsn_malformada,segredo", [
+    (_URI_MALFORMADA, SEGREDO_URI),
+    (_DSN_MALFORMADA, SEGREDO_DSN),
+])
+def test_importacao_com_dsn_malformada_nunca_vaza_segredo(dsn_malformada, segredo, monkeypatch, capsys):
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    monkeypatch.setattr(Config, _VAR_TEST_IMPORTACAO, dsn_malformada)
+
+    with pytest.raises(DSNInvalida) as exc_info:
+        resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test")
+
+    exc = exc_info.value
+    for texto in (str(exc), repr(exc)):
+        if segredo in texto or dsn_malformada in texto:
+            pytest.fail("A excecao de DSN malformada expos o segredo ou a DSN bruta.")
+    assert exc.__cause__ is None
+    assert exc.__context__ is None
+
+    print(exc)
+    saida = capsys.readouterr()
+    if segredo in saida.out or segredo in saida.err:
+        pytest.fail("A saida capturada expos o segredo da DSN malformada.")
+
+
+def test_mensagens_de_erro_da_importacao_nunca_expoem_a_senha(monkeypatch):
+    """Banco errado e usuario errado: a mensagem cita banco/usuario, nunca
+    a senha nem a URL inteira."""
+    _limpar_variaveis_de_papel_inclusive_importacao(monkeypatch)
+    senha = "SENHA-SINTETICA-IMPORTACAO-B5"
+    for url, excecao in (
+        (f"postgresql://nsi_importacao:{senha}@localhost:5432/outro_banco", BancoFuncionalNaoPermitido),
+        (f"postgresql://postgres:{senha}@localhost:5432/nsi_test", UsuarioBancoDivergente),
+    ):
+        monkeypatch.setattr(Config, _VAR_TEST_IMPORTACAO, url)
+        with pytest.raises(excecao) as exc_info:
+            resolver_url_banco_papel(_PAPEL_IMPORTACAO, "test")
+        if senha in str(exc_info.value) or senha in repr(exc_info.value):
+            pytest.fail("A mensagem de erro expos a senha da URL de importacao.")

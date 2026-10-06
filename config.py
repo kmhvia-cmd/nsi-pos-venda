@@ -60,6 +60,19 @@ class Config:
     DATABASE_URL_NSI_OPERADOR_RESTRITO      = os.getenv("DATABASE_URL_NSI_OPERADOR_RESTRITO", "")
     TEST_DATABASE_URL_NSI_OPERADOR_RESTRITO = os.getenv("TEST_DATABASE_URL_NSI_OPERADOR_RESTRITO", "")
 
+    # ============================================================
+    # Sprint B (B5.3) - identidade da importacao do legado (ADR-010, Secao
+    # 16; Especificacao Tecnica da Sprint B, B5.2, item 4). Mesma
+    # disciplina das variaveis acima: nenhum fallback entre
+    # development/test, nenhum fallback entre papeis. A role
+    # nsi_importacao so tem CONNECT em nsi_test - na B5, somente a
+    # variavel de teste e utilizavel; a de desenvolvimento existe para
+    # manter o mapa uniforme e nunca aponta para um banco em que a role
+    # consiga conectar.
+    # ============================================================
+    DATABASE_URL_NSI_IMPORTACAO      = os.getenv("DATABASE_URL_NSI_IMPORTACAO", "")
+    TEST_DATABASE_URL_NSI_IMPORTACAO = os.getenv("TEST_DATABASE_URL_NSI_IMPORTACAO", "")
+
     # Unico nome de banco aceito quando NSI_DATABASE_ENV=test (Especificacao
     # Tecnica da Sprint B, protecao contra banco de producao). Qualquer outra
     # TEST_DATABASE_URL e recusada por resolver_url_banco().
@@ -91,11 +104,13 @@ _NOME_BANCO_DESENVOLVIMENTO_PERMITIDO = "nsi_dev"
 # Mapa fechado papel -> (variavel de desenvolvimento, variavel de teste).
 # Unica fonte de verdade de quais variaveis de ambiente existem para cada
 # papel - resolver_url_banco_papel() e a UNICA funcao de resolucao para as
-# tres identidades funcionais, nunca seis funcoes separadas.
+# tres identidades funcionais da B3.1 e para a identidade de importacao da
+# B5.3 (nsi_importacao, ADR-010, Secao 16), nunca uma funcao por variavel.
 _MAPA_URLS_POR_PAPEL = {
     "nsi_aplicacao":         ("DATABASE_URL_NSI_APLICACAO",         "TEST_DATABASE_URL_NSI_APLICACAO"),
     "nsi_expiracao":         ("DATABASE_URL_NSI_EXPIRACAO",         "TEST_DATABASE_URL_NSI_EXPIRACAO"),
     "nsi_operador_restrito": ("DATABASE_URL_NSI_OPERADOR_RESTRITO", "TEST_DATABASE_URL_NSI_OPERADOR_RESTRITO"),
+    "nsi_importacao":        ("DATABASE_URL_NSI_IMPORTACAO",        "TEST_DATABASE_URL_NSI_IMPORTACAO"),
 }
 
 # Mesmo conjunto de valores reconhecido pela libpq/psycopg para sslmode.
@@ -125,21 +140,22 @@ class BancoDeTesteNaoPermitido(RuntimeError):
 
 class PapelBancoInvalido(RuntimeError):
     """'papel' fora do conjunto fechado {nsi_aplicacao, nsi_expiracao,
-    nsi_operador_restrito} - as tres roles funcionais aprovadas na Parte 1
-    da B3. Nunca aceita nome de variavel de ambiente diretamente."""
+    nsi_operador_restrito, nsi_importacao} - as tres roles funcionais
+    aprovadas na Parte 1 da B3 e a role de importacao da B5.3 (ADR-010,
+    Secao 16). Nunca aceita nome de variavel de ambiente diretamente."""
 
 
 class BancoFuncionalNaoPermitido(RuntimeError):
-    """Uma das seis variaveis DATABASE_URL_NSI_*/TEST_DATABASE_URL_NSI_*
+    """Uma das variaveis DATABASE_URL_NSI_*/TEST_DATABASE_URL_NSI_*
     aponta para um banco diferente do exigido pelo ambiente ativo
     (Config._NOME_BANCO_DESENVOLVIMENTO_PERMITIDO em development,
-    Config.NOME_BANCO_TESTE_PERMITIDO em test). Estas seis variaveis sao
+    Config.NOME_BANCO_TESTE_PERMITIDO em test). Estas variaveis sao
     exclusivas do cluster local desta sprint (Parte 1 da B3, Secao 3),
     nunca de producao."""
 
 
 class UsuarioBancoDivergente(RuntimeError):
-    """O usuario presente na URL de conexao de uma das seis variaveis
+    """O usuario presente na URL de conexao de uma das variaveis
     funcionais nao e exatamente o papel solicitado - protecao contra uma
     URL apontando, por engano, para 'postgres', para um migrator ou para
     outro papel funcional, mesmo que o banco esteja correto."""
@@ -337,7 +353,9 @@ def resolver_url_banco_papel(papel: str, ambiente: str | None = None) -> str:
     """
     Funcao UNICA e tipada de resolucao das seis URLs funcionais da Sprint
     B3 (Parte 1 da B3, Secao 3: nsi_aplicacao, nsi_expiracao,
-    nsi_operador_restrito) - nunca seis funcoes separadas. Reaproveita
+    nsi_operador_restrito) e das duas URLs da importacao do legado da
+    B5.3 (nsi_importacao - ADR-010, Secao 16), sob as MESMAS protecoes -
+    nunca uma funcao por variavel. Reaproveita
     integralmente o mesmo mecanismo/protecoes de resolver_url_banco():
     selecao fechada por ambiente (Config.NSI_DATABASE_ENV, sem fallback
     entre development/test), nenhum fallback entre papeis, parser oficial
@@ -357,7 +375,7 @@ def resolver_url_banco_papel(papel: str, ambiente: str | None = None) -> str:
        _extrair_nome_banco/_extrair_usuario via _parsear_dsn_com_seguranca).
     5. o banco referenciado e exatamente o exigido pelo ambiente ativo -
        nsi_dev em development, nsi_test em test (BancoFuncionalNaoPermitido).
-       As seis variaveis desta funcao sao exclusivas do cluster local desta
+       As variaveis desta funcao sao exclusivas do cluster local desta
        sprint, nunca usadas para producao (Parte 1 da B3, Secao 3).
     6. o usuario referenciado na URL e exatamente igual a 'papel' - uma URL
        apontando para 'postgres', para um migrator ou para outro papel
