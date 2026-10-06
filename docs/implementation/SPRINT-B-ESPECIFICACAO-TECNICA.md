@@ -896,6 +896,23 @@ Regras comuns às quatro: `LANGUAGE plpgsql`, `SECURITY DEFINER`, owner `nsi_eve
 | `fn_concluir_importacao_legado` | `p_importacao_id UUID`, `p_manifesto_canonico BYTEA`, `p_manifesto_sha256 TEXT`, `p_total_arquivos INTEGER` | `importacao_id`, `concluida_em`, `manifesto_sha256` |
 | `fn_verificar_paridade_legado` | `p_importacao_id UUID` | `aprovada` (booleano), `concluida` (booleano), `motivo` (`execucao_nao_concluida` ou nulo) e, por lote apresentado na execução, `caminho_relativo`, `lote_id_legado`, `destino`, `evoluido_no_fluxo_novo` (booleano) e um booleano por verificação do item 14 (nulo quando a verificação não se aplica, por exemplo projeção de lote não promovido ou de lote evoluído), mais as contagens |
 
+**Ordem fixa de avaliação em `fn_importar_lote_legado`.** O primeiro passo que se aplica decide o resultado; os seguintes não são avaliados:
+
+1. parâmetros, formato do caminho e execução existente e aberta (`22000`);
+2. SHA-256 recalculado contra o informado (`22000`);
+3. mesmo `caminho_relativo` já registrado na execução: replay, ou `conflito_de_idempotencia` (item 12);
+4. legibilidade do documento: recusa `documento_ilegivel` (item 6.2);
+5. `lote_id` contra o nome do diretório: recusa `identidade_divergente`;
+6. classificação por geração: recusa `formato_desconhecido`;
+7. reimportação pelo `lote_id_legado`: `ja_importado`, ou recusa `conflito_de_reimportacao` (item 11);
+8. claim pré-existente: recusa `claim_preexistente` (item 10.5);
+9. preservação (item 9);
+10. critérios de promoção, na ordem do item 10.1;
+11. promoção (itens 10.2 e 10.3);
+12. gravação da linha do registro técnico (item 16) e retorno.
+
+A reimportação vem antes da verificação de claim de propósito: um lote já promovido e reapresentado é `ja_importado`, mesmo que seus registros já tenham claims legítimos do fluxo novo.
+
 ##### 6. Estrutura do JSON legado
 
 ###### 6.1 Arquivos do escopo, relativos à origem
@@ -929,8 +946,9 @@ Um lote A3 sem nenhuma correção não tem `historico_versoes` e é classificado
 Um `registro_coleta_id` presente que não seja texto em formato UUID não corresponde a nenhuma geração e torna o formato desconhecido. Chaves duplicadas num mesmo objeto JSON seguem o comportamento do `jsonb`: prevalece o último valor na classificação, e os bytes brutos em `documento_bruto` preservam o original.
 
 Também resultam em recusa:
-- documento que não é UTF-8 nem JSON válido: motivo `documento_ilegivel`;
-- `lote_id` diferente do nome do diretório: motivo `identidade_divergente`.
+- documento que o PostgreSQL não consegue ler como JSON em UTF-8: motivo `documento_ilegivel`. Inclui bytes que não são UTF-8, JSON inválido e JSON com conteúdo que o tipo `jsonb` não aceita (por exemplo o caractere `\u0000`, ou uma marca de ordem de bytes no início do arquivo);
+- `lote_id` diferente do nome do diretório: motivo `identidade_divergente`;
+- algum `registro_coleta_id` do documento já com claim em `claims`: motivo `claim_preexistente` (item 10.5).
 
 ###### 6.3 Evidências de disparo
 
@@ -974,7 +992,7 @@ Duas tabelas candidatas, com nomes definitivos fixados na B5.4:
   - `documento_bruto` `BYTEA` (os bytes exatos do arquivo);
   - `documento_sha256`;
   - `geracao`;
-  - `status_legado` (o valor bruto de `status` e `status_pipeline`, preservado literalmente);
+  - `status_legado` `JSONB`: objeto com exatamente as chaves `status` e `status_pipeline`, cada uma com o valor literal do documento, ou com `null` quando a chave não existe no documento;
   - `criado_em_bruto` TEXT;
   - `destino` (`preservado` | `promovido`);
   - `motivo_nao_promocao`;
@@ -994,6 +1012,8 @@ Proteção (ADR-010, Seção 9.2):
 - `REVOKE ALL` de `PUBLIC` e de todas as roles funcionais, inclusive `nsi_importacao`;
 - gravação exclusivamente pela função de importação;
 - **sem** trigger de imutabilidade do owner (ADR-010, Seção 9.3).
+
+Índices: além dos que decorrem das chaves, `registros_legado` tem índice em `registro_coleta_id`, usado por `fn_criar_claim` (item 10.5) e pelo critério `colisao_de_identidade` (item 10.1). Constraints e índices fazem parte das tabelas para efeito do critério de aceite 2 (item 18).
 
 ##### 9. Preservação
 
@@ -1018,12 +1038,12 @@ Avaliados no banco, todos obrigatórios (ADR-010, Seção 10). Cada falha regist
 | `evidencia_de_disparo` | item 6.3 |
 | `lote_id_legado_invalido` | fora de `^NSI-[0-9]{8}-[0-9A-F]{6}$` |
 | `lote_id_legado_em_uso` | já usado por linha de `lotes` |
-| `m0_invalido` | `criado_em` fora de `^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?$`, inclusive com deslocamento ou fuso próprio |
+| `m0_invalido` | `criado_em` fora de `^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?$`, inclusive com deslocamento ou fuso próprio; ou que case com o formato mas não seja data e hora válidas (por exemplo, dia 30 de fevereiro) |
 | `m0_inexistente_ou_ambiguo` | horário inexistente ou ambíguo no fuso declarado (ADR-010, Seção 13.4). Inexistente: a ida e volta da conversão no fuso declarado não reproduz o horário local. Ambíguo: existe outro instante UTC, diferente do primeiro, que produz o mesmo horário local. Comprovado por teste num fuso com horário de verão |
 | `identidade_repetida` | `registro_coleta_id` repetido no lote |
 | `colisao_de_identidade` | `registro_coleta_id` já existente em `registros_coleta` ou em `registros_legado` de outro lote |
 | `totais_incoerentes` | `total_recebido` diferente da soma das duas listas |
-| `historico_incoerente` | em `a3`, versão corrente de `historico_versoes` divergente da lista em que o registro está (válido/inválido) |
+| `historico_incoerente` | em `a3`, versão corrente de `historico_versoes` divergente da lista em que o registro está (válido/inválido); ou chave de `historico_versoes` sem registro correspondente nas duas listas; ou lista de versões vazia |
 | `projecao_incompativel` | violação de qualquer constraint de `lotes` ou `registros_coleta` ao gravar a projeção. A promoção é desfeita num bloco de exceção próprio, o lote permanece preservado, e o nome da constraint é registrado |
 
 ###### 10.2 Efeitos sobre `lotes` (ADR-010, Seção 11.1)
@@ -1051,6 +1071,8 @@ Avaliados no banco, todos obrigatórios (ADR-010, Seção 10). Cada falha regist
 
 A promoção não grava em `eventos_lote` nem em `eventos_registro_coleta` e não cria recibo em `comandos_idempotentes`.
 
+A ausência de recibos gravados pela importação **não** é verificada pela paridade (item 14): `comandos_idempotentes` não registra a identidade de quem gravou cada recibo, e um recibo legítimo do fluxo novo pode existir sem evento (por exemplo, a recusa `lote_nao_congelado` de `fn_confirmar_disparo`). Ela é garantida por construção, porque as funções de importação não referenciam `comandos_idempotentes`, e comprovada por teste que compara a contagem de recibos antes e depois de cada importação (item 17).
+
 ###### 10.5 Invariante de claim — decisão explícita da B5.2 (ADR-010, Seção 15)
 
 A `0006` substitui a definição de `fn_criar_claim`, com a mesma assinatura `(UUID, TEXT, TEXT, TEXT)`, o mesmo owner, `SECURITY DEFINER`, `search_path` e matriz de `EXECUTE`, e com o mesmo envelope de idempotência. A única mudança é uma recusa nova: `{"sucesso": false, "motivo": "registro_legado_nao_promovido"}` quando o `registro_coleta_id` existe em `registros_legado` com classificação `legado_identificado_nao_promovido`.
@@ -1061,6 +1083,14 @@ Fundamentos:
 - A verificação é deliberadamente estreita: não exige a existência do registro em `registros_coleta`, para não reabrir o desenho da B3, em que o claim não depende de `registros_coleta`.
 - Posição: a recusa ocorre depois da reserva do recibo e fica registrada nele, exatamente como `registro_ocupado`. É permanente, porque um registro não promovido nunca passa a promovido (item 11).
 - A definição restaurada no downgrade é carregada do próprio arquivo da `0003`, nunca copiada à mão, e o teste de ciclo compara a definição de `fn_criar_claim` antes da `0006` com a definição após o downgrade.
+
+A recusa em `fn_criar_claim` cobre o claim pedido **depois** da importação. Para que a invariante valha em qualquer ordem e sob concorrência, três regras completam o mecanismo:
+
+- **Claim anterior à importação.** `fn_importar_lote_legado` recusa o lote, com o motivo `claim_preexistente`, se algum `registro_coleta_id` do documento já tiver linha em `claims`. A recusa é registrada no registro técnico e nada vai para o snapshot nem para a projeção (violação estrutural, ADR-010, Seção 8). Sem essa regra, um registro preservado como `legado_identificado_nao_promovido` poderia já ter claim.
+- **Serialização.** Antes da verificação de claim pré-existente (passo 8 da ordem do item 5.1), `fn_importar_lote_legado` adquire bloqueio `SHARE ROW EXCLUSIVE` sobre `claims`, mantido até o fim da transação. Esse modo conflita com a gravação de claims por `fn_criar_claim` e não impede leitura.
+- **Verificação no mesmo comando.** Em `fn_criar_claim`, a consulta a `registros_legado` é feita dentro do mesmo comando SQL que grava o claim, e não num comando anterior. **Hipótese de implementação, a validar na B5.4:** espera-se que um `fn_criar_claim` que aguarde o bloqueio da importação só leia `registros_legado` depois de a importação concorrente ter terminado. Esse comportamento do PostgreSQL ainda não foi comprovado por execução.
+
+Efeito aceito: enquanto uma transação de importação de lote estiver aberta, a criação de claims espera. A importação é rara e ocorre com as escritas pausadas (ADR-008, Seção 16). A hipótese é validada por teste de concorrência real nos dois sentidos (item 17). Se o teste a refutar, a implementação da B5.4 para e o mecanismo de serialização é decidido fora desta especificação, sem alterar as duas outras regras.
 
 ##### 11. Reimportação
 
@@ -1081,6 +1111,8 @@ Fundamentos:
 Concorrência:
 - duas importações simultâneas do mesmo arquivo terminam em uma gravação e um `ja_importado`, serializadas pela unicidade de `lote_id_legado`; com SHA-256 diferentes para o mesmo `lote_id_legado`, terminam em uma gravação e uma recusa `conflito_de_reimportacao`;
 - isolamento exigido: `READ COMMITTED`, o mesmo contrato da `0005`.
+- `fn_importar_lote_legado` bloqueia a linha da execução em `importacoes_legado` em modo compartilhado (`FOR SHARE`) antes de conferir que ela está aberta, e `fn_concluir_importacao_legado` bloqueia a mesma linha em modo exclusivo (`FOR UPDATE`) antes de contar as linhas registradas. Assim, a conclusão espera as importações em andamento, e nenhuma importação grava depois de a conclusão ter contado. O bloqueio de linha não é escrita e não dispara a trigger de imutabilidade;
+- `fn_importar_lote_legado` e `fn_criar_claim` serializam-se pelo bloqueio de `claims` descrito no item 10.5.
 
 ##### 13. SHA-256
 
@@ -1103,10 +1135,14 @@ Todos em hexadecimal minúsculo, com 64 caracteres. A implementação canônica 
   - cada valor de `registros_coleta` igual ao mapeamento do item 10.3 recalculado do documento;
   - totais iguais à recontagem;
   - `recebido_em` igual à reinterpretação de `criado_em_bruto` no fuso gravado;
-  - nenhum evento e nenhum recibo gravados por `nsi_importacao` para o lote.
-- para o registro técnico: os bytes canônicos do manifesto têm o SHA-256 gravado, e cada linha de `importacoes_legado_arquivos` coincide com a entrada correspondente do manifesto (caminho, SHA-256, geração, destino e motivo).
+  - nenhum evento gravado por `nsi_importacao` (`executado_por_login`) para o lote. Recibos não entram na paridade (item 10.4).
+- para o registro técnico, nos dois sentidos:
+  - os bytes canônicos do manifesto têm o SHA-256 gravado;
+  - `importacao_id` e `fuso_declarado` do manifesto são os da execução;
+  - cada linha de `importacoes_legado_arquivos` coincide com a entrada correspondente do manifesto (caminho, SHA-256, geração, destino e motivo);
+  - toda entrada de tipo `lote` do manifesto tem linha correspondente em `importacoes_legado_arquivos`. As entradas de tipo `tentativa_recusada` não têm linha.
 
-**Lote evoluído no fluxo novo:** um lote promovido que já tenha evento do fluxo novo, em `eventos_lote` ou em `eventos_registro_coleta` de seus registros, é reportado com `evoluido_no_fluxo_novo = true`. As comparações de projeção não se aplicam a ele (nulas), porque correções e congelamento legítimos alteram a projeção depois da importação. As verificações do snapshot, a ausência de evento e de recibo gravados por `nsi_importacao` e a prova de origem continuam obrigatórias. A paridade é, portanto, a prova do momento da importação (ADR-010, Seções 11.1 e 19).
+**Lote evoluído no fluxo novo:** um lote promovido que já tenha evento do fluxo novo, em `eventos_lote` ou em `eventos_registro_coleta` de seus registros, é reportado com `evoluido_no_fluxo_novo = true`. As comparações de projeção não se aplicam a ele (nulas), porque correções e congelamento legítimos alteram a projeção depois da importação. As verificações do snapshot, a ausência de evento gravado por `nsi_importacao` e a prova de origem continuam obrigatórias. A paridade é, portanto, a prova do momento da importação (ADR-010, Seções 11.1 e 19).
 
 **Execução não concluída e lotes `ja_importado`:** a função pode ser executada a qualquer tempo, mas `aprovada` exige execução concluída. Em execução não concluída, devolve `aprovada = false`, `concluida = false` e motivo `execucao_nao_concluida`, com todas as verificações por lote, para diagnóstico. Um lote `ja_importado` é reverificado por inteiro, com as mesmas verificações, no snapshot original a que faz referência.
 
@@ -1119,12 +1155,12 @@ Mesmo contrato da `0005`: mensagens fixas, sem `DETAIL`, sem valor pessoal, sem 
 | Situação | SQLSTATE | Mensagem |
 |---|---|---|
 | Mesmo `importacao_id` com fuso ou manifesto diferente, ou mesmo `caminho_relativo` com SHA-256 diferente na mesma execução | `22023` | `conflito_de_idempotencia` |
-| Parâmetro nulo, SHA-256 divergente ou fora do formato, fuso fora de `pg_timezone_names`, ou que não seja `UTC` nem nome no formato `Região/Local`, ou com prefixo `Etc/` (deslocamentos fixos como `Etc/GMT+3`, `GMT+0`, `EST`, `EST5EDT` são recusados, ADR-010, Seção 13.2), execução inexistente ou concluída, caminho fora do item 6.1, SHA-256 recalculado dos bytes do manifesto diferente do informado | `22000` | `entrada_estrutural_invalida` |
+| Parâmetro nulo, SHA-256 divergente ou fora do formato, fuso fora de `pg_timezone_names`, ou que não seja `UTC` nem nome no formato `Região/Local`, ou com prefixo `Etc/`, `posix/` ou `right/` (deslocamentos fixos como `Etc/GMT+3`, `GMT+0`, `EST`, `EST5EDT` são recusados, ADR-010, Seção 13.2), execução inexistente ou concluída, caminho fora do item 6.1, SHA-256 recalculado dos bytes do manifesto diferente do informado | `22000` | `entrada_estrutural_invalida` |
 | Violação de constraint fora do bloco de promoção | classe `23` (nativo) | `violacao_de_constraint`, com o nome da constraint |
 | Estado impossível (por exemplo, contagem gravada diferente da contagem do documento) | `NS001` | `invariante_violada` |
 | Chamada por papel sem `EXECUTE` | `42501` | nativo do PostgreSQL |
 
-Recusa de lote (`formato_desconhecido`, `documento_ilegivel`, `identidade_divergente`, `conflito_de_reimportacao`) e não promoção **não** são exceção: são retornos estruturados, registrados no registro técnico.
+Recusa de lote (`formato_desconhecido`, `documento_ilegivel`, `identidade_divergente`, `conflito_de_reimportacao`, `claim_preexistente`) e não promoção **não** são exceção: são retornos estruturados, registrados no registro técnico.
 
 ##### 16. Auditoria — registro técnico de importação
 
@@ -1157,6 +1193,8 @@ Três tabelas candidatas, todas **sem valor pessoal** e **imutáveis inclusive p
 
 A conclusão é uma linha própria, porque o registro da abertura é imutável.
 
+Funções de trigger: uma por tabela do registro técnico, no padrão da `0004` (nomes candidatos `fn_bloquear_alteracao_importacoes_legado`, `fn_bloquear_alteracao_importacoes_legado_arquivos` e `fn_bloquear_alteracao_importacoes_legado_conclusoes`), todas com o `EXECUTE` de `PUBLIC` revogado. As três fazem parte dos objetos deste item para efeito do critério de aceite 2 (item 18). Os índices deste item são os que decorrem das chaves e das unicidades declaradas.
+
 ##### 17. Testes
 
 Mesma separação da Seção 20: unitários em Python puro; integração somente contra PostgreSQL real (`pg_integration`) em `nsi_test`, sem SQLite e sem mock; **somente fixtures sintéticas** em `tests/fixtures/legado/`, nunca cópia de `data/`.
@@ -1180,31 +1218,36 @@ Mesma separação da Seção 20: unitários em Python puro; integração somente
   - cada motivo de não promoção do item 10.1, inclusive `projecao_incompativel`, com o nome da constraint e o lote mantido preservado;
   - mapeamento exato do item 10.3;
   - `versao_eventos_atual` 1 e 0;
-  - nenhum evento e nenhum recibo gravados pela importação;
+  - nenhum evento gravado pela importação, e contagem de recibos em `comandos_idempotentes` igual antes e depois de cada importação;
   - `data_disparo` sozinha não impede a promoção.
 - **Fuso:**
   - fuso válido;
   - fuso nulo (sem promoção, motivo `fuso_nao_declarado`);
-  - fuso inexistente, `Etc/GMT±N` e nomes de deslocamento fixo sem região, como `GMT+0` e `EST` (`22000`);
+  - fuso inexistente, `Etc/GMT±N`, nomes com prefixo `posix/` ou `right/` e nomes de deslocamento fixo sem região, como `GMT+0` e `EST` (`22000`);
   - horário inexistente e horário ambíguo num fuso com horário de verão (sem promoção);
   - M0 com deslocamento próprio (sem promoção);
   - frações de segundo preservadas.
 - **Fluxo pós-promoção:** congelamento de lote promovido com fronteira já vencida, registrado como `atrasado`; correção antes da fronteira aceita; primeiro evento com versão 2.
+- **Identidade nos testes que cruzam importação e fluxo novo.** As roles do fluxo novo só enxergam um lote promovido depois do commit, e o commit de promoção é proibido nos testes (ver "Limpeza e resíduo"). Por isso, os testes que exercitam o fluxo novo sobre lote promovido (o grupo acima e o caso de lote evoluído da paridade) rodam numa única transação aberta pelo migrator de teste sob `SET LOCAL ROLE nsi_eventos_owner`, terminada em `ROLLBACK`. Neles, a identidade técnica gravada é a do migrator, e não `nsi_importacao`; a gravação da identidade `nsi_importacao` é comprovada pelos demais testes, que conectam como a própria role.
 - **Reimportação e idempotência:**
   - `ja_importado` sem novas linhas;
   - recusa `conflito_de_reimportacao` registrada, sem escrita no snapshot nem na projeção, e execução concluída normalmente;
   - mesmo caminho com SHA-256 diferente na mesma execução: `conflito_de_idempotencia` (`22023`), sem escrita, e execução que permanece aberta;
   - replay e conflito da abertura e da conclusão;
   - manifesto gravado na conclusão, com SHA-256 recalculado; bytes divergentes do hash informado (`22000`);
+  - concorrência real entre importação e conclusão da mesma execução: a conclusão espera, e o total conferido inclui a linha da importação concorrente;
   - lote após a conclusão (`22000`);
   - concorrência real de duas importações do mesmo arquivo.
 - **Invariante de claim:**
   - `fn_criar_claim` recusa `registro_legado_nao_promovido` para registro identificado não promovido;
   - aceita registro promovido e UUID sem relação com o legado;
   - comportamento da `0003` preservado nos demais casos, com os testes da B3 sem alteração.
+  - recusa `claim_preexistente` na importação de lote com registro que já tem claim, sem escrita no snapshot nem na projeção;
+  - lote promovido e reapresentado continua `ja_importado` mesmo com claim em seus registros;
+  - concorrência real nos dois sentidos: `fn_criar_claim` que espera uma importação em andamento recusa `registro_legado_nao_promovido`; importação que espera um `fn_criar_claim` em andamento recusa `claim_preexistente`.
 - **Paridade:**
   - aprovada para importação íntegra;
-  - reprovada quando o teste altera o snapshot como owner (detecção da Seção 9.3 da ADR-010), quando um arquivo de origem muda depois da importação e quando uma linha do registro técnico diverge do manifesto;
+  - reprovada quando o teste altera o snapshot como owner (detecção da Seção 9.3 da ADR-010), quando um arquivo de origem muda depois da importação, quando uma linha do registro técnico diverge do manifesto, quando o manifesto tem entrada de lote sem linha correspondente e quando o cabeçalho do manifesto diverge da execução;
   - lote promovido e depois congelado: `evoluido_no_fluxo_novo = true`, projeção não comparada, paridade aprovada;
   - execução não concluída: `aprovada = false`, motivo `execucao_nao_concluida`;
   - lote `ja_importado` reverificado no snapshot original, e reprovado quando esse snapshot é alterado.
@@ -1222,7 +1265,7 @@ Mesma separação da Seção 20: unitários em Python puro; integração somente
 ##### 18. Critérios de aceite
 
 1. Role `nsi_importacao` provisionada pelo script de três fases, executado duas vezes, ambas com a pós-validação completa aprovada.
-2. A `0006` cria exatamente os objetos dos itens 8 e 16, as quatro funções de importação e a nova definição de `fn_criar_claim`, e nada mais.
+2. A `0006` cria exatamente os objetos dos itens 8 e 16 (tabelas, com suas constraints e índices, triggers e as três funções de trigger), as quatro funções de importação e a nova definição de `fn_criar_claim`, e nada mais.
 3. Funções com owner `nsi_eventos_owner`, `SECURITY DEFINER`, `search_path` fixo e matriz de `EXECUTE` do item 4, comprovados por inspeção somente leitura.
 4. Classificação, preservação, promoção, reimportação, conclusão com manifesto gravado e verificado, e paridade comprovadas com fixtures das quatro gerações e de cada caso de recusa e de não promoção.
 5. Nenhum evento, nenhum recibo e nenhuma identidade inventada pela importação. Nenhum lote anterior à A2 promovido.
@@ -1248,6 +1291,7 @@ Mesma separação da Seção 20: unitários em Python puro; integração somente
 3. Roles da B3.1 e `nsi_congelamento` íntegras — a confirmar pela Fase 1 do script da B5.3.
 4. Role `nsi_importacao` existente **antes** da `0006`. A ordem é fixa: B5.3 → B5.4.
 5. Autorização humana própria para cada subetapa e, separadamente, para cada execução real do provisionamento.
+6. Credencial da role `nsi_importacao` disponível para os testes da B5.4: senha definida pelo operador e variável `TEST_DATABASE_URL_NSI_IMPORTACAO` configurada no `.env` local, fora do versionamento. Dependência operacional: sem ela, os testes de integração que conectam como `nsi_importacao` não executam. Nenhum código é alterado por esta dependência.
 
 ##### 20. Plano das etapas B5.3 a B5.6
 
@@ -1356,6 +1400,6 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 
 **B5.1 (decisão de arquitetura da importação do legado): CONCLUÍDA.** ADR-010 aprovada e congelada em 2026-10-03, com a Seção 22 da ADR-009 (commit `adaabbb`). Exclusivamente documental.
 
-**B5.2 (especificação técnica da importação do legado): ESPECIFICADA.** Registrada integralmente na Seção 18. Incorpora as correções objetivas da auditoria e as cinco decisões humanas tomadas sobre ela: conflito de reimportação como recusa registrada; manifesto gravado no registro técnico; paridade como prova do momento da importação; conflito de idempotência para caminho com SHA-256 diferente na mesma execução; paridade permitida a qualquer tempo, com aprovação só em execução concluída e reverificação dos lotes `ja_importado`. **Nenhuma implementação de código, script, migration, role ou função foi realizada.** B5.3 a B5.6 aguardam autorização própria.
+**B5.2 (especificação técnica da importação do legado): ESPECIFICADA.** Registrada integralmente na Seção 18. Incorpora as correções objetivas da auditoria e as cinco decisões humanas tomadas sobre ela: conflito de reimportação como recusa registrada; manifesto gravado no registro técnico; paridade como prova do momento da importação; conflito de idempotência para caminho com SHA-256 diferente na mesma execução; paridade permitida a qualquer tempo, com aprovação só em execução concluída e reverificação dos lotes `ja_importado`. **Reabertura única, autorizada antes da B5.4**, para eliminar o que impedia a implementação, sem alterar nenhuma decisão da ADR-010: paridade restrita a eventos, com recibos garantidos por construção (item 10.4); invariante de claim completada com a recusa `claim_preexistente`, a serialização por bloqueio de `claims` e a verificação no mesmo comando (item 10.5); identidade dos testes que cruzam importação e fluxo novo (item 17); bloqueio de linha entre importação e conclusão (item 12); ordem fixa de avaliação (item 5.1); índices e funções de trigger como parte dos objetos (itens 8, 16 e 18); casos sem motivo definido, definição de `documento_ilegivel`, estrutura de `status_legado`, paridade do manifesto nos dois sentidos e prefixos de fuso recusados; e a credencial da role como dependência operacional (item 19). **Nenhuma implementação de código, script, migration, role ou função foi realizada.** B5.3 a B5.6 aguardam autorização própria.
 
 Próxima revisão: ao encerramento da B5.3.
