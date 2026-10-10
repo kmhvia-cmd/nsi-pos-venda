@@ -95,15 +95,23 @@ def _caminho_normalizado(caminho) -> str:
 def validar_origem(origem, diretorio_de_dados) -> Path:
     """Confere a origem ANTES de qualquer leitura: precisa ser informada,
     ser um diretorio existente e nao ser o diretorio de dados da aplicacao
-    (item 5, passo 2 - na B5 nenhuma execucao abre data/). A comparacao e
-    feita sobre os caminhos reais, de modo que um caminho relativo, um link
-    ou uma grafia diferente do mesmo diretorio tambem sao recusados."""
+    nem estar dentro dele (B5.2, item 5, passo 2; B6, componente C3 -
+    nenhuma execucao abre data/: no ensaio, o executor le somente a copia
+    congelada). A comparacao e feita sobre os caminhos reais, de modo que um
+    caminho relativo, um link ou uma grafia diferente tambem sao recusados."""
     if origem is None or not os.fspath(origem).strip():
         raise OrigemInvalida("origem nao informada - nao existe valor padrao")
     if diretorio_de_dados is None or not os.fspath(diretorio_de_dados).strip():
         raise OrigemInvalida("diretorio de dados da aplicacao nao informado")
-    if _caminho_normalizado(origem) == _caminho_normalizado(diretorio_de_dados):
+    real_da_origem, real_dos_dados = _caminho_normalizado(origem), _caminho_normalizado(diretorio_de_dados)
+    if real_da_origem == real_dos_dados:
         raise OrigemInvalida("a origem nao pode ser o diretorio de dados da aplicacao")
+    try:
+        contida = os.path.commonpath([real_da_origem, real_dos_dados]) == real_dos_dados
+    except ValueError:  # unidades diferentes
+        contida = False
+    if contida:
+        raise OrigemInvalida("a origem nao pode estar dentro do diretorio de dados da aplicacao")
     caminho = Path(origem)
     if not caminho.is_dir():
         raise OrigemInvalida("a origem nao e um diretorio existente")

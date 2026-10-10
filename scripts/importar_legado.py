@@ -4,13 +4,16 @@ NSI — scripts/importar_legado.py
 Responsabilidade: executor da importacao do legado operacional em JSON
 (ADR-010; Especificacao Tecnica da Sprint B, Secao 18, B5.2, item 5).
 
-Uso (somente ambiente de teste, banco nsi_test, role nsi_importacao):
+Uso (role nsi_importacao; ambiente 'test' com o banco nsi_test, ou
+ambiente 'ensaio' com o banco descartavel nsi_ensaio - B6):
 
     python scripts/importar_legado.py --origem <diretorio> [--fuso <IANA>]
                                       [--importacao-id <uuid>]
 
     --origem          diretorio raiz do legado; obrigatorio, sem valor padrao.
-                      Nunca o diretorio de dados da aplicacao.
+                      Nunca o diretorio de dados da aplicacao nem um
+                      diretorio dentro dele. No ambiente 'ensaio', tem de
+                      ser <NSI_ENSAIO_DIR>/<ensaio_id>/origem.
     --fuso            identificador IANA atestado por declaracao humana
                       (ADR-010, Secao 13.2). Omitido: nenhum lote e promovido
                       (motivo 'fuso_nao_declarado') - nunca ha valor padrao.
@@ -24,11 +27,17 @@ relatorio. A classificacao, a preservacao, a promocao e a paridade campo a
 campo sao do banco (migration 0006); este executor so le arquivos, chama as
 quatro funcoes e monta manifesto e relatorio com core/importacao_legado.py.
 
-GATE DE IDENTIDADE (item 5, passo 1), antes de qualquer chamada: banco
-nsi_test, servidor local, porta 5432, session_user = nsi_importacao - lidos
-da conexao real, nunca da URL. O executor aceita somente o ambiente 'test'
-(item 4); a URL vem de config.resolver_url_banco_papel, que ja exige
-usuario e banco exatos.
+GATE DE IDENTIDADE (item 5, passo 1), antes de qualquer chamada: banco do
+ambiente, servidor local, porta 5432, session_user = nsi_importacao - lidos
+da conexao real, nunca da URL. Ambiente e banco formam PARES FECHADOS
+('test' -> nsi_test; 'ensaio' -> nsi_ensaio): qualquer outro ambiente e
+qualquer cruzamento sao recusados antes de qualquer chamada. A URL vem de
+config.resolver_url_banco_papel, que ja exige usuario e banco exatos.
+
+AMBIENTE DE ENSAIO (B6, componente C3): alem do gate, a origem precisa
+estar na area de ensaio, fornecida exclusivamente pela variavel
+NSI_ENSAIO_DIR, sem valor padrao (fail closed) e disjunta do repositorio e
+do diretorio de dados. O executor le somente a copia congelada da rodada.
 
 Se fn_importar_lote_legado levantar 'conflito_de_idempotencia' (22023), o
 arquivo mudou durante a execucao: o executor aborta, a execucao permanece
@@ -62,6 +71,11 @@ if str(RAIZ_DO_PROJETO) not in sys.path:
 import psycopg  # noqa: E402
 
 from config import Config, resolver_url_banco_papel  # noqa: E402
+from core.ensaio_corte import (  # noqa: E402
+    AreaDeEnsaioInvalida,
+    validar_area_de_ensaio,
+    validar_origem_do_ensaio,
+)
 from core.importacao_legado import (  # noqa: E402
     TIPO_LOTE,
     ArquivoDeOrigemAlterado,
@@ -80,6 +94,9 @@ from core.importacao_legado import (  # noqa: E402
 PAPEL = "nsi_importacao"
 AMBIENTE_PERMITIDO = "test"
 BANCO_PERMITIDO = "nsi_test"
+AMBIENTE_DE_ENSAIO = "ensaio"
+# Pares FECHADOS de ambiente e banco: 'test' (B5) e 'ensaio' (B6).
+BANCO_POR_AMBIENTE = {AMBIENTE_PERMITIDO: BANCO_PERMITIDO, AMBIENTE_DE_ENSAIO: "nsi_ensaio"}
 PORTA_PERMITIDA = 5432
 ENDERECOS_LOCAIS = ("127.0.0.1", "::1")
 
@@ -102,18 +119,25 @@ class ExecucaoAbortada(RuntimeError):
         self.importacao_id = importacao_id
 
 
-def validar_ambiente(ambiente: str) -> None:
-    """Item 4: o executor da B5 aceita somente o ambiente 'test'."""
-    if ambiente != AMBIENTE_PERMITIDO:
-        raise IdentidadeNaoComprovada("ambiente nao permitido - o executor aceita somente NSI_DATABASE_ENV=test")
+def validar_ambiente(ambiente: str) -> str:
+    """O executor aceita somente os ambientes 'test' (B5.2, item 4) e
+    'ensaio' (B6). Devolve o unico banco aceito naquele ambiente."""
+    if ambiente not in BANCO_POR_AMBIENTE:
+        raise IdentidadeNaoComprovada(
+            "ambiente nao permitido - o executor aceita somente NSI_DATABASE_ENV=test ou NSI_DATABASE_ENV=ensaio")
+    return BANCO_POR_AMBIENTE[ambiente]
 
 
-def validar_identidade(banco, endereco_do_servidor, porta, usuario_da_sessao) -> None:
+def validar_identidade(banco, endereco_do_servidor, porta, usuario_da_sessao,
+                       banco_esperado: str = BANCO_PERMITIDO) -> None:
     """Gate de identidade (item 5, passo 1) sobre valores lidos da conexao
     real. Qualquer divergencia aborta antes de qualquer chamada. As
-    mensagens sao fixas: nunca repetem o valor encontrado."""
-    if banco != BANCO_PERMITIDO:
-        raise IdentidadeNaoComprovada("banco nao permitido - esperado nsi_test")
+    mensagens sao fixas: nunca repetem o valor encontrado. 'banco_esperado'
+    so pode ser um dos bancos dos pares fechados."""
+    if banco_esperado not in BANCO_POR_AMBIENTE.values():
+        raise IdentidadeNaoComprovada("banco nao permitido")
+    if banco != banco_esperado:
+        raise IdentidadeNaoComprovada(f"banco nao permitido - esperado {banco_esperado}")
     if endereco_do_servidor is not None and str(endereco_do_servidor).split("/")[0] not in ENDERECOS_LOCAIS:
         raise IdentidadeNaoComprovada("servidor remoto - o executor e exclusivo do PostgreSQL local")
     if porta != PORTA_PERMITIDA:
@@ -122,13 +146,26 @@ def validar_identidade(banco, endereco_do_servidor, porta, usuario_da_sessao) ->
         raise IdentidadeNaoComprovada("usuario da sessao nao permitido - esperado nsi_importacao")
 
 
-def comprovar_identidade(conexao) -> None:
-    """Le a identidade da conexao real e aplica o gate."""
+def comprovar_identidade(conexao, ambiente: str = AMBIENTE_PERMITIDO) -> None:
+    """Le a identidade da conexao real e aplica o gate do ambiente."""
+    banco_esperado = validar_ambiente(ambiente)
     with conexao.transaction():
         linha = conexao.execute(
             "SELECT current_database(), inet_server_addr()::text, inet_server_port(), session_user"
         ).fetchone()
-    validar_identidade(*linha)
+    validar_identidade(*linha, banco_esperado=banco_esperado)
+
+
+def validar_origem_do_ambiente(origem, ambiente: str) -> Path:
+    """Regra de origem por ambiente, aplicada ANTES de qualquer leitura. Em
+    todo ambiente: nunca o diretorio de dados nem um diretorio dentro dele.
+    Em 'ensaio': somente <NSI_ENSAIO_DIR>/<ensaio_id>/origem, com a area de
+    ensaio informada por variavel de ambiente, sem valor padrao."""
+    caminho = validar_origem(origem, Config.DATA_DIR)
+    if ambiente == AMBIENTE_DE_ENSAIO:
+        area = validar_area_de_ensaio(Config.NSI_ENSAIO_DIR, Config.DATA_DIR, RAIZ_DO_PROJETO)
+        caminho = validar_origem_do_ensaio(caminho, area)
+    return caminho
 
 
 def _chamar(conexao, sql: str, parametros: tuple) -> dict:
@@ -138,14 +175,17 @@ def _chamar(conexao, sql: str, parametros: tuple) -> dict:
         return conexao.execute(sql, parametros).fetchone()[0]
 
 
-def executar_importacao(conexao, origem, fuso=None, importacao_id=None) -> dict:
+def executar_importacao(conexao, origem, fuso=None, importacao_id=None,
+                        ambiente: str = AMBIENTE_PERMITIDO) -> dict:
     """Executa o fluxo completo do item 5 sobre uma conexao ja aberta como
-    nsi_importacao e devolve o relatorio, sem valor pessoal."""
+    nsi_importacao e devolve o relatorio, sem valor pessoal. 'ambiente'
+    decide o banco aceito pelo gate e a regra de origem."""
     # Passo 1 - gate de identidade, antes de qualquer chamada.
-    comprovar_identidade(conexao)
+    comprovar_identidade(conexao, ambiente)
 
-    # Passo 2 - origem explicita, nunca o diretorio de dados da aplicacao.
-    origem = validar_origem(origem, Config.DATA_DIR)
+    # Passo 2 - origem explicita, nunca o diretorio de dados da aplicacao;
+    # no ensaio, somente a copia congelada da rodada.
+    origem = validar_origem_do_ambiente(origem, ambiente)
 
     # Passo 3 - enumeracao do escopo, com tamanho e SHA-256 de cada arquivo.
     arquivos = enumerar_escopo(origem)
@@ -213,26 +253,25 @@ def executar_importacao(conexao, origem, fuso=None, importacao_id=None) -> dict:
     return montar_relatorio(importacao_id, fuso, entradas, retornos, manifesto, paridade_do_banco, conferencia)
 
 
-def _conectar():
-    """Conexao como nsi_importacao em nsi_test, em autocommit: cada chamada
-    e uma transacao propria. Falha de conexao vira mensagem fixa - a
-    excecao do driver pode ecoar a DSN."""
-    validar_ambiente(Config.NSI_DATABASE_ENV)
-    url = resolver_url_banco_papel(PAPEL, AMBIENTE_PERMITIDO)
+def _conectar(ambiente: str):
+    """Conexao como nsi_importacao no banco do ambiente, em autocommit: cada
+    chamada e uma transacao propria. Falha de conexao ou de configuracao
+    vira mensagem fixa - a excecao original pode ecoar a DSN."""
+    banco = validar_ambiente(ambiente)
     conexao = None
     try:
-        conexao = psycopg.connect(url, autocommit=True)
+        conexao = psycopg.connect(resolver_url_banco_papel(PAPEL, ambiente), autocommit=True)
     except Exception:
         pass
     if conexao is None:
-        raise IdentidadeNaoComprovada("nao foi possivel conectar como nsi_importacao em nsi_test")
+        raise IdentidadeNaoComprovada(f"nao foi possivel conectar como nsi_importacao em {banco}")
     return conexao
 
 
 def _argumentos(argv) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="importar_legado",
-        description="Importacao do legado operacional em JSON (ADR-010) - somente nsi_test.")
+        description="Importacao do legado operacional em JSON (ADR-010) - nsi_test ou nsi_ensaio.")
     parser.add_argument("--origem", required=True, help="diretorio raiz do legado (sem valor padrao)")
     parser.add_argument("--fuso", default=None,
                         help="identificador IANA declarado por humano; omitido, nenhum lote e promovido")
@@ -250,16 +289,19 @@ def main(argv=None) -> int:
                 uuid.UUID(argumentos.importacao_id)
             except ValueError:
                 raise ExecucaoAbortada("importacao_id_invalido") from None
-        # Origem conferida antes de abrir qualquer conexao.
-        validar_origem(argumentos.origem, Config.DATA_DIR)
-        conexao = _conectar()
+        # Ambiente e origem conferidos antes de abrir qualquer conexao.
+        ambiente = Config.NSI_DATABASE_ENV
+        validar_ambiente(ambiente)
+        validar_origem_do_ambiente(argumentos.origem, ambiente)
+        conexao = _conectar(ambiente)
         try:
-            relatorio = executar_importacao(conexao, argumentos.origem, argumentos.fuso, argumentos.importacao_id)
+            relatorio = executar_importacao(
+                conexao, argumentos.origem, argumentos.fuso, argumentos.importacao_id, ambiente)
         finally:
             conexao.close()
     except ExecucaoAbortada as exc:
         falha = {"executada": False, "motivo": exc.motivo, "importacao_id_aberta": exc.importacao_id}
-    except (IdentidadeNaoComprovada, OrigemInvalida) as exc:
+    except (IdentidadeNaoComprovada, OrigemInvalida, AreaDeEnsaioInvalida) as exc:
         falha = {"executada": False, "motivo": str(exc), "importacao_id_aberta": None}
     except Exception as exc:
         # Mensagem fixa: a excecao original pode trazer DSN ou conteudo. So

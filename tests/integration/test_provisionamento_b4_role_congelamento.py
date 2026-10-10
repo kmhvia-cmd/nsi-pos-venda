@@ -35,6 +35,8 @@ superusuario) tambem e comprovada pela Fase 3 do script, nunca aqui.
 import psycopg
 import pytest
 
+from tests.regra_ambiente_ensaio_b6 import BANCO_DE_ENSAIO
+
 from config import mascarar_dsn
 
 pytestmark = pytest.mark.pg_integration
@@ -116,13 +118,19 @@ def test_role_nao_e_dona_de_nenhum_objeto_no_cluster(cur):
 
 
 def test_dependencias_no_cluster_somente_acl_de_schema_e_funcao_nos_bancos_locais(cur):
+    """B6: no banco descartavel nsi_ensaio, enquanto existir, a role aparece
+    somente na lista de permissao de funcao - a 0005 roda nele e concede o
+    EXECUTE de fn_registrar_congelamento -, nunca em schema: a role nao tem
+    USAGE no ensaio (tests/regra_ambiente_ensaio_b6.py)."""
     cur.execute("""
         SELECT count(*) FROM pg_catalog.pg_shdepend s JOIN pg_catalog.pg_roles r ON r.oid = s.refobjid
          WHERE s.refclassid = 'pg_authid'::regclass AND r.rolname = 'nsi_congelamento'
-           AND NOT (s.deptype = 'a'
-                    AND s.classid IN ('pg_namespace'::regclass, 'pg_proc'::regclass)
-                    AND s.dbid IN (SELECT oid FROM pg_catalog.pg_database WHERE datname IN ('nsi_dev', 'nsi_test')))
-    """)
+           AND NOT (s.deptype = 'a' AND (
+                    (s.classid IN ('pg_namespace'::regclass, 'pg_proc'::regclass)
+                     AND s.dbid IN (SELECT oid FROM pg_catalog.pg_database WHERE datname IN ('nsi_dev', 'nsi_test')))
+                 OR (s.classid = 'pg_proc'::regclass
+                     AND s.dbid IN (SELECT oid FROM pg_catalog.pg_database WHERE datname = %s))))
+    """, (BANCO_DE_ENSAIO,))
     assert cur.fetchone()[0] == 0
 
 

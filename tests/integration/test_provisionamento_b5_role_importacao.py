@@ -39,6 +39,12 @@ import psycopg
 import pytest
 
 from config import mascarar_dsn
+from tests.regra_ambiente_ensaio_b6 import (
+    BANCO_DE_ENSAIO,
+    BANCOS_COM_CONCESSAO_DE_FUNCAO,
+    BANCOS_DE_NSI_IMPORTACAO,
+    concessoes_de_banco_de_nsi_importacao_sao_aceitas,
+)
 
 pytestmark = pytest.mark.pg_integration
 
@@ -116,7 +122,12 @@ def test_nenhuma_role_do_projeto_alcanca_nsi_importacao_por_set_role(cur, outra_
 
 
 def test_connect_concedido_somente_em_nsi_test(cur):
-    """Lista COMPLETA das concessoes de banco a role, em todo o cluster."""
+    """Lista COMPLETA das concessoes de banco a role, em todo o cluster.
+
+    B6: enquanto o banco descartavel nsi_ensaio existir, a role tem tambem
+    CONNECT nele - o unico estado adicional aceito, na forma exata da
+    especificacao da B6 (Secao 14). A decisao e de
+    tests/regra_ambiente_ensaio_b6.py."""
     cur.execute("""
         SELECT d.datname, a.privilege_type, a.is_grantable
           FROM pg_catalog.pg_database d
@@ -124,7 +135,13 @@ def test_connect_concedido_somente_em_nsi_test(cur):
           JOIN pg_catalog.pg_roles g ON g.oid = a.grantee
          WHERE g.rolname = 'nsi_importacao'
     """)
-    assert cur.fetchall() == [("nsi_test", "CONNECT", False)]
+    concessoes = cur.fetchall()
+    cur.execute("SELECT EXISTS (SELECT 1 FROM pg_catalog.pg_database WHERE datname = %s)", (BANCO_DE_ENSAIO,))
+    banco_de_ensaio_existe = cur.fetchone()[0]
+    assert concessoes_de_banco_de_nsi_importacao_sao_aceitas(concessoes, banco_de_ensaio_existe), (
+        f"Concessoes de banco de nsi_importacao fora do previsto: {concessoes!r} "
+        f"(banco de ensaio presente: {banco_de_ensaio_existe})."
+    )
 
 
 def test_connect_efetivo_somente_em_nsi_test(cur):
@@ -151,18 +168,21 @@ def test_role_nao_e_dona_de_nenhum_objeto_no_cluster(cur):
 
 def test_dependencias_no_cluster_somente_as_previstas(cur):
     """So lista de permissao: CONNECT em nsi_test, schema de nsi_test e
-    funcao de nsi_dev/nsi_test (EXECUTE concedido pela 0006)."""
+    funcao de nsi_dev/nsi_test (EXECUTE concedido pela 0006).
+
+    B6: o banco descartavel nsi_ensaio, enquanto existir, entra nas mesmas
+    tres listas - CONNECT, schema e funcao (tests/regra_ambiente_ensaio_b6.py)."""
     cur.execute("""
         SELECT count(*) FROM pg_catalog.pg_shdepend s JOIN pg_catalog.pg_roles r ON r.oid = s.refobjid
          WHERE s.refclassid = 'pg_authid'::regclass AND r.rolname = 'nsi_importacao'
            AND NOT (s.deptype = 'a' AND (
                     (s.classid = 'pg_database'::regclass AND s.dbid = 0
-                     AND s.objid = (SELECT oid FROM pg_catalog.pg_database WHERE datname = 'nsi_test'))
+                     AND s.objid IN (SELECT oid FROM pg_catalog.pg_database WHERE datname = ANY(%s)))
                  OR (s.classid = 'pg_namespace'::regclass
-                     AND s.dbid = (SELECT oid FROM pg_catalog.pg_database WHERE datname = 'nsi_test'))
+                     AND s.dbid IN (SELECT oid FROM pg_catalog.pg_database WHERE datname = ANY(%s)))
                  OR (s.classid = 'pg_proc'::regclass
-                     AND s.dbid IN (SELECT oid FROM pg_catalog.pg_database WHERE datname IN ('nsi_dev', 'nsi_test')))))
-    """)
+                     AND s.dbid IN (SELECT oid FROM pg_catalog.pg_database WHERE datname = ANY(%s)))))
+    """, (list(BANCOS_DE_NSI_IMPORTACAO), list(BANCOS_DE_NSI_IMPORTACAO), list(BANCOS_COM_CONCESSAO_DE_FUNCAO)))
     assert cur.fetchone()[0] == 0
 
 

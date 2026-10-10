@@ -73,6 +73,28 @@ class Config:
     DATABASE_URL_NSI_IMPORTACAO      = os.getenv("DATABASE_URL_NSI_IMPORTACAO", "")
     TEST_DATABASE_URL_NSI_IMPORTACAO = os.getenv("TEST_DATABASE_URL_NSI_IMPORTACAO", "")
 
+    # ============================================================
+    # Sprint B (B6) - ambiente de ENSAIO de corte (ADR-008, Secao 16;
+    # SPRINT-B6-ESPECIFICACAO-ENSAIO-DE-CORTE.md, Secoes 14, 15 e 17).
+    # Terceiro valor fechado de NSI_DATABASE_ENV, com variaveis proprias e
+    # sem nenhum fallback de ou para development/test. O banco de ensaio e
+    # descartavel e so existe durante uma rodada do ensaio; fora dela, estas
+    # variaveis ficam ausentes e qualquer resolucao falha explicitamente.
+    # Somente o migrator de ensaio e a role nsi_importacao conectam a ele -
+    # nenhuma outra identidade funcional tem variavel de ensaio.
+    # ============================================================
+    ENSAIO_DATABASE_URL                = os.getenv("ENSAIO_DATABASE_URL", "")
+    ENSAIO_DATABASE_URL_NSI_IMPORTACAO = os.getenv("ENSAIO_DATABASE_URL_NSI_IMPORTACAO", "")
+
+    # Unico nome de banco aceito quando NSI_DATABASE_ENV=ensaio.
+    NOME_BANCO_ENSAIO_PERMITIDO = "nsi_ensaio"
+
+    # Area de ensaio em disco (decisao D5 da B6): fornecida exclusivamente por
+    # variavel de ambiente, SEM valor padrao. Ausente, toda operacao do
+    # ensaio que dependa dela falha (fail closed) - o sistema nunca assume um
+    # diretorio.
+    NSI_ENSAIO_DIR = os.getenv("NSI_ENSAIO_DIR", "")
+
     # Unico nome de banco aceito quando NSI_DATABASE_ENV=test (Especificacao
     # Tecnica da Sprint B, protecao contra banco de producao). Qualquer outra
     # TEST_DATABASE_URL e recusada por resolver_url_banco().
@@ -88,7 +110,7 @@ class Config:
     DATABASE_SSLMODE = os.getenv("DATABASE_SSLMODE", "prefer")
 
 
-_AMBIENTES_BANCO_VALIDOS = {"development", "test"}
+_AMBIENTES_BANCO_VALIDOS = {"development", "test", "ensaio"}
 
 # Nome de banco exigido em modo "development" para as seis URLs funcionais
 # da Sprint B3 (resolver_url_banco_papel). Diferente de
@@ -111,6 +133,14 @@ _MAPA_URLS_POR_PAPEL = {
     "nsi_expiracao":         ("DATABASE_URL_NSI_EXPIRACAO",         "TEST_DATABASE_URL_NSI_EXPIRACAO"),
     "nsi_operador_restrito": ("DATABASE_URL_NSI_OPERADOR_RESTRITO", "TEST_DATABASE_URL_NSI_OPERADOR_RESTRITO"),
     "nsi_importacao":        ("DATABASE_URL_NSI_IMPORTACAO",        "TEST_DATABASE_URL_NSI_IMPORTACAO"),
+}
+
+# Mapa fechado papel -> variavel do ambiente de ENSAIO (B6). Somente
+# nsi_importacao conecta ao banco de ensaio (especificacao da B6, Secao 14):
+# as tres identidades do fluxo novo nao tem CONNECT nele e, por isso, nao
+# tem variavel - pedir uma delas em "ensaio" e papel invalido.
+_MAPA_URLS_POR_PAPEL_ENSAIO = {
+    "nsi_importacao": "ENSAIO_DATABASE_URL_NSI_IMPORTACAO",
 }
 
 # Mesmo conjunto de valores reconhecido pela libpq/psycopg para sslmode.
@@ -253,8 +283,10 @@ def resolver_url_banco(ambiente: str | None = None) -> str:
     - Nenhum fallback de uma URL para a outra, em nenhuma direcao.
     - Falha imediata (ConfiguracaoBancoAusente) se a URL exigida pelo
       ambiente ativo estiver vazia - nunca um valor padrao silencioso.
+    - "ensaio" (B6): usa EXCLUSIVAMENTE Config.ENSAIO_DATABASE_URL. O nome do
+      banco precisa ser exatamente Config.NOME_BANCO_ENSAIO_PERMITIDO.
     - Falha imediata (AmbienteBancoInvalido) se NSI_DATABASE_ENV nao for
-      exatamente "development" ou "test".
+      exatamente "development", "test" ou "ensaio".
     """
     ambiente_resolvido = ambiente if ambiente is not None else Config.NSI_DATABASE_ENV
     if ambiente_resolvido not in _AMBIENTES_BANCO_VALIDOS:
@@ -269,6 +301,23 @@ def resolver_url_banco(ambiente: str | None = None) -> str:
             raise ConfiguracaoBancoAusente(
                 "NSI_DATABASE_ENV=development exige DATABASE_URL definida - "
                 "nenhum fallback para TEST_DATABASE_URL e permitido"
+            )
+        return url
+
+    if ambiente_resolvido == "ensaio":
+        # B6: usa EXCLUSIVAMENTE Config.ENSAIO_DATABASE_URL, e o banco
+        # precisa ser exatamente Config.NOME_BANCO_ENSAIO_PERMITIDO.
+        url = Config.ENSAIO_DATABASE_URL
+        if not url:
+            raise ConfiguracaoBancoAusente(
+                "NSI_DATABASE_ENV=ensaio exige ENSAIO_DATABASE_URL definida - "
+                "nenhum fallback para DATABASE_URL ou TEST_DATABASE_URL e permitido"
+            )
+        nome_banco = _extrair_nome_banco(url)
+        if nome_banco != Config.NOME_BANCO_ENSAIO_PERMITIDO:
+            raise BancoDeTesteNaoPermitido(
+                f"ENSAIO_DATABASE_URL aponta para o banco {nome_banco!r}, mas o modo "
+                f"de ensaio so aceita {Config.NOME_BANCO_ENSAIO_PERMITIDO!r}"
             )
         return url
 
@@ -367,14 +416,16 @@ def resolver_url_banco_papel(papel: str, ambiente: str | None = None) -> str:
     1. 'papel' pertence ao conjunto fechado de _MAPA_URLS_POR_PAPEL
        (PapelBancoInvalido).
     2. 'ambiente' (ou Config.NSI_DATABASE_ENV, se None) pertence a
-       {"development", "test"} (AmbienteBancoInvalido).
+       {"development", "test", "ensaio"} (AmbienteBancoInvalido). Em "ensaio"
+       (B6), somente o papel nsi_importacao existe (PapelBancoInvalido).
     3. a variavel de ambiente correta para (papel, ambiente) esta definida
        - nenhum fallback para a URL do outro ambiente nem de outro papel
        (ConfiguracaoBancoAusente).
     4. a URL e sintaticamente valida (DSNInvalida, propagada por
        _extrair_nome_banco/_extrair_usuario via _parsear_dsn_com_seguranca).
     5. o banco referenciado e exatamente o exigido pelo ambiente ativo -
-       nsi_dev em development, nsi_test em test (BancoFuncionalNaoPermitido).
+       nsi_dev em development, nsi_test em test, nsi_ensaio em ensaio
+       (BancoFuncionalNaoPermitido).
        As variaveis desta funcao sao exclusivas do cluster local desta
        sprint, nunca usadas para producao (Parte 1 da B3, Secao 3).
     6. o usuario referenciado na URL e exatamente igual a 'papel' - uma URL
@@ -398,8 +449,18 @@ def resolver_url_banco_papel(papel: str, ambiente: str | None = None) -> str:
             f"valores permitidos: {sorted(_AMBIENTES_BANCO_VALIDOS)}"
         )
 
-    nome_var_dev, nome_var_test = _MAPA_URLS_POR_PAPEL[papel]
-    nome_var = nome_var_dev if ambiente_resolvido == "development" else nome_var_test
+    if ambiente_resolvido == "ensaio":
+        # B6: somente os papeis de _MAPA_URLS_POR_PAPEL_ENSAIO existem no
+        # ambiente de ensaio - nunca um fallback para a variavel de teste.
+        if papel not in _MAPA_URLS_POR_PAPEL_ENSAIO:
+            raise PapelBancoInvalido(
+                f"papel={papel!r} nao existe no ambiente de ensaio - "
+                f"valores permitidos: {sorted(_MAPA_URLS_POR_PAPEL_ENSAIO)}"
+            )
+        nome_var = _MAPA_URLS_POR_PAPEL_ENSAIO[papel]
+    else:
+        nome_var_dev, nome_var_test = _MAPA_URLS_POR_PAPEL[papel]
+        nome_var = nome_var_dev if ambiente_resolvido == "development" else nome_var_test
 
     url = getattr(Config, nome_var)
     if not url:
@@ -408,10 +469,11 @@ def resolver_url_banco_papel(papel: str, ambiente: str | None = None) -> str:
             f"para o papel {papel!r} - nenhum fallback e permitido"
         )
 
-    nome_banco_esperado = (
-        _NOME_BANCO_DESENVOLVIMENTO_PERMITIDO if ambiente_resolvido == "development"
-        else Config.NOME_BANCO_TESTE_PERMITIDO
-    )
+    nome_banco_esperado = {
+        "development": _NOME_BANCO_DESENVOLVIMENTO_PERMITIDO,
+        "test": Config.NOME_BANCO_TESTE_PERMITIDO,
+        "ensaio": Config.NOME_BANCO_ENSAIO_PERMITIDO,
+    }[ambiente_resolvido]
     nome_banco_real = _extrair_nome_banco(url)
     if nome_banco_real != nome_banco_esperado:
         raise BancoFuncionalNaoPermitido(
