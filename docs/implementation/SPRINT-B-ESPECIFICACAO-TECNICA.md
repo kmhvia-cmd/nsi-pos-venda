@@ -4,7 +4,7 @@
 
 **Subordinação:** integral à ADR-008 (APROVADA E CONGELADA) e ao `ROADMAP-SPRINTS-B-G.md`. Nenhuma frase deste documento pode contradizer a ADR-008; onde houver aparente tensão, a ADR-008 prevalece e este documento deve ser corrigido.
 
-**Status:** DOCUMENTO VIVO — **B1 (esta especificação) CONCLUÍDA**; **B2 (Infraestrutura, Conexão e Migrations) CONCLUÍDA** (Seção 18); **B3.1 (Provisionamento administrativo, roles e isolamento) CONCLUÍDA** (Seção 18); **B3.2 (Migration `0002` — tabelas, constraints, índices e trigger defensiva) CONCLUÍDA** (Seção 18); **B3.3 (Migration `0003` — seis funções `SECURITY DEFINER`) CONCLUÍDA** (Seção 18); **B3.4 (Testes finais e documentação de encerramento da Sprint B3) CONCLUÍDA** (Seção 18). **Sprint B3 (B3.1–B3.4) integralmente CONCLUÍDA.** **B4.1 (decisão arquitetural do catálogo de eventos operacionais — ADR-009) CONCLUÍDA** (Seção 18); **B4.2 (Migration `0004` — schema relacional de lotes, registros de coleta e eventos operacionais) CONCLUÍDA** (Seção 18); **B4.3 (role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER`) CONCLUÍDA** (Seção 18). **B5.0 e B5.1 (ADR-010) CONCLUÍDAS; B5.2 ESPECIFICADA — implementação ainda não autorizada** (Seção 18). B5.3–B5.6, B6 e B7 pendentes, cada uma com autorização própria e separada.
+**Status:** DOCUMENTO VIVO — **B1 (esta especificação) CONCLUÍDA**; **B2 (Infraestrutura, Conexão e Migrations) CONCLUÍDA** (Seção 18); **B3.1 (Provisionamento administrativo, roles e isolamento) CONCLUÍDA** (Seção 18); **B3.2 (Migration `0002` — tabelas, constraints, índices e trigger defensiva) CONCLUÍDA** (Seção 18); **B3.3 (Migration `0003` — seis funções `SECURITY DEFINER`) CONCLUÍDA** (Seção 18); **B3.4 (Testes finais e documentação de encerramento da Sprint B3) CONCLUÍDA** (Seção 18). **Sprint B3 (B3.1–B3.4) integralmente CONCLUÍDA.** **B4.1 (decisão arquitetural do catálogo de eventos operacionais — ADR-009) CONCLUÍDA** (Seção 18); **B4.2 (Migration `0004` — schema relacional de lotes, registros de coleta e eventos operacionais) CONCLUÍDA** (Seção 18); **B4.3 (role `nsi_congelamento` e Migration `0005` — cinco funções `SECURITY DEFINER`) CONCLUÍDA** (Seção 18). **B5.0 e B5.1 (ADR-010) CONCLUÍDAS; B5.2 ESPECIFICADA E CONGELADA; B5.3 (role `nsi_importacao`), B5.4 (Migration `0006`), B5.5 (módulo e executor da importação) e B5.6 (encerramento) CONCLUÍDAS** (Seção 18, "Registro de implementação da B5"). B6 e B7 pendentes, cada uma com autorização própria e separada.
 
 **Autorização:** este documento, por si só, **não autoriza nenhuma implementação**. Cada subetapa (B2–B7) exige autorização própria, seguindo a mesma disciplina já usada nas Sprints A1–A3 (plano → aprovação → implementação → teste → diff → stage → commit → push). B7 exige autorização distinta de B5/B6 e está bloqueada por pré-requisitos próprios (Seção 14).
 
@@ -319,7 +319,7 @@ Consumo único decorre estruturalmente da combinação `(estado, claim_id)` na c
 | **B4.1** | Decisão arquitetural formal do catálogo de eventos operacionais (ADR-009) | **CONCLUÍDA** — detalhada abaixo |
 | **B4.2** | Migration `0004` — tabelas `lotes`, `registros_coleta`, `eventos_lote`, `eventos_registro_coleta`, triggers defensivas e ampliação de `comandos_idempotentes` | **CONCLUÍDA** — detalhada abaixo |
 | **B4.3** | Provisionamento administrativo da role `nsi_congelamento` e Migration `0005` — exatamente as cinco funções `SECURITY DEFINER` do catálogo da ADR-009 e seus `REVOKE`/`GRANT` | **CONCLUÍDA** — detalhada abaixo |
-| **B5** | Importador e validação de migração, ambiente de teste/staging | B5.0 e B5.1 **CONCLUÍDAS**; B5.2 **ESPECIFICADA**; B5.3–B5.6 pendentes, cada uma com autorização própria — detalhada abaixo |
+| **B5** | Importador e validação de migração, ambiente de teste/staging | **CONCLUÍDA** — B5.0 a B5.6; B5.2 especificada e congelada; detalhada abaixo, com o "Registro de implementação da B5" |
 | **B6** | Ensaio de corte completo, ambiente controlado | pendente — regras abaixo |
 | **B7** | Corte real + preservação dos JSONs, produção | **bloqueada** até Seção 14 estar satisfeita; autorização própria e separada de B5/B6 |
 
@@ -1304,9 +1304,100 @@ Mesma separação da Seção 20: unitários em Python puro; integração somente
 
 Os nomes de arquivo são candidatos, a fixar em cada subetapa.
 
+##### Registro de implementação da B5 (B5.3 a B5.6)
+
+Registro de encerramento. O texto dos itens 1 a 20 acima é o da especificação congelada da B5.2 e não foi reaberto nem alterado; o resultado da implementação, as decisões tomadas dentro dela e a situação de cada critério de aceite estão somente aqui.
+
+**Commits** (todos em `main`): `6eaabe1` (B5.3 — scripts da role `nsi_importacao`, papel em `config.py` e testes), `54d1ab3` (B5.4 — migration `0006`, fixtures e testes) e `b0c7bc3` (B5.5 — módulo puro, executor e testes).
+
+**Arquivos entregues** — nomes finais dos candidatos do item 20:
+
+| Arquivo | Subetapa |
+|---|---|
+| `scripts/postgres_local/provisionar_b5_role_importacao.sql`, `desprovisionar_b5_role_importacao.sql` (não executado) | B5.3 |
+| `docs/implementation/PROCEDIMENTO-MANUAL-B5-ROLE-IMPORTACAO-DESTRUTIVO.md` | B5.3 |
+| `config.py` (papel `nsi_importacao`), `tests/unit/test_config_banco.py`, `tests/unit/test_scripts_b5_role_importacao.py`, `tests/integration/test_provisionamento_b5_role_importacao.py` | B5.3 |
+| `migrations/versions/0006_importacao_legado.py` | B5.4 |
+| `tests/integration/test_fn_iniciar_importacao_legado.py`, `test_fn_importar_lote_legado.py`, `test_fn_concluir_importacao_legado.py`, `test_fn_verificar_paridade_legado.py`, `test_invariante_claim_legado.py`, `test_permissoes_b5.py`, `test_migration_0006_upgrade_downgrade.py` | B5.4 |
+| `tests/unit/test_migration_0006_estatico.py` | B5.4 — além da lista candidata: testes estáticos da migration |
+| `tests/apoio_b5.py`, `tests/fixtures/legado/` | B5.4 — apoio comum e fixtures sintéticas das quatro gerações e dos formatos de recusa |
+| `tests/integration/test_alembic_postgres.py`, `test_migration_0002_upgrade_downgrade.py`, `test_migration_0004_upgrade_downgrade.py`, `test_migration_0005_upgrade_downgrade.py` | B5.4 — ajuste somente do novo head `0006` |
+| `core/importacao_legado.py`, `scripts/importar_legado.py` | B5.5 |
+| `tests/unit/test_importacao_legado.py`, `tests/integration/test_executor_importacao_legado.py` | B5.5 |
+
+**Objetos criados pela `0006`:** as cinco tabelas `importacoes_legado`, `importacoes_legado_arquivos`, `importacoes_legado_conclusoes`, `lotes_legado` e `registros_legado`, com 32 constraints e 7 índices; três triggers de imutabilidade no registro técnico, com suas três funções; as quatro funções de importação; e a nova definição de `fn_criar_claim`. O snapshot não tem trigger de imutabilidade (ADR-010, Seção 9.3).
+
+**Decisões tomadas dentro da especificação** — nenhuma altera contrato, catálogo, matriz de papéis ou decisão da ADR-010:
+
+- **Ordem de gravação em `fn_importar_lote_legado`.** Os passos 9 a 11 do item 5.1 são gravados na ordem critérios → promoção → snapshot, na mesma transação: `lotes_legado` referencia `lotes` por chave estrangeira e tem `CHECK` de coerência entre destino, motivo e lote promovido, de modo que a linha do snapshot só pode ser gravada com o destino já conhecido. O resultado é o da ordem lógica do item 5.1: a preservação nunca depende da promoção, e a promoção desfeita deixa o lote preservado.
+- **Lote sem nenhum registro e sem marcas da A2.** A regra do item 6.2 casa com `anterior_a1` e com `a1`; a função classifica como `anterior_a1`. Nenhuma das duas é promovível.
+- **`total_arquivos` divergente** das linhas registradas é `entrada_estrutural_invalida` (`22000`).
+- **Evidência de disparo em `status_pipeline`:** somente o valor booleano verdadeiro do JSON.
+- **Retorno de abertura e de conclusão.** `iniciada_em` e `concluida_em` são devolvidos em UTC e em formato fixo, para que o replay devolva o mesmo resultado em qualquer sessão.
+- **Paridade.** `fn_verificar_paridade_legado` é `STABLE`, percorre os lotes em ordem de bytes do caminho (`COLLATE "C"`) e devolve, além das verificações do item 14, `prova_de_origem_confere` para lote promovido.
+- **Serialização entre importações.** O bloqueio `SHARE ROW EXCLUSIVE` de `claims` conflita consigo mesmo: importações de lote ficam serializadas entre si a partir do passo 8, e a reimportação (passo 7) é reavaliada depois do bloqueio. Um lote já importado é decidido antes do bloqueio e não faz a criação de claims esperar.
+- **Promoção sem commit nos testes.** O executor roda cada chamada em um bloco de transação; quando a conexão recebida já está numa transação, os blocos viram savepoints. É o que permite exercitar a promoção de ponta a ponta e terminar em `ROLLBACK`, como exige o item 17.
+- **Retomada pelo executor.** Somente uma execução aberta é retomada. Para uma execução já concluída, o executor aborta com `execucao_ja_concluida`, sem reapresentar lotes: `nsi_importacao` não lê tabelas, e a conclusão é detectada por `fn_verificar_paridade_legado`.
+- **Origem.** A recusa compara a origem com o diretório de dados da aplicação por igualdade de caminho real, como o item 5 determina.
+
+**Hipótese do item 10.5 — validada.** Os dois testes de concorrência real de `test_invariante_claim_legado.py` comprovaram, por execução, que um `fn_criar_claim` que aguarda o bloqueio da importação só lê `registros_legado` depois de a importação concorrente ter terminado (recusa `registro_legado_nao_promovido`), e que a importação que aguarda um `fn_criar_claim` em andamento recusa `claim_preexistente`. O mecanismo de serialização foi mantido como especificado.
+
+**Execução real:**
+
+- `nsi_test` e `nsi_dev` confirmados por leitura em `0005` antes da B5.4.
+- Role `nsi_importacao` provisionada administrativamente pelo operador (B5.3). A senha foi redefinida pelo operador em 2026-10-10 e a variável `TEST_DATABASE_URL_NSI_IMPORTACAO` foi configurada no `.env` local, fora do versionamento (item 19, dependência 6).
+- `0006` aplicada primeiro em `nsi_test`. O ciclo `0006 → 0005 → 0002 → 0005 → 0006`, com o gate de identidade antes de cada `downgrade`, comprovou que a definição de `fn_criar_claim` restaurada pelo downgrade é idêntica à criada pelo caminho original da `0003` (texto, owner, `SECURITY DEFINER`, `search_path` e matriz de `EXECUTE`). O preflight do downgrade foi comprovado executando o próprio `downgrade()` dentro de uma transação que contém uma promoção e termina em `ROLLBACK`.
+- `0006` aplicada em `nsi_dev` em 2026-10-10, **somente por `upgrade`**, com identidade confirmada antes (banco `nsi_dev`, servidor local, porta 5432, `nsi_dev_migrator`, revisão `0005`). Nenhum `downgrade` foi executado em `nsi_dev`, e nenhuma importação: as cinco tabelas novas estão com zero linhas, e `nsi_importacao` não tem `CONNECT` nem `USAGE` em `nsi_dev`.
+- Inspeção somente leitura dos dois bancos no encerramento: revisão `0006 (head)` em ambos; 13 tabelas, 21 funções (15 `SECURITY DEFINER`, todas com o `search_path` fixo), 29 índices, 97 constraints e 6 triggers, idênticos nos dois; owner `nsi_eventos_owner` em todas as tabelas e funções de negócio; `PUBLIC` sem `EXECUTE` em nenhuma função; nenhuma concessão em tabela; nenhum índice inválido, constraint não validada ou trigger desabilitada.
+- Nenhum arquivo de `data/` foi lido por teste, script ou execução da B5. O script de desprovisionamento da role não foi executado.
+
+**Testes** (contagens na suíte final): 714 testes da B5.
+
+| Arquivo | Testes |
+|---|---|
+| `tests/unit/test_scripts_b5_role_importacao.py` | 109 |
+| `tests/integration/test_provisionamento_b5_role_importacao.py` | 25 |
+| `tests/integration/test_fn_iniciar_importacao_legado.py` | 37 |
+| `tests/integration/test_fn_importar_lote_legado.py` | 193 |
+| `tests/integration/test_fn_concluir_importacao_legado.py` | 27 |
+| `tests/integration/test_fn_verificar_paridade_legado.py` | 48 |
+| `tests/integration/test_invariante_claim_legado.py` | 24 |
+| `tests/integration/test_permissoes_b5.py` | 127 |
+| `tests/integration/test_migration_0006_upgrade_downgrade.py` | 7 |
+| `tests/unit/test_migration_0006_estatico.py` | 22 |
+| `tests/unit/test_importacao_legado.py` | 66 |
+| `tests/integration/test_executor_importacao_legado.py` | 29 |
+
+Suíte completa do projeto, com integração real obrigatória (`NSI_REQUIRE_PG_TESTS=1`): **1750 de 1750 aprovados, nenhuma falha, nenhum pulado**. Sem `pg_integration`: 698 coletados, 1052 desmarcados.
+
+**Resíduo de teste.** Os testes com commit real usam somente lotes não promovíveis; nenhum lote promovido é confirmado em `nsi_test`, e o preflight do downgrade da `0006` não foi enfraquecido. Execuções, snapshot e registro técnico desses testes ficam como resíduo sintético em `nsi_test`, nunca em `nsi_dev`, até o ciclo destrutivo da própria suíte remover as tabelas. Os recibos de `criar_claim` criados pelos testes de concorrência são removidos pelas próprias chaves.
+
+**Observações registradas, sem ação nesta subetapa:**
+
+- O `lote_id` de um documento recusado (`identidade_divergente`, `formato_desconhecido`) é texto vindo do próprio documento e fica gravado em `importacoes_legado_arquivos`, que é imutável. Avaliar no ensaio da B6, com dado real.
+- Um valor pessoal não textual no legado (por exemplo, um número) entra na projeção convertido em texto.
+- A recusa de origem não barra um subdiretório do diretório de dados informado como origem. Na B5 nenhuma execução usa `data/`; a regra para dado real pertence à B6.
+
+**Situação dos critérios de aceite (item 18):**
+
+| # | Critério | Situação |
+|---|---|---|
+| 1 | Role provisionada pelo script de três fases, executado duas vezes, ambas aprovadas | role provisionada e comprovada por leitura (25 testes de integração: atributos, ausência de membership, `CONNECT` e `USAGE` somente em `nsi_test`, `EXECUTE` somente nas quatro funções). **O número de execuções do script e o resultado da Fase 3 não foram atestados neste registro — a confirmar pelo operador**, inclusive uma execução já com os dois bancos em `0006` |
+| 2 | A `0006` cria exatamente os objetos dos itens 8 e 16, as quatro funções e a nova `fn_criar_claim` | satisfeito — inventário exato por teste |
+| 3 | Owner, `SECURITY DEFINER`, `search_path` e matriz de `EXECUTE` comprovados por leitura | satisfeito, nos dois bancos |
+| 4 | Classificação, preservação, promoção, reimportação, conclusão e paridade com fixtures das quatro gerações e de cada recusa e não promoção | satisfeito |
+| 5 | Nenhum evento, recibo ou identidade inventados; nenhum lote anterior à A2 promovido | satisfeito |
+| 6 | Invariante de claim garantida e comprovada | satisfeito, inclusive sob concorrência real nos dois sentidos |
+| 7 | Nenhum valor pessoal em registro técnico, manifesto, retorno, relatório, exceção ou saída de teste | satisfeito |
+| 8 | Downgrade restaura a `0005` exata; preflight aborta se existir lote promovido | satisfeito |
+| 9 | `nsi_test` primeiro; `nsi_dev` só por `upgrade`, sem importação; ambos em `0006 (head)` | satisfeito |
+| 10 | Suíte da B5 e suíte completa aprovadas | satisfeito — 1750 de 1750 |
+| 11 | Nenhum arquivo de `data/` lido; `0001`–`0005` e arquivos existentes de produção intocados, exceto `config.py` | satisfeito |
+| 12 | Documentação de encerramento neste documento, no ROADMAP e no `PROJECT_STATUS.md` | satisfeito por esta revisão |
+
 ### B4, B5, B6, B7 — resumo
 - **B4:** B4.1 e B4.2 concluídas; B4.3 concluída (detalhamento acima).
-- **B5:** B5.0 e B5.1 concluídas; B5.2 especificada (detalhamento acima, subordinado à ADR-010); B5.3–B5.6 pendentes. Executada somente em `nsi_test`, com dados sintéticos; nunca toca produção.
+- **B5:** concluída (B5.0 a B5.6; detalhamento e registro de implementação acima, subordinados à ADR-010). Executada somente em `nsi_test`, com dados sintéticos; nunca tocou produção nem `data/`.
 - **B6:** ver Seção 19.
 - **B7:** ver Seção 14; produção, autorização própria.
 
@@ -1402,4 +1493,12 @@ Tensão de granularidade entre modelo atual (arquivo mutável inteiro) e modelo-
 
 **B5.2 (especificação técnica da importação do legado): ESPECIFICADA.** Registrada integralmente na Seção 18. Incorpora as correções objetivas da auditoria e as cinco decisões humanas tomadas sobre ela: conflito de reimportação como recusa registrada; manifesto gravado no registro técnico; paridade como prova do momento da importação; conflito de idempotência para caminho com SHA-256 diferente na mesma execução; paridade permitida a qualquer tempo, com aprovação só em execução concluída e reverificação dos lotes `ja_importado`. **Reabertura única, autorizada antes da B5.4**, para eliminar o que impedia a implementação, sem alterar nenhuma decisão da ADR-010: paridade restrita a eventos, com recibos garantidos por construção (item 10.4); invariante de claim completada com a recusa `claim_preexistente`, a serialização por bloqueio de `claims` e a verificação no mesmo comando (item 10.5); identidade dos testes que cruzam importação e fluxo novo (item 17); bloqueio de linha entre importação e conclusão (item 12); ordem fixa de avaliação (item 5.1); índices e funções de trigger como parte dos objetos (itens 8, 16 e 18); casos sem motivo definido, definição de `documento_ilegivel`, estrutura de `status_legado`, paridade do manifesto nos dois sentidos e prefixos de fuso recusados; e a credencial da role como dependência operacional (item 19). **Nenhuma implementação de código, script, migration, role ou função foi realizada.** B5.3 a B5.6 aguardam autorização própria.
 
-Próxima revisão: ao encerramento da B5.3.
+**B5.3 (provisionamento da role `nsi_importacao`): CONCLUÍDA.** Scripts de provisionamento e de desprovisionamento em três fases, papel `nsi_importacao` em `config.py`, testes estáticos e testes de integração somente leitura (commit `6eaabe1`). A role existe com os atributos aprovados, sem membership, com `CONNECT` e `USAGE` somente em `nsi_test`. O script de desprovisionamento não foi executado.
+
+**B5.4 (Migration `0006` — importação do legado): CONCLUÍDA.** Cinco tabelas (registro técnico imutável e snapshot legado sem trigger), quatro funções `SECURITY DEFINER` de importação e a nova definição de `fn_criar_claim`, com downgrade protegido por preflight (commit `54d1ab3`). Aplicada em `nsi_test`, com ciclo de downgrade e upgrade comprovado, e em `nsi_dev` em 2026-10-10, somente por `upgrade`. A hipótese de serialização do item 10.5 foi validada por concorrência real.
+
+**B5.5 (módulo, executor e paridade): CONCLUÍDA.** `core/importacao_legado.py` (puro) e `scripts/importar_legado.py` (executor com gate de identidade, somente `nsi_test`), com testes unitários e de integração de ponta a ponta (commit `b0c7bc3`).
+
+**B5.6 (testes finais e encerramento): CONCLUÍDA.** Regressão completa com integração real obrigatória: **1750 de 1750 aprovados, nenhuma falha, nenhum pulado**. `nsi_test` e `nsi_dev` em `0006 (head)`, com catálogos idênticos e nenhum objeto inválido. Onze dos doze critérios de aceite do item 18 satisfeitos; o critério 1 (duas execuções do script da role, com a Fase 3 aprovada) depende de confirmação do operador (Seção 18, "Registro de implementação da B5"). **B5 CONCLUÍDA. A Sprint B segue em andamento: B6 e B7 pendentes.**
+
+Próxima revisão: ao início da B6.

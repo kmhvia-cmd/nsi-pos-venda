@@ -185,7 +185,7 @@ Cada sprint abaixo é descrita por oito campos fixos:
 | A1 — Identidade por linha e schema estrutural do CSV | CONCLUÍDA |
 | A2 — Validação de conteúdo e normalização de WhatsApp | CONCLUÍDA |
 | A3 — Correção append-only de registros inválidos | CONCLUÍDA |
-| B — Persistência imutável, claims e idempotência | EM ANDAMENTO — B1, B2, B3 (B3.1–B3.4) e B4 (B4.1–B4.3) concluídas; B5, B6 e B7 pendentes. Detalhamento: `SPRINT-B-ESPECIFICACAO-TECNICA.md`, Seção 18 |
+| B — Persistência imutável, claims e idempotência | EM ANDAMENTO — B1, B2, B3 (B3.1–B3.4), B4 (B4.1–B4.3) e B5 (B5.0–B5.6: importação do legado em `nsi_test`, com dados sintéticos, ADR-010) concluídas; B6 (ensaio de corte) e B7 (corte real, bloqueado até a Seção 14 da especificação) pendentes. Detalhamento: `SPRINT-B-ESPECIFICACAO-TECNICA.md`, Seção 18 |
 | C — Envio efetivo, wamid e webhook | NÃO INICIADA |
 | D — Operador Interno, autenticação, rotas e detecção do congelamento M0+192h | NÃO INICIADA |
 | E — Correlação determinística e Motor NSI | NÃO INICIADA |
