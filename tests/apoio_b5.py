@@ -23,11 +23,10 @@ pessoais sinteticos usam marcadores fixos (VALORES_PESSOAIS_SINTETICOS),
 que os testes de privacidade procuram em retornos, registro tecnico,
 manifesto e mensagens de erro.
 
-O manifesto canonico e o SHA-256 daqui servem apenas aos testes da B5.4. A
-implementacao canonica de producao (B5.2, item 13) pertence a B5.5
-(core/importacao_legado.py); quando existir, estes testes passam a usa-la.
+O SHA-256 e o manifesto canonico vem de core/importacao_legado.py, a
+implementacao UNICA de producao (B5.2, item 13) - as funcoes daqui apenas
+a adaptam a forma usada pelos testes.
 """
-import hashlib
 import json
 import os
 import secrets
@@ -38,6 +37,7 @@ import psycopg
 import pytest
 
 from config import ConfiguracaoBancoAusente, resolver_url_banco_papel
+from core import importacao_legado as _producao
 
 DIRETORIO_FIXTURES = Path(__file__).parent / "fixtures" / "legado"
 
@@ -92,38 +92,26 @@ def serializar(documento) -> bytes:
 
 
 def sha256_hex(conteudo: bytes) -> str:
-    return hashlib.sha256(conteudo).hexdigest()
+    return _producao.sha256_bytes(conteudo)
 
 
 def manifesto_canonico(importacao_id: str, fuso, arquivos: list) -> bytes:
-    """Manifesto do item 7, em serializacao canonica: chaves ordenadas,
-    separadores sem espaco, UTF-8 sem escape, arquivos por caminho."""
-    documento = {
-        "formato": "nsi-manifesto-legado/1",
-        "importacao_id": importacao_id,
-        "fuso_declarado": fuso,
-        "arquivos": sorted(arquivos, key=lambda a: a["caminho_relativo"]),
-    }
-    return json.dumps(documento, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    """Manifesto do item 7, em serializacao canonica (modulo de producao)."""
+    return _producao.montar_manifesto(importacao_id, fuso, arquivos)
+
+
+def _arquivo(caminho: str, conteudo: bytes, tipo: str):
+    return _producao.ArquivoDoEscopo(caminho, tipo, len(conteudo), _producao.sha256_bytes(conteudo))
 
 
 def entrada_de_lote(caminho: str, conteudo: bytes, resultado: dict) -> dict:
     """Entrada de tipo 'lote' do manifesto, a partir do retorno de
     fn_importar_lote_legado."""
-    return {
-        "caminho_relativo": caminho, "tamanho_bytes": len(conteudo), "sha256": sha256_hex(conteudo),
-        "tipo": "lote", "geracao": resultado["geracao"], "destino": resultado["destino"],
-        "motivo": resultado["motivo"], "lote_id_legado": resultado["lote_id_legado"],
-        "lote_id_promovido": resultado["lote_id_promovido"],
-    }
+    return _producao.entrada_de_lote(_arquivo(caminho, conteudo, _producao.TIPO_LOTE), resultado)
 
 
 def entrada_de_tentativa_recusada(caminho: str, conteudo: bytes) -> dict:
-    return {
-        "caminho_relativo": caminho, "tamanho_bytes": len(conteudo), "sha256": sha256_hex(conteudo),
-        "tipo": "tentativa_recusada", "geracao": None, "destino": "somente_manifesto",
-        "motivo": None, "lote_id_legado": None, "lote_id_promovido": None,
-    }
+    return _producao.entrada_de_tentativa_recusada(_arquivo(caminho, conteudo, _producao.TIPO_TENTATIVA_RECUSADA))
 
 
 # ============================================================
