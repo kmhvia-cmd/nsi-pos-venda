@@ -4,12 +4,14 @@ NSI - tests/integration/test_migration_0005_upgrade_downgrade.py
 (Sprint B, B4.3 - ADR-009)
 
 Testes de integracao REAIS contra PostgreSQL - nunca SQLite, nunca mock -
-do ciclo 0005 -> 0004 -> 0005, exclusivamente contra nsi_test (nunca
-nsi_dev - Especificacao Tecnica, Secao 18, "Criterios de rollback": nenhum
-downgrade e executado em nsi_dev).
+do ciclo que atravessa o downgrade da 0005, exclusivamente contra nsi_test
+(nunca nsi_dev - Especificacao Tecnica, Secao 18, "Criterios de rollback":
+nenhum downgrade e executado em nsi_dev). Desde a B5.4 o head e 0006: o
+ciclo parte de 0006 e volta a 0006 (0006 -> 0004 -> 0006), atravessando
+tambem o downgrade da 0006, que restaura fn_criar_claim da 0003.
 
 Revisoes EXPLICITAS em toda chamada ao Alembic (`downgrade 0004`,
-`upgrade 0005`) - nunca `head`.
+`upgrade 0006`) - nunca `head`.
 
 GATE DE IDENTIDADE OBRIGATORIO antes de qualquer downgrade: current_
 database() = 'nsi_test', servidor local, porta 5432, current_user =
@@ -69,6 +71,17 @@ MATRIZ_EXECUTE = {
 }
 TABELAS = {"alembic_version", "claims", "eventos_claim", "comandos_idempotentes",
            "lotes", "registros_coleta", "eventos_lote", "eventos_registro_coleta"}
+
+# Head 0006 (B5.4): cinco tabelas, quatro funcoes de importacao e tres
+# funcoes de trigger a mais - nenhuma delas existe em 0004.
+REVISAO_HEAD = "0006"
+TABELAS_0006 = {"importacoes_legado", "importacoes_legado_arquivos", "importacoes_legado_conclusoes",
+                "lotes_legado", "registros_legado"}
+FUNCOES_0006 = {
+    "fn_iniciar_importacao_legado", "fn_importar_lote_legado", "fn_concluir_importacao_legado",
+    "fn_verificar_paridade_legado", "fn_bloquear_alteracao_importacoes_legado",
+    "fn_bloquear_alteracao_importacoes_legado_arquivos", "fn_bloquear_alteracao_importacoes_legado_conclusoes",
+}
 
 _CHAVE_SINTETICA = "chave-sintetica-teste-downgrade-0005"
 
@@ -162,10 +175,12 @@ def _assert_saida_alembic_sem_dsn(url: str, saida: str, rotulo: str) -> None:
 
 
 def _assert_inventario_0005(estado: dict) -> None:
-    assert estado["versao"] == "0005"
-    assert estado["tabelas"] == TABELAS
-    assert set(estado["funcoes"]) == FUNCOES_ATE_0004 | set(FUNCOES_0005), (
-        "O schema precisa ter exatamente as funcoes ate a 0004 mais as cinco da 0005."
+    """Inventario do head (0006), com as cinco funcoes da 0005 conferidas
+    uma a uma."""
+    assert estado["versao"] == REVISAO_HEAD
+    assert estado["tabelas"] == TABELAS | TABELAS_0006
+    assert set(estado["funcoes"]) == FUNCOES_ATE_0004 | set(FUNCOES_0005) | FUNCOES_0006, (
+        "O schema precisa ter exatamente as funcoes ate a 0004, as cinco da 0005 e as sete da 0006."
     )
     for nome in FUNCOES_0005:
         funcao = estado["funcoes"][nome]
@@ -199,11 +214,11 @@ def test_inventario_somente_leitura_do_head(request):
     assert estado["role_congelamento"] == (True, 1, True)
 
 
-def test_ciclo_downgrade_0004_upgrade_0005_preserva_dados_e_role(request):
-    """Estado inicial 0005 -> (gate) -> downgrade 0004 -> confirma remocao
+def test_ciclo_downgrade_0004_upgrade_0006_preserva_dados_e_role(request):
+    """Estado inicial 0006 -> (gate) -> downgrade 0004 -> confirma remocao
     exata das cinco funcoes, com tabelas, dados, recibo e role intactos ->
-    upgrade 0005 -> confirma a mesma matriz e as funcoes operando sobre os
-    dados preservados, terminando OBRIGATORIAMENTE em 0005."""
+    upgrade 0006 -> confirma a mesma matriz e as funcoes operando sobre os
+    dados preservados, terminando OBRIGATORIAMENTE em 0006."""
     url = request.getfixturevalue("url_banco_teste")
     env = {**os.environ, "NSI_DATABASE_ENV": "test"}
     lote_id = uuid_texto()
@@ -248,17 +263,18 @@ def test_ciclo_downgrade_0004_upgrade_0005_preserva_dados_e_role(request):
         assert estado_pos_downgrade["versao"] == "0004"
         assert estado_pos_downgrade["tabelas"] == TABELAS
         assert set(estado_pos_downgrade["funcoes"]) == FUNCOES_ATE_0004, (
-            "O downgrade precisa remover exatamente as cinco funcoes da 0005, e nenhuma outra."
+            "O downgrade precisa remover exatamente as cinco funcoes da 0005 (e os objetos da 0006), "
+            "e nenhuma outra."
         )
         assert estado_pos_downgrade["role_congelamento"] == (True, 1, True), (
             "O downgrade nunca toca a role nsi_congelamento, sua membership ou seu USAGE."
         )
         assert _dados_sinteticos(url, lote_id) == (1, 1), "O downgrade nunca toca dados nem recibos."
 
-        resultado_upgrade = _executar_alembic("upgrade", "0005", env=env)
+        resultado_upgrade = _executar_alembic("upgrade", REVISAO_HEAD, env=env)
         assert resultado_upgrade.returncode == 0, resultado_upgrade.stderr
-        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stdout, "upgrade 0005 - stdout")
-        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stderr, "upgrade 0005 - stderr")
+        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stdout, "upgrade 0006 - stdout")
+        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stderr, "upgrade 0006 - stderr")
 
         estado_final = _consultar_estado(url)
         _assert_inventario_0005(estado_final)
@@ -289,18 +305,18 @@ def test_ciclo_downgrade_0004_upgrade_0005_preserva_dados_e_role(request):
 
         _comprovar_identidade_antes_de_destrutivo(url)
         estado_para_recuperacao = _consultar_estado(url)
-        if estado_para_recuperacao["versao"] != "0005":
-            resultado_recuperacao = _executar_alembic("upgrade", "0005", env=env)
+        if estado_para_recuperacao["versao"] != REVISAO_HEAD:
+            resultado_recuperacao = _executar_alembic("upgrade", REVISAO_HEAD, env=env)
             _assert_saida_alembic_sem_dsn(url, resultado_recuperacao.stdout, "recuperacao final - stdout")
             _assert_saida_alembic_sem_dsn(url, resultado_recuperacao.stderr, "recuperacao final - stderr")
             if resultado_recuperacao.returncode != 0 and not excecao_original_em_andamento:
                 pytest.fail(
-                    "Falha ao recuperar nsi_test para 0005 apos o teste - stderr: "
+                    "Falha ao recuperar nsi_test para 0006 apos o teste - stderr: "
                     f"{resultado_recuperacao.stderr[-500:] if resultado_recuperacao.stderr else '(vazio)'}"
                 )
 
     estado_final = _consultar_estado(url)
-    assert estado_final["versao"] == "0005"
+    assert estado_final["versao"] == REVISAO_HEAD
     assert _dados_sinteticos(url, lote_id) == (1, 0), "O recibo sintetico nao pode sobreviver ao final deste teste."
 
 

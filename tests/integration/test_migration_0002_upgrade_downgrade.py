@@ -2,23 +2,23 @@
 """
 NSI - tests/integration/test_migration_0002_upgrade_downgrade.py
 (Sprint B, B3.2 - ADR-008, Parte 1 da B3 e correcoes de seguranca;
-ciclo estendido ao head 0003 na B3.4, ao head 0004 na B4.2 e ao head
-0005 na B4.3, sem reabrir o gate nem o piso 0001 ja aprovados na B3.2)
+ciclo estendido ao head 0003 na B3.4, ao head 0004 na B4.2, ao head
+0005 na B4.3 e ao head 0006 na B5.4, sem reabrir o gate nem o piso 0001 ja aprovados na B3.2)
 
 Testes de integracao REAIS contra PostgreSQL - nunca SQLite, nunca mock -
 do ciclo completo de downgrade/upgrade entre a revisao 0001 e o head
-atual (0005), exclusivamente contra nsi_test (nunca nsi_dev - ver
+atual (0006), exclusivamente contra nsi_test (nunca nsi_dev - ver
 docs/implementation/SPRINT-B-ESPECIFICACAO-TECNICA.md, plano de
 execucao da B3.2/B3.4/B4.2/B4.3).
 
-Revisoes EXPLICITAS em toda chamada ao Alembic (`upgrade 0005`,
+Revisoes EXPLICITAS em toda chamada ao Alembic (`upgrade 0006`,
 `downgrade 0001`) - nunca `head`: identificador explicito evita
 qualquer ambiguidade caso uma revisao futura mude o head novamente.
 
 RECUPERACAO OBRIGATORIA (correcao desta rodada, B4.2): todo o ciclo
 destrutivo roda dentro de um try/finally - o finally repete o gate
 completo de identidade, consulta a revisao atual e forca `alembic
-upgrade 0005` somente se necessario, sem nunca mascarar uma excecao
+upgrade 0006` somente se necessario, sem nunca mascarar uma excecao
 original do proprio teste (ver docstring da funcao de teste).
 
 Nenhum teste deste arquivo chama pytest nem executa a suite completa
@@ -79,6 +79,9 @@ TABELAS_DE_NEGOCIO_0004 = {
     "claims", "eventos_claim", "comandos_idempotentes",
     # B4 (migration 0004, ADR-009)
     "lotes", "registros_coleta", "eventos_lote", "eventos_registro_coleta",
+    # B5 (migration 0006, ADR-010)
+    "importacoes_legado", "importacoes_legado_arquivos", "importacoes_legado_conclusoes",
+    "lotes_legado", "registros_legado",
 }
 
 
@@ -198,10 +201,10 @@ def test_identidade_do_banco_de_teste_e_comprovada(request):
 
 def test_ciclo_downgrade_0001_upgrade_0004(request):
     """
-    Ciclo completo, adaptado na B4.3 para o head atual: estado inicial
-    0005 (aplicado manualmente pelo operador antes desta suite rodar) ->
+    Ciclo completo, adaptado na B5.4 para o head atual: estado inicial
+    0006 (aplicado manualmente pelo operador antes desta suite rodar) ->
     (gate de identidade) -> downgrade 0001 -> confirma inventario ->
-    upgrade 0005 -> terminando OBRIGATORIAMENTE em 0005. O piso 0001 e o
+    upgrade 0006 -> terminando OBRIGATORIAMENTE em 0006. O piso 0001 e o
     gate de identidade sao exatamente os aprovados na B3.2 - nao foram
     reabertos.
 
@@ -212,7 +215,7 @@ def test_ciclo_downgrade_0001_upgrade_0004(request):
 
     RECUPERACAO OBRIGATORIA (B4.2): todo o trecho destrutivo roda dentro
     de um try/finally. O finally repete o gate completo de identidade,
-    consulta a revisao atual e executa somente 'alembic upgrade 0005'
+    consulta a revisao atual e executa somente 'alembic upgrade 0006'
     se nsi_test nao estiver la - nunca contra nsi_dev. Se ja houver uma
     excecao original em andamento (o proprio corpo do teste falhou), o
     finally nunca levanta uma NOVA falha por cima dela: uma falha da
@@ -225,16 +228,16 @@ def test_ciclo_downgrade_0001_upgrade_0004(request):
     env = {**os.environ, "NSI_DATABASE_ENV": "test"}
 
     try:
-        # Estado inicial: 0005 (head) - o fluxo real aprovado aplica
-        # 'alembic upgrade 0005' MANUALMENTE antes de rodar esta suite
+        # Estado inicial: 0006 (head) - o fluxo real aprovado aplica
+        # 'alembic upgrade 0006' MANUALMENTE antes de rodar esta suite
         # (ordem de execucao da B4.3); este teste nunca faz o primeiro
         # upgrade ele mesmo. Nunca presumido, sempre confirmado antes
         # de qualquer acao.
         estado_inicial = _consultar_estado(url)
-        assert estado_inicial["versao"] == "0005", (
+        assert estado_inicial["versao"] == "0006", (
             f"Estado inicial inesperado: alembic_version={estado_inicial['versao']!r}, "
-            "esperado '0005' antes deste teste rodar - o fluxo aprovado exige "
-            "'alembic upgrade 0005' aplicado manualmente antes da suite."
+            "esperado '0006' antes deste teste rodar - o fluxo aprovado exige "
+            "'alembic upgrade 0006' aplicado manualmente antes da suite."
         )
         assert estado_inicial["tabelas"] == ({"alembic_version"} | TABELAS_DE_NEGOCIO_0004), (
             "Inventario inicial precisa ser exatamente alembic_version mais as "
@@ -259,16 +262,16 @@ def test_ciclo_downgrade_0001_upgrade_0004(request):
             f"sem residuo - encontrado: {estado_pos_downgrade['tabelas']}"
         )
 
-        # upgrade 0005 - o ciclo TERMINA aplicado em 0005 (head),
-        # exigencia explicita desta rodada da B4.3 - nunca 'head'.
-        resultado_upgrade = _executar_alembic("upgrade", "0005", env=env)
+        # upgrade 0006 - o ciclo TERMINA aplicado em 0006 (head),
+        # exigencia explicita desta rodada da B5.4 - nunca 'head'.
+        resultado_upgrade = _executar_alembic("upgrade", "0006", env=env)
         assert resultado_upgrade.returncode == 0, resultado_upgrade.stderr
-        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stdout, "upgrade 0005 - stdout")
-        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stderr, "upgrade 0005 - stderr")
+        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stdout, "upgrade 0006 - stdout")
+        _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stderr, "upgrade 0006 - stderr")
 
         estado_final = _consultar_estado(url)
-        assert estado_final["versao"] == "0005", (
-            "O ciclo de testes precisa terminar com nsi_test novamente em 0005 - "
+        assert estado_final["versao"] == "0006", (
+            "O ciclo de testes precisa terminar com nsi_test novamente em 0006 - "
             f"estado final encontrado: {estado_final['versao']!r}"
         )
         assert estado_final["tabelas"] == ({"alembic_version"} | TABELAS_DE_NEGOCIO_0004)
@@ -281,15 +284,15 @@ def test_ciclo_downgrade_0001_upgrade_0004(request):
         _comprovar_identidade_antes_de_destrutivo(url)
 
         estado_para_recuperacao = _consultar_estado(url)
-        if estado_para_recuperacao["versao"] != "0005":
-            resultado_recuperacao = _executar_alembic("upgrade", "0005", env=env)
+        if estado_para_recuperacao["versao"] != "0006":
+            resultado_recuperacao = _executar_alembic("upgrade", "0006", env=env)
             _assert_saida_alembic_sem_dsn(url, resultado_recuperacao.stdout, "recuperacao final - stdout")
             _assert_saida_alembic_sem_dsn(url, resultado_recuperacao.stderr, "recuperacao final - stderr")
             estado_para_recuperacao = _consultar_estado(url)
 
-        if estado_para_recuperacao["versao"] != "0005":
+        if estado_para_recuperacao["versao"] != "0006":
             mensagem = (
-                "Recuperacao para 0005 nao foi confirmada apos o teste - revisao "
+                "Recuperacao para 0006 nao foi confirmada apos o teste - revisao "
                 f"encontrada: {estado_para_recuperacao['versao']!r} (sem DSN/credenciais)."
             )
             if excecao_original_em_andamento:

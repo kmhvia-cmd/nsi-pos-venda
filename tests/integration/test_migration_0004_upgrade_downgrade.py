@@ -6,12 +6,12 @@ NSI - tests/integration/test_migration_0004_upgrade_downgrade.py
 Testes de integracao REAIS contra PostgreSQL - nunca SQLite, nunca mock -
 do ciclo completo de downgrade/upgrade da migration 0004, exclusivamente
 contra nsi_test (nunca nsi_dev), mesma disciplina ja corrigida na B3.4
-para a migration 0003. Desde a B4.3 o head e 0005: o ciclo parte de
-0005 e volta a 0005, atravessando o downgrade da 0004 - o Alembic roda
+para a migration 0003. Desde a B5.4 o head e 0006: o ciclo parte de
+0006 e volta a 0006, atravessando o downgrade da 0004 - o Alembic roda
 o downgrade inteiro numa unica transacao (migrations/env.py), entao um
-downgrade recusado pelo preflight da 0004 desfaz tambem o da 0005.
+downgrade recusado pelo preflight da 0004 desfaz tambem os da 0006 e da 0005.
 
-Revisoes EXPLICITAS em toda chamada ao Alembic (`upgrade 0005`,
+Revisoes EXPLICITAS em toda chamada ao Alembic (`upgrade 0006`,
 `downgrade 0003`) - nunca `head`.
 
 GATE DE IDENTIDADE OBRIGATORIO antes de qualquer downgrade: current_
@@ -21,16 +21,16 @@ chamada ao Alembic ocorrer. Repetido antes de CADA acao destrutiva.
 
 Cobre dois cenarios:
 
-1. Ciclo limpo: 0005 -> (gate) -> downgrade 0003 -> confirma inventario
+1. Ciclo limpo: 0006 -> (gate) -> downgrade 0003 -> confirma inventario
    identico ao de 0003 original (incluindo o CHECK de 5 comandos
    restaurado em comandos_idempotentes, sem nenhuma das quatro tabelas
-   da B4) -> upgrade 0005 -> confirma inventario completo de volta.
+   da B4) -> upgrade 0006 -> confirma inventario completo de volta.
 
 2. Downgrade bloqueado por recibo residual: insere e COMMITA um recibo
    sintetico de comando da B4 em comandos_idempotentes -> tenta
    downgrade 0003 -> confirma falha explicita e permanencia integral em
-   0005 -> remove SOMENTE o recibo sintetico -> downgrade 0003 (sucesso)
-   -> confirma 0003 -> upgrade 0005 novamente -> confirma ausencia de
+   0006 -> remove SOMENTE o recibo sintetico -> downgrade 0003 (sucesso)
+   -> confirma 0003 -> upgrade 0006 novamente -> confirma ausencia de
    qualquer residuo permanente das duas tentativas.
 
 pg_catalog.pg_tables - nunca information_schema.tables - mesmo motivo
@@ -59,6 +59,9 @@ USUARIO_MIGRATOR_ESPERADO = "nsi_test_migrator"
 
 TABELAS_B3 = {"claims", "eventos_claim", "comandos_idempotentes"}
 TABELAS_B4 = {"lotes", "registros_coleta", "eventos_lote", "eventos_registro_coleta"}
+# Head 0006 (B5.4): registro tecnico de importacao e snapshot legado.
+TABELAS_B5 = {"importacoes_legado", "importacoes_legado_arquivos", "importacoes_legado_conclusoes",
+              "lotes_legado", "registros_legado"}
 
 COMANDOS_B4 = (
     "registrar_lote", "registrar_congelamento", "confirmar_disparo",
@@ -216,20 +219,20 @@ def test_identidade_do_banco_de_teste_e_comprovada(request):
 
 
 def test_ciclo_downgrade_0003_upgrade_0004(request):
-    """Estado inicial 0005 (aplicado manualmente pelo operador antes
+    """Estado inicial 0006 (aplicado manualmente pelo operador antes
     desta suite rodar) -> (gate) -> downgrade 0003 -> confirma
-    inventario identico ao de 0003 original -> upgrade 0005 -> confirma
-    inventario completo de volta, terminando OBRIGATORIAMENTE em 0005."""
+    inventario identico ao de 0003 original -> upgrade 0006 -> confirma
+    inventario completo de volta, terminando OBRIGATORIAMENTE em 0006."""
     url = request.getfixturevalue("url_banco_teste")
     env = {**os.environ, "NSI_DATABASE_ENV": "test"}
 
     estado_inicial = _consultar_estado(url)
-    assert estado_inicial["versao"] == "0005", (
+    assert estado_inicial["versao"] == "0006", (
         f"Estado inicial inesperado: alembic_version={estado_inicial['versao']!r}, "
-        "esperado '0005' antes deste teste rodar - o fluxo aprovado exige "
-        "'alembic upgrade 0005' aplicado manualmente antes da suite."
+        "esperado '0006' antes deste teste rodar - o fluxo aprovado exige "
+        "'alembic upgrade 0006' aplicado manualmente antes da suite."
     )
-    assert estado_inicial["tabelas"] == ({"alembic_version"} | TABELAS_B3 | TABELAS_B4)
+    assert estado_inicial["tabelas"] == ({"alembic_version"} | TABELAS_B3 | TABELAS_B4 | TABELAS_B5)
     assert "registrar_lote" in estado_inicial["check_comando_def"]
 
     _comprovar_identidade_antes_de_destrutivo(url)
@@ -249,21 +252,21 @@ def test_ciclo_downgrade_0003_upgrade_0004(request):
         "CHECK de comando precisa voltar aos 5 valores originais de claims apos o downgrade."
     )
 
-    resultado_upgrade = _executar_alembic("upgrade", "0005", env=env)
+    resultado_upgrade = _executar_alembic("upgrade", "0006", env=env)
     assert resultado_upgrade.returncode == 0, resultado_upgrade.stderr
-    _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stdout, "upgrade 0005 - stdout")
-    _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stderr, "upgrade 0005 - stderr")
+    _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stdout, "upgrade 0006 - stdout")
+    _assert_saida_alembic_sem_dsn(url, resultado_upgrade.stderr, "upgrade 0006 - stderr")
 
     estado_final = _consultar_estado(url)
-    assert estado_final["versao"] == "0005", (
-        "O ciclo de testes precisa terminar com nsi_test novamente em 0005 - "
+    assert estado_final["versao"] == "0006", (
+        "O ciclo de testes precisa terminar com nsi_test novamente em 0006 - "
         f"estado final encontrado: {estado_final['versao']!r}"
     )
-    assert estado_final["tabelas"] == ({"alembic_version"} | TABELAS_B3 | TABELAS_B4)
+    assert estado_final["tabelas"] == ({"alembic_version"} | TABELAS_B3 | TABELAS_B4 | TABELAS_B5)
     assert "registrar_lote" in estado_final["check_comando_def"]
 
     # Verificacao explicita de ownership, por pg_catalog, apos o upgrade
-    # para 0005 - nunca presumida a partir de como a migration foi
+    # para 0006 - nunca presumida a partir de como a migration foi
     # escrita. alembic_version nunca e tocada por esta migration -
     # permanece do migrator, nunca do owner.
     owners_tabelas = estado_final["owners_tabelas"]
@@ -297,7 +300,7 @@ def test_downgrade_bloqueado_por_recibo_residual_b4(request):
     sintetico de forma idempotente (garante limpeza mesmo se a remocao
     intermediaria acima nunca tiver sido alcancada por uma falha
     anterior), repete o gate completo de identidade, e forca 'alembic
-    upgrade 0005' se nsi_test nao estiver la - nunca contra nsi_dev.
+    upgrade 0006' se nsi_test nao estiver la - nunca contra nsi_dev.
     Se o corpo do teste ja estiver propagando uma falha, o 'finally'
     nunca levanta uma NOVA falha por cima dela (o que a esconderia) -
     só levanta se a recuperacao falhar e nao houver falha original em
@@ -306,8 +309,8 @@ def test_downgrade_bloqueado_por_recibo_residual_b4(request):
     env = {**os.environ, "NSI_DATABASE_ENV": "test"}
 
     estado_inicial = _consultar_estado(url)
-    assert estado_inicial["versao"] == "0005", (
-        "Este teste tambem exige nsi_test em 0005 antes de rodar."
+    assert estado_inicial["versao"] == "0006", (
+        "Este teste tambem exige nsi_test em 0006 antes de rodar."
     )
 
     _inserir_recibo_sintetico_b4(url)
@@ -325,10 +328,10 @@ def test_downgrade_bloqueado_por_recibo_residual_b4(request):
         _assert_saida_alembic_sem_dsn(url, resultado_bloqueado.stderr, "downgrade bloqueado - stderr")
 
         estado_apos_bloqueio = _consultar_estado(url)
-        assert estado_apos_bloqueio["versao"] == "0005", (
-            "nsi_test precisa permanecer integralmente em 0005 apos o downgrade recusado."
+        assert estado_apos_bloqueio["versao"] == "0006", (
+            "nsi_test precisa permanecer integralmente em 0006 apos o downgrade recusado."
         )
-        assert estado_apos_bloqueio["tabelas"] == ({"alembic_version"} | TABELAS_B3 | TABELAS_B4), (
+        assert estado_apos_bloqueio["tabelas"] == ({"alembic_version"} | TABELAS_B3 | TABELAS_B4 | TABELAS_B5), (
             "Nenhuma tabela pode ter sido removida por um downgrade que falhou no preflight."
         )
 
@@ -372,8 +375,8 @@ def test_downgrade_bloqueado_por_recibo_residual_b4(request):
         _comprovar_identidade_antes_de_destrutivo(url)
 
         estado_para_recuperacao = _consultar_estado(url)
-        if estado_para_recuperacao["versao"] != "0005":
-            resultado_recuperacao = _executar_alembic("upgrade", "0005", env=env)
+        if estado_para_recuperacao["versao"] != "0006":
+            resultado_recuperacao = _executar_alembic("upgrade", "0006", env=env)
             _assert_saida_alembic_sem_dsn(url, resultado_recuperacao.stdout, "recuperacao final - stdout")
             _assert_saida_alembic_sem_dsn(url, resultado_recuperacao.stderr, "recuperacao final - stderr")
             if resultado_recuperacao.returncode != 0 and not excecao_original_em_andamento:
@@ -381,16 +384,16 @@ def test_downgrade_bloqueado_por_recibo_residual_b4(request):
                 # falha original em andamento - nunca mascara a causa
                 # raiz de uma falha anterior do proprio corpo do teste.
                 pytest.fail(
-                    "Falha ao recuperar nsi_test para 0005 apos o teste - stderr: "
+                    "Falha ao recuperar nsi_test para 0006 apos o teste - stderr: "
                     f"{resultado_recuperacao.stderr[-500:] if resultado_recuperacao.stderr else '(vazio)'}"
                 )
 
     estado_final = _consultar_estado(url)
-    assert estado_final["versao"] == "0005", (
-        "O ciclo precisa terminar novamente em 0005, sem nenhum residuo permanente "
+    assert estado_final["versao"] == "0006", (
+        "O ciclo precisa terminar novamente em 0006, sem nenhum residuo permanente "
         "das duas tentativas de downgrade."
     )
-    assert estado_final["tabelas"] == ({"alembic_version"} | TABELAS_B3 | TABELAS_B4)
+    assert estado_final["tabelas"] == ({"alembic_version"} | TABELAS_B3 | TABELAS_B4 | TABELAS_B5)
 
     with psycopg.connect(url) as conn:
         with conn.cursor() as cur:

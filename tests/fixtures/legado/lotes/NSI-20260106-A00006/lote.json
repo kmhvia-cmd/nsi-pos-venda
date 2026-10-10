@@ -1,0 +1,37 @@
+{
+  "lote_id": "NSI-20260106-A00006",
+  "empresa": "Empresa Sintetica",
+  "nome_lote": "Lote Sintetico",
+  "data_inicial": "2026-01-01",
+  "data_final": "2026-01-31",
+  "csv_original": "sintetico.csv",
+  "criado_em": "2026-01-05T10:30:00.123456",
+  "total_clientes": 2,
+  "status": "aguardando_d8",
+  "data_disparo": "2026-01-13T10:30:00.123456",
+  "status_pipeline": {
+    "upload": true,
+    "lote_criado": true,
+    "aguardando_d8": false,
+    "disparo_whatsapp": false,
+    "webhook": false,
+    "analise_ia": false,
+    "dashboard": false,
+    "pdf": false
+  },
+  "clientes": [
+    {
+      "registro_coleta_id": "139282da-94f1-4a0f-acfc-196c134153b3",
+      "nome": "Pessoa Sintetica Legado 1",
+      "telefone": "5511987600001",
+      "produto": "Produto Sintetico Legado",
+      "resposta": ""
+    },
+    {
+      "nome": "Pessoa Sintetica Legado 2",
+      "telefone": "5511987600002",
+      "produto": "Produto Sintetico Legado",
+      "resposta": ""
+    }
+  ]
+}

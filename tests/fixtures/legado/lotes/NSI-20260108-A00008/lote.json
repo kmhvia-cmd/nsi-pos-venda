@@ -1,0 +1,52 @@
+{
+  "lote_id": "NSI-20260199-FFFFFF",
+  "empresa": "Empresa Sintetica",
+  "nome_lote": "Lote Sintetico",
+  "data_inicial": "2026-01-01",
+  "data_final": "2026-01-31",
+  "csv_original": "sintetico.csv",
+  "criado_em": "2026-01-05T10:30:00.123456",
+  "total_clientes": 2,
+  "status": "aguardando_d8",
+  "data_disparo": "2026-01-13T10:30:00.123456",
+  "status_pipeline": {
+    "upload": true,
+    "lote_criado": true,
+    "aguardando_d8": false,
+    "disparo_whatsapp": false,
+    "webhook": false,
+    "analise_ia": false,
+    "dashboard": false,
+    "pdf": false
+  },
+  "clientes": [
+    {
+      "registro_coleta_id": "07f742c4-18d9-4360-884f-b1c85e33151a",
+      "nome": "Pessoa Sintetica Legado 1",
+      "telefone": "5511987600001",
+      "produto": "Produto Sintetico Legado",
+      "resposta": ""
+    },
+    {
+      "registro_coleta_id": "5cb06e05-5d20-4e6b-ad2b-9561ebf4d139",
+      "nome": "Pessoa Sintetica Legado 2",
+      "telefone": "5511987600002",
+      "produto": "Produto Sintetico Legado",
+      "resposta": ""
+    }
+  ],
+  "total_recebido": 3,
+  "total_valido": 2,
+  "total_invalido": 1,
+  "clientes_invalidos": [
+    {
+      "registro_coleta_id": "57cc9e76-7dec-4eea-bf89-c0c86bbf9595",
+      "nome_bruto": "Pessoa Sintetica Legado Invalido 1",
+      "whatsapp_bruto": "551198761",
+      "produto_bruto": "Produto Sintetico Legado",
+      "motivos": [
+        "whatsapp_comprimento_invalido"
+      ]
+    }
+  ]
+}

@@ -30,15 +30,18 @@ pytestmark = pytest.mark.pg_integration
 
 NOME_SCHEMA = "nsi_operacional"
 
-# Sete tabelas de negocio existentes no head atual (0005, ADR-008/ADR-009)
-# - tres da B3 (migration 0002) mais quatro da B4 (migration 0004); a
-# migration 0005 (B4.3) cria somente funcoes, nenhuma tabela.
+# Doze tabelas de negocio existentes no head atual (0006, ADR-008/ADR-009/
+# ADR-010) - tres da B3 (migration 0002), quatro da B4 (migration 0004) e
+# cinco da B5 (migration 0006: registro tecnico de importacao e snapshot
+# legado); a migration 0005 (B4.3) cria somente funcoes, nenhuma tabela.
 # Corrigido nesta rodada: quando este arquivo foi escrito (B2.2), o head
 # nao criava nenhuma tabela de negocio - isso deixou de ser verdade a
 # partir da migration 0002 e permanece assim no head atual.
 TABELAS_DE_NEGOCIO_HEAD_0004 = {
     "claims", "eventos_claim", "comandos_idempotentes",
     "lotes", "registros_coleta", "eventos_lote", "eventos_registro_coleta",
+    "importacoes_legado", "importacoes_legado_arquivos", "importacoes_legado_conclusoes",
+    "lotes_legado", "registros_legado",
 }
 
 
@@ -136,7 +139,7 @@ def test_upgrade_downgrade_upgrade_com_inventario_do_head(url_banco_teste):
     ('..._sem_tabela_de_negocio') so era verdade na B2.2, quando o head
     nao criava nenhuma tabela de negocio. Desde a migration 0002, o head
     sempre cria tabelas de negocio reais - o nome e a verificacao agora
-    refletem exatamente o inventario esperado no head atual (0005).
+    refletem exatamente o inventario esperado no head atual (0006).
 
     A identidade do banco (nsi_test, servidor local, porta 5432) e
     comprovada aqui dentro, ANTES de qualquer chamada ao Alembic - inclusive
@@ -149,9 +152,9 @@ def test_upgrade_downgrade_upgrade_com_inventario_do_head(url_banco_teste):
     de um try/finally. O finally repete o gate completo de identidade,
     consulta a revisao atual e executa somente 'alembic upgrade head'
     se nsi_test nao estiver no head - nunca contra nsi_dev - confirmando
-    ao final que o head resolvido e exatamente '0005' (o head atual do
+    ao final que o head resolvido e exatamente '0006' (o head atual do
     projeto nesta rodada; este teste continua validando 'head'/'base'
-    semanticamente, nunca fixado em '0005' como alvo literal do ciclo
+    semanticamente, nunca fixado em '0006' como alvo literal do ciclo
     em si). Se ja houver uma excecao original em andamento, uma falha
     da propria recuperacao nunca a mascara - e apenas reportada via
     'print', sem DSN nem credenciais.
@@ -169,7 +172,7 @@ def test_upgrade_downgrade_upgrade_com_inventario_do_head(url_banco_teste):
         tabelas_pos_upgrade = _listar_tabelas_do_schema(url_banco_teste)
         assert tabelas_pos_upgrade == ({"alembic_version"} | TABELAS_DE_NEGOCIO_HEAD_0004), (
             "Apos 'upgrade head', o inventario precisa ser exatamente alembic_version "
-            f"mais as sete tabelas de negocio do head atual (0005) - encontrado: {tabelas_pos_upgrade}"
+            f"mais as doze tabelas de negocio do head atual (0006) - encontrado: {tabelas_pos_upgrade}"
         )
 
         # GATE OBRIGATORIO antes de qualquer downgrade.
@@ -192,7 +195,7 @@ def test_upgrade_downgrade_upgrade_com_inventario_do_head(url_banco_teste):
         tabelas_finais = _listar_tabelas_do_schema(url_banco_teste)
         assert tabelas_finais == ({"alembic_version"} | TABELAS_DE_NEGOCIO_HEAD_0004), (
             "Apos o segundo 'upgrade head', o inventario precisa ser exatamente "
-            f"alembic_version mais as sete tabelas de negocio - encontrado: {tabelas_finais}"
+            f"alembic_version mais as doze tabelas de negocio - encontrado: {tabelas_finais}"
         )
     finally:
         excecao_original_em_andamento = sys.exc_info()[0] is not None
@@ -201,7 +204,7 @@ def test_upgrade_downgrade_upgrade_com_inventario_do_head(url_banco_teste):
         _comprovar_identidade_banco_teste(url_banco_teste)
 
         revisao_atual = _consultar_revisao_atual(url_banco_teste)
-        if revisao_atual != "0005":
+        if revisao_atual != "0006":
             resultado_recuperacao = _executar_alembic("upgrade", "head", env=env)
             assert url_banco_teste not in resultado_recuperacao.stdout
             assert url_banco_teste not in resultado_recuperacao.stderr
@@ -209,13 +212,13 @@ def test_upgrade_downgrade_upgrade_com_inventario_do_head(url_banco_teste):
 
         inventario_recuperado = _listar_tabelas_do_schema(url_banco_teste)
         recuperacao_completa = (
-            revisao_atual == "0005"
+            revisao_atual == "0006"
             and inventario_recuperado == ({"alembic_version"} | TABELAS_DE_NEGOCIO_HEAD_0004)
         )
 
         if not recuperacao_completa:
             mensagem = (
-                "Recuperacao para o head (0005) nao foi confirmada apos o teste - "
+                "Recuperacao para o head (0006) nao foi confirmada apos o teste - "
                 f"revisao encontrada: {revisao_atual!r}, inventario encontrado: "
                 f"{inventario_recuperado!r} (sem DSN/credenciais)."
             )

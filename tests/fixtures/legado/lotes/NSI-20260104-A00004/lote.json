@@ -1,0 +1,122 @@
+{
+  "lote_id": "NSI-20260104-A00004",
+  "empresa": "Empresa Sintetica",
+  "nome_lote": "Lote Sintetico",
+  "data_inicial": "2026-01-01",
+  "data_final": "2026-01-31",
+  "csv_original": "sintetico.csv",
+  "criado_em": "2026-01-04T09:00:00.000004",
+  "total_clientes": 2,
+  "status": "aguardando_d8",
+  "data_disparo": "2026-01-13T10:30:00.123456",
+  "status_pipeline": {
+    "upload": true,
+    "lote_criado": true,
+    "aguardando_d8": false,
+    "disparo_whatsapp": false,
+    "webhook": false,
+    "analise_ia": false,
+    "dashboard": false,
+    "pdf": false
+  },
+  "clientes": [
+    {
+      "registro_coleta_id": "0a52048c-6b22-4ec9-9b0d-acff401c444d",
+      "nome": "Pessoa Sintetica Legado 1",
+      "telefone": "5511987600001",
+      "produto": "Produto Sintetico Legado",
+      "resposta": ""
+    },
+    {
+      "registro_coleta_id": "500b7749-ec9d-452f-9d07-e4e8947a9f2c",
+      "nome": "Pessoa Sintetica Legado 2",
+      "telefone": "5511987600002",
+      "produto": "Produto Sintetico Legado",
+      "resposta": ""
+    }
+  ],
+  "total_recebido": 4,
+  "total_valido": 2,
+  "total_invalido": 2,
+  "clientes_invalidos": [
+    {
+      "registro_coleta_id": "6e23f72f-beb1-49dc-b944-978566e15fff",
+      "nome_bruto": "Pessoa Sintetica Legado Invalido 1",
+      "whatsapp_bruto": "551198761",
+      "produto_bruto": "Produto Sintetico Legado",
+      "motivos": [
+        "whatsapp_comprimento_invalido"
+      ]
+    },
+    {
+      "registro_coleta_id": "d3369103-9c39-4af4-a5e8-d116b9b73330",
+      "nome_bruto": "Pessoa Sintetica Legado Invalido 2",
+      "whatsapp_bruto": "551198762",
+      "produto_bruto": "Produto Sintetico Legado",
+      "motivos": [
+        "whatsapp_comprimento_invalido"
+      ]
+    }
+  ],
+  "historico_versoes": {
+    "0a52048c-6b22-4ec9-9b0d-acff401c444d": [
+      {
+        "registro_coleta_versao_id": "2eac1c07-6755-43b2-b567-9b944f5ee721",
+        "numero_versao": 1,
+        "status_versao": "invalida",
+        "processo": "upload_original",
+        "recebido_em": "2026-01-05T10:30:00.123456",
+        "nome_bruto": "Pessoa Sintetica Legado Historico",
+        "whatsapp_bruto": "551198769",
+        "produto_bruto": "Produto Sintetico Legado",
+        "motivos": []
+      },
+      {
+        "registro_coleta_versao_id": "16a17c1f-c2ac-4417-aef9-df6339b3c9cf",
+        "numero_versao": 2,
+        "status_versao": "valida",
+        "processo": "upload_correcao_csv",
+        "recebido_em": "2026-01-05T10:30:00.123456",
+        "nome_bruto": "Pessoa Sintetica Legado Historico",
+        "whatsapp_bruto": "551198769",
+        "produto_bruto": "Produto Sintetico Legado",
+        "motivos": []
+      }
+    ],
+    "6e23f72f-beb1-49dc-b944-978566e15fff": [
+      {
+        "registro_coleta_versao_id": "ebf94567-8b04-4aa6-a9ce-c9601f0a7a1d",
+        "numero_versao": 1,
+        "status_versao": "invalida",
+        "processo": "upload_original",
+        "recebido_em": "2026-01-05T10:30:00.123456",
+        "nome_bruto": "Pessoa Sintetica Legado Historico",
+        "whatsapp_bruto": "551198769",
+        "produto_bruto": "Produto Sintetico Legado",
+        "motivos": []
+      },
+      {
+        "registro_coleta_versao_id": "32ba74ba-2890-4771-8d93-53b4c49ae867",
+        "numero_versao": 2,
+        "status_versao": "invalida",
+        "processo": "upload_correcao_csv",
+        "recebido_em": "2026-01-05T10:30:00.123456",
+        "nome_bruto": "Pessoa Sintetica Legado Historico",
+        "whatsapp_bruto": "551198769",
+        "produto_bruto": "Produto Sintetico Legado",
+        "motivos": []
+      },
+      {
+        "registro_coleta_versao_id": "9510b30c-620e-4273-ad11-fee1d16da913",
+        "numero_versao": 3,
+        "status_versao": "invalida",
+        "processo": "upload_correcao_csv",
+        "recebido_em": "2026-01-05T10:30:00.123456",
+        "nome_bruto": "Pessoa Sintetica Legado Historico",
+        "whatsapp_bruto": "551198769",
+        "produto_bruto": "Produto Sintetico Legado",
+        "motivos": []
+      }
+    ]
+  }
+}
