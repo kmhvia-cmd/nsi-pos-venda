@@ -232,4 +232,6 @@ Testes de integração terminam em `ROLLBACK` sempre que possível; os que exige
 
 **C1 (ADR-011): CONCLUÍDA** — commit `521cad9`.
 
-**C2 (especificação técnica): CONCLUÍDA** — este documento.
+**C2 (especificação técnica): CONCLUÍDA** — commit `3d5d0d6`.
+
+**C3 (roles): ARTEFATOS CONCLUÍDOS; PROVISIONAMENTO PENDENTE DO OPERADOR.** Scripts `provisionar_c3_roles_envio.sql` e `desprovisionar_c3_roles_envio.sql`, procedimento `PROCEDIMENTO-MANUAL-C3-ROLES-ENVIO.md`, variáveis de conexão dos dois papéis em `config.py` e testes estáticos e unitários. Todos os blocos de validação somente leitura dos dois scripts foram executados contra `nsi_test`, sem erro de SQL; as escritas da Fase 2 exigem o superusuário e **não foram executadas**. A verificação somente leitura das roles provisionadas é acrescentada depois da execução pelo operador.

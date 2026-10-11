@@ -73,6 +73,15 @@ class Config:
     DATABASE_URL_NSI_IMPORTACAO      = os.getenv("DATABASE_URL_NSI_IMPORTACAO", "")
     TEST_DATABASE_URL_NSI_IMPORTACAO = os.getenv("TEST_DATABASE_URL_NSI_IMPORTACAO", "")
 
+    # Sprint C (C3) - identidades do dominio de envio (ADR-011, Secao 11):
+    # nsi_envio (quem envia) e nsi_webhook (quem recebe notificacoes), cada
+    # uma com LOGIN e credencial propria, em nsi_dev e nsi_test. Mesmas
+    # regras das demais variaveis funcionais: sem valor padrao, sem fallback.
+    DATABASE_URL_NSI_ENVIO        = os.getenv("DATABASE_URL_NSI_ENVIO", "")
+    TEST_DATABASE_URL_NSI_ENVIO   = os.getenv("TEST_DATABASE_URL_NSI_ENVIO", "")
+    DATABASE_URL_NSI_WEBHOOK      = os.getenv("DATABASE_URL_NSI_WEBHOOK", "")
+    TEST_DATABASE_URL_NSI_WEBHOOK = os.getenv("TEST_DATABASE_URL_NSI_WEBHOOK", "")
+
     # ============================================================
     # Sprint B (B6) - ambiente de ENSAIO de corte (ADR-008, Secao 16;
     # SPRINT-B6-ESPECIFICACAO-ENSAIO-DE-CORTE.md, Secoes 14, 15 e 17).
@@ -133,6 +142,8 @@ _MAPA_URLS_POR_PAPEL = {
     "nsi_expiracao":         ("DATABASE_URL_NSI_EXPIRACAO",         "TEST_DATABASE_URL_NSI_EXPIRACAO"),
     "nsi_operador_restrito": ("DATABASE_URL_NSI_OPERADOR_RESTRITO", "TEST_DATABASE_URL_NSI_OPERADOR_RESTRITO"),
     "nsi_importacao":        ("DATABASE_URL_NSI_IMPORTACAO",        "TEST_DATABASE_URL_NSI_IMPORTACAO"),
+    "nsi_envio":             ("DATABASE_URL_NSI_ENVIO",             "TEST_DATABASE_URL_NSI_ENVIO"),
+    "nsi_webhook":           ("DATABASE_URL_NSI_WEBHOOK",           "TEST_DATABASE_URL_NSI_WEBHOOK"),
 }
 
 # Mapa fechado papel -> variavel do ambiente de ENSAIO (B6). Somente
