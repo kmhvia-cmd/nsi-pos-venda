@@ -619,6 +619,19 @@ def test_roteiro_de_pausa_copia_e_levantamento_pela_linha_de_comando(area, insta
         assert proibido not in todas, "Nenhuma evidencia contem valor pessoal, nome fora do escopo ou caminho absoluto."
 
 
+def test_gerar_sintetico_usa_por_padrao_a_composicao_da_d10(area, capsys):
+    """Decisao D10: as fixtures mais pelo menos 20 lotes por geracao."""
+    assert cli.LOTES_EXTRAS_DA_RODADA_S == 20
+    _cli(capsys, "preparar", "--ensaio-id", "s1")
+    codigo, saida = _cli(capsys, "gerar-sintetico", "--ensaio-id", "s1", "--fuso", "America/Sao_Paulo")
+    assert codigo == 0
+    for geracao in ("anterior_a1", "a1", "a2", "a3"):
+        assert sum(saida["por_geracao_e_destino"][geracao].values()) >= 20, geracao
+    assert saida["por_geracao_e_destino"]["a2"]["promovido"] >= 20
+    assert saida["por_geracao_e_destino"]["a3"]["promovido"] >= 20
+    assert _cli(capsys, "gerar-sintetico", "--ensaio-id", "s1")[0] == cli.SAIDA_RECUSADA, "Nunca regenera."
+
+
 def test_comandos_recusam_rodada_inexistente_e_evidencia_repetida(area, instalacao, capsys):
     codigo, saida = _cli(capsys, "levantamento", "--ensaio-id", "nao-existe")
     assert (codigo, saida["motivo"]) == (cli.SAIDA_RECUSADA, "rodada inexistente - execute 'preparar' antes")

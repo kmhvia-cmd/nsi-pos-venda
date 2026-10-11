@@ -4,7 +4,7 @@
 
 **Subordinação:** `docs/implementation/SPRINT-B6-ESPECIFICACAO-ENSAIO-DE-CORTE.md` (referida aqui como "a especificação"), ADR-008 (Seção 16), ADR-010 e B5.2. Em caso de divergência, vale a especificação. Complementa, sem alterar, os procedimentos manuais da B3, da B4 e da B5.
 
-**Status:** DOCUMENTO VIVO. **Nenhum passo deste documento foi executado na B6.2.** Os dois scripts administrativos exigem o superusuário e só rodam pelas mãos do operador, na B6.3, depois das decisões `D1` a `D10` (Seção 49 da especificação). A Rodada R, com dado real, exige ainda o termo de autorização da Seção 35.
+**Status:** DOCUMENTO VIVO. As Seções 2, 3 e 5 foram executadas por inteiro na Rodada S de 2026-10-10, aprovada (`RELATORIO-FINAL-B6-ENSAIO-DE-CORTE.md`). A Seção 4 (Rodada R, com dado real) **nunca foi executada**: foi dispensada na B6 por `D1` = não e passou a ser pré-requisito da B7; exige as decisões da Seção 49 da especificação e o termo de autorização da Seção 35. Os dois scripts administrativos exigem o superusuário e só rodam pelas mãos do operador.
 
 ---
 
@@ -48,6 +48,8 @@ Os comandos são para o PowerShell, na raiz do repositório. `<id>` é o identif
    - `ENSAIO_DATABASE_URL` — usuário `nsi_ensaio_migrator`, banco `nsi_ensaio`;
    - `ENSAIO_DATABASE_URL_NSI_IMPORTACAO` — usuário `nsi_importacao`, banco `nsi_ensaio`.
 
+   O formato é `postgresql://usuario:senha@localhost:5432/nsi_ensaio`, **sem** sufixo de driver: `postgresql+psycopg://` é recusado como URL inválida (o prefixo de dialeto é acrescentado somente por `migrations/env.py`). Caracteres especiais da senha são codificados (por exemplo, `$` vira `%24`).
+
 6. **Aplicar a `0006`**, somente por `upgrade`:
 
    ```powershell
@@ -70,10 +72,10 @@ Todo comando de `scripts/ensaio_corte.py` imprime um JSON sem valor pessoal e de
 
 Não há aplicação a pausar nem dado real. A rodada ensaia as ferramentas, mede os tempos e comprova a verificação `V5`.
 
-1. **`S2` — gerar a instalação sintética** e declarar os destinos esperados **antes** da importação. Use o fuso que será declarado em `S5`, e 20 lotes extras por geração (`D10`):
+1. **`S2` — gerar a instalação sintética** e declarar os destinos esperados **antes** da importação. Use o fuso que será declarado em `S5`. O padrão do comando é a composição da `D10`: as oito fixtures da B5 mais 20 lotes por geração (`--lotes-extras`, que só deve ser aumentado, nunca reduzido):
 
    ```powershell
-   .venv\Scripts\python.exe scripts/ensaio_corte.py gerar-sintetico --ensaio-id <id> --fuso America/Sao_Paulo --lotes-extras 20
+   .venv\Scripts\python.exe scripts/ensaio_corte.py gerar-sintetico --ensaio-id <id> --fuso America/Sao_Paulo
    ```
 
    Grava a instalação em `<area>/<id>/instalacao_sintetica/` e `evidencias/esperado.json`.
@@ -87,17 +89,17 @@ Não há aplicação a pausar nem dado real. A rodada ensaia as ferramentas, med
    .venv\Scripts\python.exe scripts/ensaio_corte.py comparar --ensaio-id <id> --a I1 --b I2
    ```
 
-3. **`S3` — backup e teste de restauração** (`E5`), com a ferramenta nativa do sistema operacional. O arquivo vai para `backup/`; a extração, para `restauracao/`. O inventário da restauração precisa ser idêntico a `I1`:
+3. **`S3` — backup e teste de restauração** (`E5`), com a ferramenta nativa do sistema operacional — `tar.exe`, que acompanha o Windows e não tem o limite de 2 GB do `Compress-Archive`. O arquivo vai para `backup/`; a extração, para `restauracao/`. O inventário da restauração precisa ser idêntico a `I1`:
 
    ```powershell
-   Compress-Archive -Path "$sint\*" -DestinationPath "$env:NSI_ENSAIO_DIR\<id>\backup\backup.zip"
-   Get-FileHash "$env:NSI_ENSAIO_DIR\<id>\backup\backup.zip" -Algorithm SHA256
-   Expand-Archive -Path "$env:NSI_ENSAIO_DIR\<id>\backup\backup.zip" -DestinationPath "$env:NSI_ENSAIO_DIR\<id>\restauracao"
+   tar.exe -cf "$env:NSI_ENSAIO_DIR\<id>\backup\backup.tar" -C $sint .
+   Get-FileHash "$env:NSI_ENSAIO_DIR\<id>\backup\backup.tar" -Algorithm SHA256
+   tar.exe -xf "$env:NSI_ENSAIO_DIR\<id>\backup\backup.tar" -C "$env:NSI_ENSAIO_DIR\<id>\restauracao"
    .venv\Scripts\python.exe scripts/ensaio_corte.py inventario --ensaio-id <id> --rotulo RESTAURACAO --diretorio "$env:NSI_ENSAIO_DIR\<id>\restauracao"
    .venv\Scripts\python.exe scripts/ensaio_corte.py comparar --ensaio-id <id> --a I1 --b RESTAURACAO
    ```
 
-   Depois da comparação, apagar o conteúdo de `restauracao/`. O tamanho e o SHA-256 do backup são anotados pelo operador em `evidencias/E5_backup.json`.
+   No Git Bash, `tar.exe` resolve para outro programa, que não aceita caminhos com letra de unidade: use o PowerShell, ou `C:\Windows\System32\tar.exe`. Depois da comparação, apagar o conteúdo de `restauracao/`. O tamanho e o SHA-256 do backup são anotados pelo operador em `evidencias/E5_backup.json`.
 
 4. **`S3` — cópia congelada** (`E6`). Copia somente o escopo, marca somente leitura e confere contra `I1`:
 
@@ -131,7 +133,7 @@ Não há aplicação a pausar nem dado real. A rodada ensaia as ferramentas, med
 
    Roda em transação somente leitura, como `nsi_ensaio_migrator` sob `nsi_eventos_owner`. Grava `E10_auditoria.json` (partes A e B e, na Rodada S, a `V5`), `E11_quantificacao.json` (parte C) e `E10_privacidade.json` (parte D). A comparação do catálogo com `nsi_test` exige `TEST_DATABASE_URL` configurada; sem ela, a auditoria reprova com `a_catalogo_nao_comparado`.
 
-8. **Fechar o índice das evidências** — depois dele, nenhuma evidência entra na rodada:
+8. **Fechar o índice das evidências** — depois dele, nenhuma evidência entra em `evidencias/`. As evidências posteriores ao índice (`E14` a `E17`: eliminação, descarte e suíte) são registradas pelo operador junto à cópia das evidências, fora da área de ensaio:
 
    ```powershell
    .venv\Scripts\python.exe scripts/ensaio_corte.py indice --ensaio-id <id>

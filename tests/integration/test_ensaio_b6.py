@@ -424,7 +424,7 @@ def test_roteiro_da_rodada_s_pela_linha_de_comando_e_pelo_executor(importacao, t
         return saida
 
     comando("preparar", "--ensaio-id", "s1")
-    gerado = comando("gerar-sintetico", "--ensaio-id", "s1", "--fuso", SP)
+    gerado = comando("gerar-sintetico", "--ensaio-id", "s1", "--fuso", SP, "--lotes-extras", "3")
     instalacao = str(area / "s1" / es.SUBDIRETORIO_DA_INSTALACAO_SINTETICA)
     for rotulo in ("I1", "I2"):
         comando("inventario", "--ensaio-id", "s1", "--rotulo", rotulo, "--diretorio", instalacao)

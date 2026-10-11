@@ -1,0 +1,252 @@
+{
+  "c_intervalo_de_criado_em": {
+    "lotes_na_projecao": 43,
+    "lotes_no_snapshot": 96,
+    "maior_criado_em_bruto": "2026-02-03T09:15:00.250000",
+    "menor_criado_em_bruto": "2018-11-04T00:30:00",
+    "registros_na_projecao": 130,
+    "registros_no_snapshot": 247
+  },
+  "c_lotes_em_andamento": [
+    {
+      "com_evidencia_de_disparo": 0,
+      "destino": "preservado",
+      "em_andamento": 21,
+      "geracao": "a1",
+      "lotes": 21
+    },
+    {
+      "com_evidencia_de_disparo": 2,
+      "destino": "preservado",
+      "em_andamento": 8,
+      "geracao": "a2",
+      "lotes": 10
+    },
+    {
+      "com_evidencia_de_disparo": 0,
+      "destino": "promovido",
+      "em_andamento": 22,
+      "geracao": "a2",
+      "lotes": 22
+    },
+    {
+      "com_evidencia_de_disparo": 0,
+      "destino": "preservado",
+      "em_andamento": 1,
+      "geracao": "a3",
+      "lotes": 1
+    },
+    {
+      "com_evidencia_de_disparo": 0,
+      "destino": "promovido",
+      "em_andamento": 21,
+      "geracao": "a3",
+      "lotes": 21
+    },
+    {
+      "com_evidencia_de_disparo": 0,
+      "destino": "preservado",
+      "em_andamento": 21,
+      "geracao": "anterior_a1",
+      "lotes": 21
+    }
+  ],
+  "c_lotes_por_geracao_e_destino": [
+    {
+      "destino": "preservado",
+      "geracao": "a1",
+      "lotes": 21
+    },
+    {
+      "destino": "preservado",
+      "geracao": "a2",
+      "lotes": 10
+    },
+    {
+      "destino": "promovido",
+      "geracao": "a2",
+      "lotes": 22
+    },
+    {
+      "destino": "preservado",
+      "geracao": "a3",
+      "lotes": 1
+    },
+    {
+      "destino": "promovido",
+      "geracao": "a3",
+      "lotes": 21
+    },
+    {
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "lotes": 21
+    },
+    {
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "lotes": 4
+    },
+    {
+      "destino": "recusado",
+      "geracao": null,
+      "lotes": 4
+    }
+  ],
+  "c_motivos": [
+    {
+      "destino": "preservado",
+      "lotes": 1,
+      "motivo": "colisao_de_identidade"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 2,
+      "motivo": "evidencia_de_disparo"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 42,
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 1,
+      "motivo": "historico_incoerente"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 1,
+      "motivo": "identidade_repetida"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 1,
+      "motivo": "lote_id_legado_invalido"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 1,
+      "motivo": "m0_inexistente_ou_ambiguo"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 2,
+      "motivo": "m0_invalido"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 1,
+      "motivo": "projecao_incompativel"
+    },
+    {
+      "destino": "preservado",
+      "lotes": 1,
+      "motivo": "totais_incoerentes"
+    },
+    {
+      "destino": "recusado",
+      "lotes": 2,
+      "motivo": "documento_ilegivel"
+    },
+    {
+      "destino": "recusado",
+      "lotes": 4,
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "destino": "recusado",
+      "lotes": 2,
+      "motivo": "identidade_divergente"
+    }
+  ],
+  "c_registros_por_classificacao": [
+    {
+      "classificacao": "legado_identificado_nao_promovido",
+      "geracao": "a1",
+      "lista": "clientes",
+      "registros": 42
+    },
+    {
+      "classificacao": "legado_identificado_nao_promovido",
+      "geracao": "a2",
+      "lista": "clientes",
+      "registros": 20
+    },
+    {
+      "classificacao": "legado_promovido",
+      "geracao": "a2",
+      "lista": "clientes",
+      "registros": 44
+    },
+    {
+      "classificacao": "legado_identificado_nao_promovido",
+      "geracao": "a2",
+      "lista": "clientes_invalidos",
+      "registros": 10
+    },
+    {
+      "classificacao": "legado_promovido",
+      "geracao": "a2",
+      "lista": "clientes_invalidos",
+      "registros": 22
+    },
+    {
+      "classificacao": "legado_identificado_nao_promovido",
+      "geracao": "a3",
+      "lista": "clientes",
+      "registros": 2
+    },
+    {
+      "classificacao": "legado_promovido",
+      "geracao": "a3",
+      "lista": "clientes",
+      "registros": 42
+    },
+    {
+      "classificacao": "legado_identificado_nao_promovido",
+      "geracao": "a3",
+      "lista": "clientes_invalidos",
+      "registros": 1
+    },
+    {
+      "classificacao": "legado_promovido",
+      "geracao": "a3",
+      "lista": "clientes_invalidos",
+      "registros": 22
+    },
+    {
+      "classificacao": "legado_sem_identidade_tecnica",
+      "geracao": "anterior_a1",
+      "lista": "clientes",
+      "registros": 42
+    }
+  ],
+  "c_status_literal_por_geracao": [
+    {
+      "geracao": "a1",
+      "lotes": 21,
+      "status_literal": "aguardando_d8"
+    },
+    {
+      "geracao": "a2",
+      "lotes": 31,
+      "status_literal": "aguardando_d8"
+    },
+    {
+      "geracao": "a2",
+      "lotes": 1,
+      "status_literal": "disparado"
+    },
+    {
+      "geracao": "a3",
+      "lotes": 22,
+      "status_literal": "aguardando_d8"
+    },
+    {
+      "geracao": "anterior_a1",
+      "lotes": 21,
+      "status_literal": "pendente"
+    }
+  ]
+}

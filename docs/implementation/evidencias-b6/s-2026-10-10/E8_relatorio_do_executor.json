@@ -1,0 +1,75 @@
+{
+  "arquivos_no_manifesto": 106,
+  "constraints_violadas": {
+    "ck_registros_coleta_coerencia": 1
+  },
+  "executada": true,
+  "fuso_declarado": "America/Sao_Paulo",
+  "importacao_id": "37c9c731-2953-41c2-aa99-4d723ab9c845",
+  "lotes": 104,
+  "manifesto_sha256": "8c5757b59aae4a333e2b0828e0e058866b255527311b2ccad19d0129765b3169",
+  "motivos_de_nao_promocao": {
+    "colisao_de_identidade": 1,
+    "evidencia_de_disparo": 2,
+    "geracao_nao_promovivel": 42,
+    "historico_incoerente": 1,
+    "identidade_repetida": 1,
+    "lote_id_legado_invalido": 1,
+    "m0_inexistente_ou_ambiguo": 1,
+    "m0_invalido": 2,
+    "projecao_incompativel": 1,
+    "totais_incoerentes": 1
+  },
+  "motivos_de_recusa": {
+    "documento_ilegivel": 2,
+    "formato_desconhecido": 4,
+    "identidade_divergente": 2
+  },
+  "paridade": {
+    "aprovada": true,
+    "arquivos_alterados": [],
+    "arquivos_sem_destino": [],
+    "banco_aprovada": true,
+    "concluida": true,
+    "contagens": {
+      "evoluidos_no_fluxo_novo": 0,
+      "ja_importado": 0,
+      "lotes": 104,
+      "lotes_reprovados": 0,
+      "preservado": 53,
+      "promovido": 43,
+      "recusado": 8
+    },
+    "entradas_fora_da_enumeracao": [],
+    "manifesto_completo": true,
+    "origem_confere": true,
+    "registro_tecnico": {
+      "manifesto_cabecalho_confere": true,
+      "manifesto_sem_lote_orfao": true,
+      "manifesto_sha256_confere": true
+    }
+  },
+  "por_geracao_e_destino": {
+    "a1": {
+      "preservado": 21
+    },
+    "a2": {
+      "preservado": 10,
+      "promovido": 22
+    },
+    "a3": {
+      "preservado": 1,
+      "promovido": 21
+    },
+    "anterior_a1": {
+      "preservado": 21
+    },
+    "formato_desconhecido": {
+      "recusado": 4
+    },
+    "nao_classificado": {
+      "recusado": 4
+    }
+  },
+  "tentativas_recusadas_somente_manifesto": 2
+}

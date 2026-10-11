@@ -1,0 +1,14 @@
+{
+  "banco": "nsi_ensaio",
+  "catalogo_identico_ao_de_nsi_test": true,
+  "codificacao": "UTF8",
+  "dono_do_banco": "postgres",
+  "impressao_digital_do_catalogo": "6957af3cf5d40f0e9e7c14b465a8e874",
+  "pr6": {
+    "log_min_duration_statement": "-1",
+    "log_parameter_max_length_on_error": "0",
+    "log_statement": "none"
+  },
+  "provisionamento": "executado pelo operador com o superusuario; Fase 3 aprovada, conforme informado pelo operador - o log do psql nao foi entregue",
+  "revisao": "0006 (head), aplicada somente por upgrade"
+}

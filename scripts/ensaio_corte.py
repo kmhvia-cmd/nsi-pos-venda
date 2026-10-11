@@ -65,6 +65,8 @@ PORTA_PERMITIDA = 5432
 ENDERECOS_LOCAIS = ("127.0.0.1", "::1")
 MARCADOR_DE_CONSULTA = "-- @consulta "
 AMOSTRA_DE_VALORES_PESSOAIS = 500
+# Decisao D10 (Secao 49): pelo menos 20 lotes por geracao, alem das fixtures.
+LOTES_EXTRAS_DA_RODADA_S = 20
 
 SAIDA_SUCESSO = 0
 SAIDA_REPROVADA = 1
@@ -322,7 +324,7 @@ def _argumentos(argv) -> argparse.Namespace:
     sub = comando("gerar-sintetico", _gerar_sintetico, "gera a instalacao sintetica da Rodada S e os destinos esperados")
     sub.add_argument("--fuso", default=None)
     sub.add_argument("--semente", type=int, default=20260203)
-    sub.add_argument("--lotes-extras", type=int, default=3, dest="lotes_extras")
+    sub.add_argument("--lotes-extras", type=int, default=LOTES_EXTRAS_DA_RODADA_S, dest="lotes_extras")
     sub = comando("inventario", _inventario, "inventaria um diretorio")
     sub.add_argument("--diretorio", required=True)
     sub.add_argument("--rotulo", required=True)

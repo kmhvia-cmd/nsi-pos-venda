@@ -1,0 +1,651 @@
+{
+  "arquivos_do_escopo": [
+    {
+      "caminho_relativo": "correcoes_rejeitadas/2026-01-09/3f0c1b7e-5a44-4c0e-9d0a-6f6f1f0a9b01.json",
+      "sha256": "e4ca922fa9760df84b9087f3b97395d384e2d6bde9cbea72de117c786bfcc053",
+      "tamanho_bytes": 182,
+      "tipo": "tentativa_recusada"
+    },
+    {
+      "caminho_relativo": "correcoes_rejeitadas/2026-02-04/cfbf0141-4e22-4372-bc9b-99b6679d020c.json",
+      "sha256": "96a67b2bc3c83deb101c14018b96dd04e4d6a493c9f0d2af42610498a70e90b4",
+      "tamanho_bytes": 81,
+      "tipo": "tentativa_recusada"
+    },
+    {
+      "caminho_relativo": "lotes/LEGADO-d67659bb/lote.json",
+      "sha256": "78ec02bf29f10e9c6f5b99452b74538a4b413889707c0c21543a293d86ac0ff0",
+      "tamanho_bytes": 1438,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260101-A00001/lote.json",
+      "sha256": "f6ea15041764d4c5a87c105f4bbb3a894da0295f06a411ef5ec3b89204460243",
+      "tamanho_bytes": 896,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260102-A00002/lote.json",
+      "sha256": "72f7694fc9ddadb21013524bb84f9fa8d25b7ae221c93a9a77d1fb48de6303a9",
+      "tamanho_bytes": 1037,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260103-A00003/lote.json",
+      "sha256": "284a4b043e624f4fad74c0798815309411912896d7e6098f92262aa8499dfcd6",
+      "tamanho_bytes": 1428,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260104-A00004/lote.json",
+      "sha256": "ca83b460d2091ee5f71c4bf90c8c73765ba63455c05e319c80544eeb9527cbd2",
+      "tamanho_bytes": 3985,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260105-A00005/lote.json",
+      "sha256": "8af66b01d661241d989e862634d4ff9c0a65bc63d6291846fe340b6b83fb6b53",
+      "tamanho_bytes": 1455,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260106-A00006/lote.json",
+      "sha256": "2ad94ebc3bb4198a3bd2378724dc2ee3f9724adbfb5221aa982ad65da73fb53f",
+      "tamanho_bytes": 969,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260107-A00007/lote.json",
+      "sha256": "b6c10794bc48f0c1667a39c9fc5fba3087cb1fd259875c172033ca8e205b4f6b",
+      "tamanho_bytes": 120,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260108-A00008/lote.json",
+      "sha256": "62d1731dfa74eeff62dbf328c326f0e0503bbaa9da099ba199a51d5bca1fafd2",
+      "tamanho_bytes": 1428,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000001/lote.json",
+      "sha256": "9d468ba767a19ed699d4262e54c586631f2a7236e7a1c90c6dd4da8b9640c10d",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000002/lote.json",
+      "sha256": "1180f549822e0469ce923980a6bc4177adc220faad0cc58de1a2601ce5f99dfd",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000003/lote.json",
+      "sha256": "77fc86bec51fc14849f6ea13edb3e5113e0aae58d493ca8546d17f7b03b31b8a",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000004/lote.json",
+      "sha256": "d9ea5f6b97a26e144f1a06b55fa285d66654e7a797a2b64cff627c3be3161db6",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000005/lote.json",
+      "sha256": "cbac4d45e83bdeded913379fc4bc2518f42179c12d2130cdb45def785218ddd4",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000006/lote.json",
+      "sha256": "d755b799bb72034f2ff27d1c7f4c13914958924999d18c38cde3bdf2ba144945",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000007/lote.json",
+      "sha256": "c637d7885ffa862fe2861feb248aaa66ac95f2dceee70e3fc14742badb92bd2b",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000008/lote.json",
+      "sha256": "797c39ca0d3a0fa93613f771640dd7c1a0bf2c73fceedee196fb25ada5b38f90",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000009/lote.json",
+      "sha256": "2af0018bea3047dfad706906cee9c9d486a71033366e67bd8a4bf96ca14afb3b",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000A/lote.json",
+      "sha256": "0c3580f418ae1b937b5ed9ab3432aa2358020e4b8b4666c788603a29f64a7117",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000B/lote.json",
+      "sha256": "501e61c405bbcbb2af8e9d975dd0435a7254e5567c377a5bad8a9f9be7ed40db",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000C/lote.json",
+      "sha256": "6f71a4bc38e353293dd0025b1ef0f8a8413c22b118584ea4540ee65f35587374",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000D/lote.json",
+      "sha256": "d08116a0bea65699a61fa4126c72762e7a7ff9b46d66a2290c060da8f41b0012",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000E/lote.json",
+      "sha256": "e6881b988d23433770080a4b80f94fdb615d33cb74516d9f923622b8ce3af496",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000F/lote.json",
+      "sha256": "140f68c5bec308e7e51b62f37dd71e9809a0d1a9450b9e36ae6cf35aff084282",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000010/lote.json",
+      "sha256": "7847262ca28f87c18aabaf4b9ec98a326de244ee4ef9b3264de4c495a756a15b",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000011/lote.json",
+      "sha256": "e71b91c51ff1f1e9d874227688e54207d8e58991f8abb6ba8a8ce25d22ea8884",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000012/lote.json",
+      "sha256": "db0e8379c3958d8b05b58d59671c0c2ebbd096cf7c0909907cd8130c3958b9b2",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000013/lote.json",
+      "sha256": "34581d7d450d1eefc7342eec018da92f6e22828f95880bc41103032b6f6c9366",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000014/lote.json",
+      "sha256": "8963cbf71ae2c004f59dea907c554f5be203af180611f0a7df177bdbcee3544b",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000015/lote.json",
+      "sha256": "601330b79e61f30c925c1dc2c2d186b0608b2e9754cd3099b037a01947b579f5",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000016/lote.json",
+      "sha256": "5be0895063ef19816472494f8de4c570ffae8cfcea5dc1ac1aca9ce024f2716a",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000017/lote.json",
+      "sha256": "d960e23f79e1146c1808cd01cb5e3f1277af3359a641ea0b1cfae3862186b293",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000018/lote.json",
+      "sha256": "c23b5fbb788d5c7fe287a7b582691ab5266c8fb59721267693729b2ab4db2395",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000019/lote.json",
+      "sha256": "7f1f40b661812cadae53d213e85bd621ac5b100690361ac21310afdba1f8817e",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001A/lote.json",
+      "sha256": "168f6789b2d1e354405b50891687b3399ae35416a404bfbbfeaca5c8637151ce",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001B/lote.json",
+      "sha256": "ee3317a2d7e091e2888f178556fb501a04451518605e0648e3068964d259f013",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001C/lote.json",
+      "sha256": "793fbf75a186099bbbd0d2adb158b708443e04f654fb81305b20f57341865700",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001D/lote.json",
+      "sha256": "5d80e06d9d11b29fdb89e8a31f31b71d7755b4ba3c3400c1709646d64542e003",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001E/lote.json",
+      "sha256": "35305bc86f354474aef0185e587563ef395da7ad59ca0ef7a24b792ca0d6a2f8",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001F/lote.json",
+      "sha256": "450c3af2db517a1238b09926e3e5f74e9b8808afcc3e397a2a9a751b3ce89594",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000020/lote.json",
+      "sha256": "7f551b10de4439ab37e82e20b82fa21f42c0f5d6a03da5055bdaeec61dff61ad",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000021/lote.json",
+      "sha256": "2d6a160ffb22fde938c15f877f0fabc87b934e5b12187f4b4b603b217ce1994e",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000022/lote.json",
+      "sha256": "6d452f752df8597266be5c94003b4a3a2f39573ae3529a80160bd1d5058520ff",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000023/lote.json",
+      "sha256": "1c7aac197b25d21e1913307c4888627898604036564b69c9da873563cf424e31",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000024/lote.json",
+      "sha256": "e11ca17c475703bf5f4a38c616b63b4ed802e646670a7c513d864c7a7df21150",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000025/lote.json",
+      "sha256": "2dfa0b985a304b79065a8bca130e5414eafc3f014210f3ea9f7f96120b218904",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000026/lote.json",
+      "sha256": "4f57515f231d6675ee8682254ee52f8513d776b9eb87d9767d2d82a17a00ffc8",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000027/lote.json",
+      "sha256": "65eb6f14af1ce24c5db9beabd1c1ca93775511bea78ca9ed48c18ce90da93be0",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000028/lote.json",
+      "sha256": "42d1374afa0764d52f81c765e9c42e6400fce2c159596bdc6350a9b339aa5ed0",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000029/lote.json",
+      "sha256": "310df544efd77a36d67ca69d079a400466e20b1698f5c2c39bc073052c7f0834",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002A/lote.json",
+      "sha256": "a246ffd7b422d1c18f937b16df53912817a60124a6bdc8c4c94b7f75da772dc8",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002B/lote.json",
+      "sha256": "f58f5836da16e41180726c5812a3a1d4bf3f7bdcef3323abfa40a8a8283a0f32",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002C/lote.json",
+      "sha256": "811b100016aea31d118b1d2c22717d54bd38b502b90fd1e3f9b6cf3c347f7f6a",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002D/lote.json",
+      "sha256": "cba4e6b52a0fea0c859c43d93ca706656f0d70e50a340d648f49633c6b6b10f8",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002E/lote.json",
+      "sha256": "0c1726b5a6d172d234ec2bb05638258926ab5d5a7b29e034599bedd342729250",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002F/lote.json",
+      "sha256": "a2d8d14bbeca3568810a38e95c0c2193f166a1873184f46e5373f1e9087967a5",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000030/lote.json",
+      "sha256": "43722389e9fcc0128c4fcb594c2cd02ce6848c8a6099b6d9d27f661818ac05c0",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000031/lote.json",
+      "sha256": "51efef987c957a79e7179951fa17569b928a75d86e1f50326bc44da6bb0a68b2",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000032/lote.json",
+      "sha256": "c2ee1a2400a274e93da7858bc8ae95dc9f567ca5b86d4a5af7d0f33b6adca0e5",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000033/lote.json",
+      "sha256": "d3048f943e8ee4ab5dd3994a4f552e0df4df83e3e68fbd96f08666fee453ac9f",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000034/lote.json",
+      "sha256": "488810c1975416c44f3990743d42ba67cc9304c58876f08d3f15699681197a05",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000035/lote.json",
+      "sha256": "d7117840bb6358eede5a9443bc257fd102795446894e843c4bd2fa5c9c08969a",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000036/lote.json",
+      "sha256": "73bfd2604f60500e9a7f2d67f3806f9b9abd99be07e1385fb68504788c0910ec",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000037/lote.json",
+      "sha256": "d3a9b34898fecec6c35719b81ea14d473d4ef394c8512b4fee23d5424090a608",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000038/lote.json",
+      "sha256": "d794485d8a6be735576d62211906d86db2c94ae1a27b220204d0588e6a40e877",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000039/lote.json",
+      "sha256": "5371a104139e0d736d2594691bbdb6f29fa523d988bee336be015117b60d495d",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003A/lote.json",
+      "sha256": "df3c410146d4a31a46f2efd434098ac76406a2c6e58913321f121cf1c39f8563",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003B/lote.json",
+      "sha256": "ac8fd8c53abd5ef34e28a0f2a320ac7d44e69ed52427d331fde73206fb60f972",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003C/lote.json",
+      "sha256": "220f8398bc10bd4d4d31be156e5e89d0001e4fea37afd19c9ea35419f18c0e7f",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003D/lote.json",
+      "sha256": "bd20bc790047394d25e84697f65d5bc1f091575925f67b7cfecaa4169cefbcdc",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003E/lote.json",
+      "sha256": "fdbc6cbd569d8916ce69055a6ced87ff9441b9868e5c5fe7ae3cad8ff2b944da",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003F/lote.json",
+      "sha256": "56e54213a94aac0673a5319d823c0b8237df479a6f77a479fde42a011543aaa9",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000040/lote.json",
+      "sha256": "b9cd91d31a04812344091140b79f622e9e25247f635c33841fb8ed2eb55bc92d",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000041/lote.json",
+      "sha256": "a1afa38d0e9f0534ed81588556455a588b2c069aab9148947a6e4aac6f221c64",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000042/lote.json",
+      "sha256": "57fd2bf0c16395dabb7199a49b7f7bb37e73309bb3d8cbd629b12cda958e3d25",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000043/lote.json",
+      "sha256": "38d43cca55bcdf95b7f231401e036bda5e3885541f8b8744aacf64ac392b68ca",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000044/lote.json",
+      "sha256": "a645d8ad66640531670ee3769370143294bb873bbf1f39bfaef31b41781e4078",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000045/lote.json",
+      "sha256": "0083da4be3144d281a84f861b53f50012d5acb047d9c20729a5f8144e9c5d694",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000046/lote.json",
+      "sha256": "37cfcf95cea1c9357ede0272948a2687a2e0c042bb91dd49104a683c2ef5554f",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000047/lote.json",
+      "sha256": "6dbe0ab87662c8039c60dad5f3e92af54f89681faefbc6cdfcc89b412c72b0a7",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000048/lote.json",
+      "sha256": "a5f76a4e7480c369cbf45ad23a1f310840c74009e8a88f107d328eb7e6b1900e",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000049/lote.json",
+      "sha256": "0e13e3ed4bb8c9dcead4d78a717da4add178c9f7c5f350e69b9127a49d4e034f",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004A/lote.json",
+      "sha256": "22a79f304dee81de42260a540d08a834bde9115c746a934a45fa7430dedcd049",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004B/lote.json",
+      "sha256": "f1d4cf6aa16601b605c6fea451702579cc9bcac753cea5a046c517a7c2dd210e",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004C/lote.json",
+      "sha256": "1a14a13dd7dfd14990169dc7bd6e4a64410af82bafe64219963198b28047f48b",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004D/lote.json",
+      "sha256": "cad274d2f56cad8bc76f5c5c07eb0e6a884e84992b87c23068ad444c61193445",
+      "tamanho_bytes": 910,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004E/lote.json",
+      "sha256": "a993ee9ad747fde5552d2a47060d7eec3b3ae4c93615e58de9e60bc6a6e75a32",
+      "tamanho_bytes": 1051,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004F/lote.json",
+      "sha256": "e53534bedc70edb57a3c553e2bfeea40510101c278abdc6571aa0e28b5f89568",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000050/lote.json",
+      "sha256": "cc66b86dd1dfaeaf8250326b7978b2e4fb8024bd0df29fe9a5118e40002582f7",
+      "tamanho_bytes": 3277,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000051/lote.json",
+      "sha256": "6048d7fca644174dfc0b7b404eab7fe8600d155088b84ff71ae0ae316b9df9c4",
+      "tamanho_bytes": 1438,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000052/lote.json",
+      "sha256": "b14181de60e7aea360709ad19e1a8966d2b9caff339738887cc2697fd4ac82c0",
+      "tamanho_bytes": 1494,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000054/lote.json",
+      "sha256": "461b7eb10170995e1d42dba4b7c4c1aca0ddf4c43bed8ea059356acbb8a33752",
+      "tamanho_bytes": 1435,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000055/lote.json",
+      "sha256": "6b55086797560e642db217349984ab010af93de1af509c0c831b2c3746b00266",
+      "tamanho_bytes": 1441,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000056/lote.json",
+      "sha256": "e368f5275735639601dee4de542f3ca4b2b4352c5f7918ca264bf80a3af5a94a",
+      "tamanho_bytes": 1435,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000057/lote.json",
+      "sha256": "ca44b62706bd16a718449333b67609b8e48de4d08cfcf6170e609353ab0bbc50",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000058/lote.json",
+      "sha256": "2c12242f4983186c6b556cfb7afb5921e69c4131913f72d415e7379cc55b2cf6",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000059/lote.json",
+      "sha256": "1e5372b93bfb3e11e5d3947ef12179329b9365a2aca5d0e432f07fb5d896c914",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005A/lote.json",
+      "sha256": "3bece884c088266d19fbd4cfbc2861e7e2d48855bf40edca9b40b12cd340edb4",
+      "tamanho_bytes": 1443,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005B/lote.json",
+      "sha256": "a482afd7b12862a845a699d1b7a54c4218d5710f5705d79b91b5f424c6242f84",
+      "tamanho_bytes": 3279,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005C/lote.json",
+      "sha256": "e1f22f1b3098a19e416e73d5d09b50cf63045c136e48dfaaaf1ed556da88ffb2",
+      "tamanho_bytes": 1440,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005D/lote.json",
+      "sha256": "611627675208e25b1a555bc9224eed2b3159414cc4c265826f3cd96463a96a52",
+      "tamanho_bytes": 1469,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005E/lote.json",
+      "sha256": "db7db5faea52465f668c5cd0d64c35ed203c102d00cd3b68396fc8c9c724632a",
+      "tamanho_bytes": 983,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005F/lote.json",
+      "sha256": "75abd097711b08ac340adf4f0c908ae6bea26d4bf64b177711995a1906984b0a",
+      "tamanho_bytes": 100,
+      "tipo": "lote"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000061/lote.json",
+      "sha256": "f5ab5263adb79740ca15f8fed32badc26135ee76662cb24ba012ad26ac4201f7",
+      "tamanho_bytes": 1442,
+      "tipo": "lote"
+    }
+  ],
+  "escopo": {
+    "bytes": 168344,
+    "lotes": 104,
+    "resumo": "4fd0f264d4b0b504b3deb9d042bca28df8403f436394a92cd4ade27bc60908e9",
+    "tentativas_recusadas": 2
+  },
+  "fora_do_escopo": {
+    "arquivos": 4,
+    "bytes": 53,
+    "resumo": "e113cf29d1dc0caac5e8e328597331c8c3f62e07d608f85d3e9f3132f910ff61"
+  }
+}

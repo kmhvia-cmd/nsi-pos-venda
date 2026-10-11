@@ -1,0 +1,6216 @@
+{
+  "caminhos_com_divergencia": [
+    "lotes/NSI-20260105-A00005/lote.json",
+    "lotes/NSI-20260106-A00006/lote.json",
+    "lotes/NSI-20260107-A00007/lote.json",
+    "lotes/NSI-20260108-A00008/lote.json",
+    "lotes/NSI-20260203-00005D/lote.json",
+    "lotes/NSI-20260203-00005E/lote.json",
+    "lotes/NSI-20260203-00005F/lote.json",
+    "lotes/NSI-20260203-000061/lote.json"
+  ],
+  "chaves_de_raiz_fora_da_lista": [
+    "campo_nao_previsto"
+  ],
+  "detalhe": [
+    {
+      "caminho_relativo": "lotes/LEGADO-d67659bb/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1438,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260101-A00001/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 896,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260102-A00002/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1037,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260103-A00003/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1428,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260104-A00004/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3985,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260105-A00005/lote.json",
+      "chaves_de_raiz": [
+        "campo_nao_previsto",
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [
+        "campo_nao_previsto"
+      ],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [
+        "chave_de_raiz_fora_da_lista"
+      ],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1455,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260106-A00006/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 1
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [
+        "mistura_de_identidade"
+      ],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 969,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260107-A00007/lote.json",
+      "contem_escape_nulo": false,
+      "divergencias": [
+        "documento_ilegivel"
+      ],
+      "inicia_com_bom": false,
+      "legivel": false,
+      "tamanho_bytes": 120
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260108-A00008/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [
+        "identidade_divergente"
+      ],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": false,
+      "tamanho_bytes": 1428,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000001/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000002/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000003/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000004/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000005/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000006/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000007/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000008/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000009/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000A/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000B/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000C/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000D/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000E/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000F/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000010/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000011/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000012/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000013/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000014/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000015/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000016/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000017/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000018/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000019/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001A/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001B/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001C/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001D/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001E/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001F/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000020/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000021/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000022/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000023/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000024/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000025/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000026/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000027/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000028/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000029/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002A/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002B/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002C/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002D/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002E/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002F/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000030/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000031/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000032/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000033/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000034/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000035/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000036/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000037/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000038/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000039/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003A/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003B/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003C/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003D/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003E/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003F/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000040/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000041/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000042/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000043/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000044/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000045/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000046/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000047/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000048/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000049/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004A/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004B/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004C/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004D/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 0,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 2
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 910,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004E/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1051,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004F/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000050/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3277,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000051/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1438,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000052/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "data_envio_mensagem",
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1494,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000054/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1435,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000055/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1441,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000056/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1435,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000057/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000058/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000059/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005A/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1443,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005B/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "historico_versoes",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 3279,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "historico_versoes": "objeto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005C/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1440,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005D/lote.json",
+      "chaves_de_raiz": [
+        "campo_nao_previsto",
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [
+        "campo_nao_previsto"
+      ],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [
+        "chave_de_raiz_fora_da_lista"
+      ],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 1469,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005E/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 1
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [
+        "mistura_de_identidade"
+      ],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": true,
+      "tamanho_bytes": 983,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto"
+      }
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005F/lote.json",
+      "contem_escape_nulo": false,
+      "divergencias": [
+        "documento_ilegivel"
+      ],
+      "inicia_com_bom": false,
+      "legivel": false,
+      "tamanho_bytes": 100
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000061/lote.json",
+      "chaves_de_raiz": [
+        "clientes",
+        "clientes_invalidos",
+        "criado_em",
+        "csv_original",
+        "data_disparo",
+        "data_final",
+        "data_inicial",
+        "empresa",
+        "lote_id",
+        "nome_lote",
+        "status",
+        "status_pipeline",
+        "total_clientes",
+        "total_invalido",
+        "total_recebido",
+        "total_valido"
+      ],
+      "chaves_de_raiz_fora_da_lista": [],
+      "clientes": {
+        "chaves": [
+          "nome",
+          "produto",
+          "registro_coleta_id",
+          "resposta",
+          "telefone"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 2,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 2,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "clientes_invalidos": {
+        "chaves": [
+          "motivos",
+          "nome_bruto",
+          "produto_bruto",
+          "registro_coleta_id",
+          "whatsapp_bruto"
+        ],
+        "chaves_fora_da_lista": [],
+        "com_registro_coleta_id": 1,
+        "registro_coleta_id_fora_do_formato": 0,
+        "registros": 1,
+        "registros_que_nao_sao_objeto": 0,
+        "sem_registro_coleta_id": 0
+      },
+      "contem_escape_nulo": false,
+      "divergencias": [
+        "identidade_divergente"
+      ],
+      "inicia_com_bom": false,
+      "legivel": true,
+      "lote_id_confere_com_o_diretorio": false,
+      "tamanho_bytes": 1442,
+      "tipo_da_raiz": "objeto",
+      "tipos": {
+        "clientes": "lista",
+        "clientes_invalidos": "lista",
+        "criado_em": "texto",
+        "lote_id": "texto",
+        "status": "texto",
+        "status_pipeline": "objeto",
+        "total_invalido": "numero",
+        "total_recebido": "numero",
+        "total_valido": "numero"
+      }
+    }
+  ],
+  "divergencias": {
+    "chave_de_raiz_fora_da_lista": 2,
+    "documento_ilegivel": 2,
+    "identidade_divergente": 2,
+    "mistura_de_identidade": 2
+  },
+  "lotes": 104,
+  "lotes_com_divergencia": 8,
+  "lotes_sem_divergencia": 96
+}

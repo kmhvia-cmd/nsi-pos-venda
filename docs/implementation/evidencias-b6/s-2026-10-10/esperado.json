@@ -1,0 +1,672 @@
+{
+  "fuso_declarado": "America/Sao_Paulo",
+  "lotes": [
+    {
+      "caminho_relativo": "lotes/LEGADO-d67659bb/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "lote_id_legado_invalido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260101-A00001/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260102-A00002/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260103-A00003/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260104-A00004/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260105-A00005/lote.json",
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260106-A00006/lote.json",
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260107-A00007/lote.json",
+      "destino": "recusado",
+      "geracao": null,
+      "motivo": "documento_ilegivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260108-A00008/lote.json",
+      "destino": "recusado",
+      "geracao": null,
+      "motivo": "identidade_divergente"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000001/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000002/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000003/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000004/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000005/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000006/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000007/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000008/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000009/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000A/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000B/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000C/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000D/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000E/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00000F/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000010/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000011/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000012/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000013/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000014/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000015/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000016/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000017/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000018/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000019/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001A/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001B/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001C/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001D/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001E/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00001F/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000020/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000021/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000022/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000023/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000024/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000025/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000026/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000027/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000028/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000029/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002A/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002B/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002C/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002D/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002E/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00002F/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000030/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000031/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000032/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000033/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000034/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000035/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000036/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000037/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000038/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000039/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003A/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003B/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003C/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003D/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003E/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00003F/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000040/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000041/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000042/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000043/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000044/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000045/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000046/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000047/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000048/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000049/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004A/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004B/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004C/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004D/lote.json",
+      "destino": "preservado",
+      "geracao": "anterior_a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004E/lote.json",
+      "destino": "preservado",
+      "geracao": "a1",
+      "motivo": "geracao_nao_promovivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00004F/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000050/lote.json",
+      "destino": "promovido",
+      "geracao": "a3",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000051/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "evidencia_de_disparo"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000052/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "evidencia_de_disparo"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000054/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "m0_invalido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000055/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "m0_invalido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000056/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "m0_inexistente_ou_ambiguo"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000057/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "identidade_repetida"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000058/lote.json",
+      "destino": "promovido",
+      "geracao": "a2",
+      "motivo": null
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000059/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "colisao_de_identidade"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005A/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "totais_incoerentes"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005B/lote.json",
+      "destino": "preservado",
+      "geracao": "a3",
+      "motivo": "historico_incoerente"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005C/lote.json",
+      "destino": "preservado",
+      "geracao": "a2",
+      "motivo": "projecao_incompativel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005D/lote.json",
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005E/lote.json",
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005F/lote.json",
+      "destino": "recusado",
+      "geracao": null,
+      "motivo": "documento_ilegivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000061/lote.json",
+      "destino": "recusado",
+      "geracao": null,
+      "motivo": "identidade_divergente"
+    }
+  ],
+  "resumo": {
+    "lotes": 104,
+    "motivos_de_nao_promocao": {
+      "colisao_de_identidade": 1,
+      "evidencia_de_disparo": 2,
+      "geracao_nao_promovivel": 42,
+      "historico_incoerente": 1,
+      "identidade_repetida": 1,
+      "lote_id_legado_invalido": 1,
+      "m0_inexistente_ou_ambiguo": 1,
+      "m0_invalido": 2,
+      "projecao_incompativel": 1,
+      "totais_incoerentes": 1
+    },
+    "motivos_de_recusa": {
+      "documento_ilegivel": 2,
+      "formato_desconhecido": 4,
+      "identidade_divergente": 2
+    },
+    "por_geracao_e_destino": {
+      "a1": {
+        "preservado": 21
+      },
+      "a2": {
+        "preservado": 10,
+        "promovido": 22
+      },
+      "a3": {
+        "preservado": 1,
+        "promovido": 21
+      },
+      "anterior_a1": {
+        "preservado": 21
+      },
+      "formato_desconhecido": {
+        "recusado": 4
+      },
+      "nao_classificado": {
+        "recusado": 4
+      }
+    }
+  },
+  "semente": 20260203
+}

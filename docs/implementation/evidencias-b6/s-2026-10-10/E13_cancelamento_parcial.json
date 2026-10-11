@@ -1,0 +1,7 @@
+{
+  "I3_igual_a_I1": true,
+  "aplicacao": "nao se aplica na Rodada S - nao ha aplicacao pausada",
+  "comparacao": "comparacao_I1_I3.json",
+  "origem_e_copia_somente_leitura_em_outra_area": true,
+  "rodada": "S"
+}

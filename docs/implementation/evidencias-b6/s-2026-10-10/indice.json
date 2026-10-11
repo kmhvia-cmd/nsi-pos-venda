@@ -1,0 +1,94 @@
+{
+  "arquivos": [
+    {
+      "arquivo": "comparacao_I1_I2.json",
+      "sha256": "47353c744ee2ef45a3d7b3143631c31ca608bdabdfa44f2cf7c0b0f2beea164b",
+      "tamanho_bytes": 191
+    },
+    {
+      "arquivo": "comparacao_I1_I3.json",
+      "sha256": "c51dcb598e795d27eec85ed9ff555305442e4bb593610016b2ba36fe70ca5e48",
+      "tamanho_bytes": 191
+    },
+    {
+      "arquivo": "comparacao_I1_RESTAURACAO.json",
+      "sha256": "b55017e706ad0daac04a2a39c899b6aa02f57bdc0ebdf91ae6bbd3ec08c525dc",
+      "tamanho_bytes": 200
+    },
+    {
+      "arquivo": "E10_auditoria.json",
+      "sha256": "9bff5ba8f91cefa893d143eadd51c827a27cce886c3640c7f2f791e8d3ef0e7b",
+      "tamanho_bytes": 3913
+    },
+    {
+      "arquivo": "E10_privacidade.json",
+      "sha256": "8d253db914ab21e6a17dd3bf1582211a36f607726f29d3ee4d23adc5fdfb6c06",
+      "tamanho_bytes": 122
+    },
+    {
+      "arquivo": "E11_quantificacao.json",
+      "sha256": "335784d53dcb63a67998fca488d0de1d24dfcd091a1d1c5d7e1506dc67d81055",
+      "tamanho_bytes": 5246
+    },
+    {
+      "arquivo": "E12_tempos.json",
+      "sha256": "5364e45f47448d122dad9b47b46e342857708572b09f698b56a565fcf27238bd",
+      "tamanho_bytes": 536
+    },
+    {
+      "arquivo": "E13_cancelamento_parcial.json",
+      "sha256": "2df5ed3cb8ad85a0ecc722ae004c0c2bd2021d0420793f6764f555abae52256b",
+      "tamanho_bytes": 212
+    },
+    {
+      "arquivo": "E2_ambiente.json",
+      "sha256": "8990e9a94857b9f482db1196b99d21e762669de9e2dcb1818f10f1557f12d2f2",
+      "tamanho_bytes": 537
+    },
+    {
+      "arquivo": "E5_backup.json",
+      "sha256": "22179a43637dcf4ca8f3083bfd8e0b9d059415d6890b20c0bfe13920f806a7a4",
+      "tamanho_bytes": 429
+    },
+    {
+      "arquivo": "E6_copia_congelada.json",
+      "sha256": "a0097504ad7473f8ffe5768d2417cb27ebd035307fed76d085dcb305d5cd608f",
+      "tamanho_bytes": 171
+    },
+    {
+      "arquivo": "E7_levantamento_estrutural.json",
+      "sha256": "4be351df71940cf363785284e1ebc99732cfe429c35ebc36d2fd63b7ac996038",
+      "tamanho_bytes": 165721
+    },
+    {
+      "arquivo": "E8_relatorio_do_executor.json",
+      "sha256": "6b8f811fca18b4c8359bf6901395cb90778a6769c413832ccb2406bbc835a368",
+      "tamanho_bytes": 1900
+    },
+    {
+      "arquivo": "esperado.json",
+      "sha256": "a3e20054b233d8518274247ed55361954057568c500051643b6ad7371b4304d7",
+      "tamanho_bytes": 18308
+    },
+    {
+      "arquivo": "inventario_I1.json",
+      "sha256": "0ebde3eb3f8a0ab4ea9e126143b5f60cb982dab66a5f6bc39ed6a4c856098611",
+      "tamanho_bytes": 22890
+    },
+    {
+      "arquivo": "inventario_I2.json",
+      "sha256": "0ebde3eb3f8a0ab4ea9e126143b5f60cb982dab66a5f6bc39ed6a4c856098611",
+      "tamanho_bytes": 22890
+    },
+    {
+      "arquivo": "inventario_I3.json",
+      "sha256": "0ebde3eb3f8a0ab4ea9e126143b5f60cb982dab66a5f6bc39ed6a4c856098611",
+      "tamanho_bytes": 22890
+    },
+    {
+      "arquivo": "inventario_RESTAURACAO.json",
+      "sha256": "0ebde3eb3f8a0ab4ea9e126143b5f60cb982dab66a5f6bc39ed6a4c856098611",
+      "tamanho_bytes": 22890
+    }
+  ]
+}

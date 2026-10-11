@@ -173,3 +173,17 @@ def test_area_de_ensaio_nao_tem_valor_padrao():
     assert 'NSI_ENSAIO_DIR = os.getenv("NSI_ENSAIO_DIR", "")' in fonte
     for variavel in ("ENSAIO_DATABASE_URL", "ENSAIO_DATABASE_URL_NSI_IMPORTACAO"):
         assert f'os.getenv("{variavel}", "")' in fonte
+
+
+def test_url_com_prefixo_de_dialeto_e_recusada_com_orientacao_fixa_e_sem_vazar_a_senha(monkeypatch):
+    """O parser do psycopg/libpq nao aceita 'postgresql+psycopg://' (formato
+    do SQLAlchemy). A recusa orienta o operador, com mensagem fixa."""
+    import config
+    monkeypatch.setattr(Config, "ENSAIO_DATABASE_URL",
+                        "postgresql+psycopg://nsi_ensaio_migrator:segredo-ensaio%24@localhost:5432/nsi_ensaio")
+    with pytest.raises(DSNInvalida) as exc_info:
+        resolver_url_banco("ensaio")
+    assert str(exc_info.value) == config.MENSAGEM_DSN_INVALIDA
+    assert "segredo-ensaio" not in str(exc_info.value) + repr(exc_info.value)
+    assert exc_info.value.__context__ is None and exc_info.value.__cause__ is None
+    assert "sem sufixo de driver" in config.MENSAGEM_DSN_INVALIDA

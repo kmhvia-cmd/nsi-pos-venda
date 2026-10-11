@@ -1,0 +1,18 @@
+{
+  "auditoria_e_quantificacao": 0.375,
+  "backup_e_restauracao": "inferiores a 1 cada, nao medidos com precisao",
+  "copia_congelada": 0.328,
+  "gerar_sintetico": 0.156,
+  "importacao_104_lotes": 3,
+  "inventario_I1": 0.891,
+  "inventario_I2": 0.032,
+  "janela_de_observacao": 125,
+  "levantamento_estrutural": 0.047,
+  "origem": "duracao informada por cada comando; importacao medida pelo relogio do terminal",
+  "unidade": "segundos",
+  "volume": {
+    "bytes_do_escopo": 168344,
+    "lotes": 104,
+    "tentativas_recusadas": 2
+  }
+}

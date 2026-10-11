@@ -1,0 +1,142 @@
+{
+  "aprovada": true,
+  "divergencias": [],
+  "ensaio_id": "s-2026-10-10",
+  "integridade": {
+    "a_catalogo": {
+      "constraints": 97,
+      "funcoes": 21,
+      "funcoes_security_definer": 15,
+      "impressao_digital": "6957af3cf5d40f0e9e7c14b465a8e874",
+      "indices": 29,
+      "tabelas": 13,
+      "triggers": 6
+    },
+    "a_concessoes": {
+      "concessoes_em_tabela": 0,
+      "connect_no_banco": [
+        "nsi_ensaio_migrator",
+        "nsi_importacao"
+      ],
+      "execute_de_nsi_importacao": [
+        "fn_concluir_importacao_legado",
+        "fn_importar_lote_legado",
+        "fn_iniciar_importacao_legado",
+        "fn_verificar_paridade_legado"
+      ],
+      "usage_no_schema": [
+        "nsi_ensaio_migrator",
+        "nsi_importacao"
+      ]
+    },
+    "a_objetos_invalidos": {
+      "constraints_nao_validadas": 0,
+      "funcoes_com_execute_de_public": 0,
+      "indices_invalidos": 0,
+      "objetos_com_outro_dono": 0,
+      "security_definer_sem_search_path_fixo": 0,
+      "triggers_desabilitadas": 0
+    },
+    "a_revisao": {
+      "banco": "nsi_ensaio",
+      "revisao": "0006"
+    }
+  },
+  "invariantes": {
+    "b_execucoes": {
+      "concluidas": 1,
+      "conclusoes_com_sha256_divergente": 0,
+      "conclusoes_com_total_divergente": 0,
+      "execucoes": 1,
+      "fusos_declarados": [
+        "America/Sao_Paulo"
+      ],
+      "logins": [
+        "nsi_importacao"
+      ]
+    },
+    "b_invariantes": {
+      "lotes_da_projecao_sem_origem_legada": 0,
+      "lotes_promovidos_fora_do_estado_inicial": 0,
+      "promovidos_de_geracao_anterior_a_a2": 0,
+      "registros_identificados_sem_uuid": 0,
+      "registros_nao_promovidos_na_projecao": 0,
+      "registros_promovidos_com_versao_de_eventos": 0,
+      "registros_sem_identidade_com_uuid": 0,
+      "snapshots_com_sha256_divergente": 0
+    },
+    "b_tabelas_que_devem_estar_vazias": {
+      "claims": 0,
+      "comandos_idempotentes": 0,
+      "eventos_claim": 0,
+      "eventos_lote": 0,
+      "eventos_registro_coleta": 0
+    }
+  },
+  "lotes_recusados": [
+    {
+      "caminho_relativo": "lotes/NSI-20260105-A00005/lote.json",
+      "constraint_violada": null,
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260106-A00006/lote.json",
+      "constraint_violada": null,
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260107-A00007/lote.json",
+      "constraint_violada": null,
+      "destino": "recusado",
+      "geracao": null,
+      "motivo": "documento_ilegivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260108-A00008/lote.json",
+      "constraint_violada": null,
+      "destino": "recusado",
+      "geracao": null,
+      "motivo": "identidade_divergente"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005D/lote.json",
+      "constraint_violada": null,
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005E/lote.json",
+      "constraint_violada": null,
+      "destino": "recusado",
+      "geracao": "formato_desconhecido",
+      "motivo": "formato_desconhecido"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-00005F/lote.json",
+      "constraint_violada": null,
+      "destino": "recusado",
+      "geracao": null,
+      "motivo": "documento_ilegivel"
+    },
+    {
+      "caminho_relativo": "lotes/NSI-20260203-000061/lote.json",
+      "constraint_violada": null,
+      "destino": "recusado",
+      "geracao": null,
+      "motivo": "identidade_divergente"
+    }
+  ],
+  "v5_destinos_esperados": {
+    "ausentes": [],
+    "confere": true,
+    "divergentes": [],
+    "esperados": 104,
+    "inesperados": [],
+    "obtidos": 104
+  }
+}

@@ -196,6 +196,18 @@ class SSLModeInvalido(RuntimeError):
     libpq, ou a URL de conexao contradiz o sslmode configurado."""
 
 
+
+# Mensagem FIXA de DSNInvalida: nunca interpola a entrada. Orienta sobre a
+# causa mais comum - o prefixo de dialeto do SQLAlchemy
+# ('postgresql+psycopg://'), que o parser do psycopg/libpq nao aceita. As
+# variaveis de URL deste projeto usam sempre 'postgresql://'; o prefixo de
+# dialeto e acrescentado somente por migrations/env.py.
+MENSAGEM_DSN_INVALIDA = (
+    "URL de conexao invalida - use o formato postgresql://usuario:senha@host:porta/banco, "
+    "sem sufixo de driver (como '+psycopg') e com caracteres especiais da senha codificados"
+)
+
+
 class DSNInvalida(RuntimeError):
     """
     Uma URL/DSN de conexao fornecida nao pode ser interpretada pelo parser do
@@ -210,7 +222,7 @@ class DSNInvalida(RuntimeError):
     """
 
     def __init__(self) -> None:
-        super().__init__("DSN de conexao invalida ou nao pode ser interpretada")
+        super().__init__(MENSAGEM_DSN_INVALIDA)
 
 
 def _parsear_dsn_com_seguranca(url: str) -> dict:

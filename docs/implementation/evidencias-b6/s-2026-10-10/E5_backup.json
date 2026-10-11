@@ -1,0 +1,12 @@
+{
+  "arquivo": "backup/backup.tar",
+  "duracao": "backup e extracao inferiores a 1 segundo cada; nao medidos com precisao nesta rodada",
+  "ferramenta": "tar.exe nativo do Windows",
+  "sha256": "b7fa134a08255dce317c27d2b5aa7300c9c73b3314e5b765e268dfc619dcc7fd",
+  "tamanho_bytes": 310272,
+  "teste_de_restauracao": {
+    "comparacao": "comparacao_I1_RESTAURACAO.json",
+    "identicos": true,
+    "restauracao_apagada": true
+  }
+}
