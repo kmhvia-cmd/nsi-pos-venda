@@ -47,9 +47,13 @@ Cada sprint abaixo é descrita por oito campos fixos:
 
 **Condição para uso operacional:** a validação do passo 4 do corte controlado (ADR-008, Seção 16) precisa estar formalmente aprovada antes da mudança de fonte de verdade; nenhuma sprint subsequente pode iniciar uso operacional de claims antes dessa aprovação.
 
+**Encerramento da Sprint B (2026-10-11) — realocação da B7.** Por decisão humana explícita do operador, registrada como evolução deste documento (ver "Nota de fronteira"), a **Sprint B está ENCERRADA** com as subetapas B1 a B6 concluídas, e a subetapa **B7 (corte real: pausa de escritas, backup, importação definitiva, validação, mudança da fonte de verdade e preservação dos JSONs legados) passa a ser o primeiro item da Sprint C**. Muda **somente a alocação no planejamento**: a especificação técnica da B7, seus pré-requisitos bloqueantes e a exigência de autorização própria permanecem exatamente como estão em `SPRINT-B-ESPECIFICACAO-TECNICA.md` (Seções 12, 14 e 18) e em `SPRINT-B6-ESPECIFICACAO-ENSAIO-DE-CORTE.md` (Seção 50); a ADR-008 (Seções 16 e 17) e a ADR-010 não são alteradas. Seguem com a B7, para a Sprint C, as partes das "Entregas", dos "Critérios de aceite" e da "Condição para uso operacional" acima que dependem do corte real: a execução do corte controlado, o congelamento dos JSONs legados com manifesto e checksums, a paridade sobre os `lote.json` reais e a aprovação formal do passo 4. O que a Sprint B entregou é a fundação de persistência em `nsi_dev`/`nsi_test`, o importador e o ensaio de corte com dados sintéticos; **o backend da aplicação continua em `lote.json`** e a limitação de `adapters/storage.py::_obter_lock_lote` só é removida na operação pelo corte real.
+
 ---
 
 ## Sprint C — Envio Efetivo, wamid e Webhook
+
+**Primeiro item da Sprint C — B7 (implantação: corte real).** Realocada da Sprint B em 2026-10-11, por decisão do operador. Conserva o identificador **B7** e a especificação técnica integral, sem nenhuma alteração: `SPRINT-B-ESPECIFICACAO-TECNICA.md` (Seções 12, 14 e 18) e `SPRINT-B6-ESPECIFICACAO-ENSAIO-DE-CORTE.md` (Seção 50, doze itens que a bloqueiam — entre eles a Rodada R do ensaio, com dado real, e a quantificação da ADR-010, Seção 12.3). Continua **bloqueada** até esses pré-requisitos estarem satisfeitos e exige autorização própria. É o primeiro item na ordem da sprint; os campos abaixo descrevem o restante da Sprint C e não foram alterados.
 
 **Objetivo:** implementar e testar, em ambiente controlado, a integração de envio pelo WhatsApp, a captura de `wamid` e o processamento de webhook — **sem habilitar envio real a clientes nesta sprint**.
 
@@ -185,8 +189,8 @@ Cada sprint abaixo é descrita por oito campos fixos:
 | A1 — Identidade por linha e schema estrutural do CSV | CONCLUÍDA |
 | A2 — Validação de conteúdo e normalização de WhatsApp | CONCLUÍDA |
 | A3 — Correção append-only de registros inválidos | CONCLUÍDA |
-| B — Persistência imutável, claims e idempotência | EM ANDAMENTO — B1, B2, B3 (B3.1–B3.4), B4 (B4.1–B4.3) e B5 (B5.0–B5.6: importação do legado em `nsi_test`, com dados sintéticos, ADR-010) e B6 (B6.0–B6.5: ensaio de corte em banco descartável — Rodada S, sintética, aprovada em 2026-10-10; Rodada R, com dado real, dispensada pelo operador e transferida para a B7) concluídas; B7 (corte real) pendente e bloqueada até a Seção 14 da especificação e os doze itens da Seção 50 de `SPRINT-B6-ESPECIFICACAO-ENSAIO-DE-CORTE.md`. Detalhamento: `SPRINT-B-ESPECIFICACAO-TECNICA.md`, Seção 18, e `RELATORIO-FINAL-B6-ENSAIO-DE-CORTE.md` |
-| C — Envio efetivo, wamid e webhook | NÃO INICIADA |
+| B — Persistência imutável, claims e idempotência | **ENCERRADA em 2026-10-11** — B1, B2, B3 (B3.1–B3.4), B4 (B4.1–B4.3), B5 (B5.0–B5.6: importação do legado em `nsi_test`, com dados sintéticos, ADR-010) e B6 (B6.0–B6.5: ensaio de corte em banco descartável — Rodada S, sintética, aprovada em 2026-10-10; Rodada R, com dado real, dispensada pelo operador) concluídas. A B7 (corte real) foi realocada para a Sprint C, como primeiro item, por decisão do operador, com a especificação inalterada. Detalhamento: `SPRINT-B-ESPECIFICACAO-TECNICA.md`, Seção 18, e `RELATORIO-FINAL-B6-ENSAIO-DE-CORTE.md` |
+| C — Envio efetivo, wamid e webhook | NÃO INICIADA — primeiro item: B7 (implantação: corte real), realocada da Sprint B, **bloqueada** até a Seção 14 de `SPRINT-B-ESPECIFICACAO-TECNICA.md` e os doze itens da Seção 50 de `SPRINT-B6-ESPECIFICACAO-ENSAIO-DE-CORTE.md` |
 | D — Operador Interno, autenticação, rotas e detecção do congelamento M0+192h | NÃO INICIADA |
 | E — Correlação determinística e Motor NSI | NÃO INICIADA |
 | F — Teste controlado da Meta | NÃO INICIADA |
