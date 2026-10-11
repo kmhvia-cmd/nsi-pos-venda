@@ -90,6 +90,8 @@
 
 🟢 ADR-011 — Catálogo de Eventos do Domínio de Envio e de Eventos Técnicos do WhatsApp (Sprint C, Subetapa C1): APROVADA E CONGELADA em 2026-10-11 — catálogo fechado de seis eventos (`envio_solicitado`, `envio_aceito_api`, `envio_falha_api_observada`, `envio_resultado_desconhecido`, `status_whatsapp_observado`, `mensagem_recebida_observada`); intenção de envio confirmada no banco antes da chamada à API; tentativa sem desfecho nunca reenviada, e `resultado_desconhecido` bloqueia o registro até decisão humana futura; somente a primeira tentativa é alcançável (as demais dependem das Sprints D e G); status de webhook como fatos independentes, sem "status atual" e sem inferência de leitura humana; telefone, texto de mensagem e texto de erro nunca persistidos por este domínio; `wamid` somente em projeção; duas roles novas com `LOGIN` próprio (`nsi_envio`, `nsi_webhook`), sem membership; envio real desabilitado por padrão, inclusive o caminho legado de disparo. Nenhuma implementação nesta subetapa.
 
+🟢 ADR-007 — Sprint C, Subetapa C2 (Especificação Técnica): CONCLUÍDA — `docs/implementation/SPRINT-C-ESPECIFICACAO-TECNICA.md` traduz a ADR-011 em quatro tabelas (`envios`, `eventos_envio`, `mensagens_recebidas`, `eventos_mensagem_recebida`), sete funções `SECURITY DEFINER`, duas roles, serviço de envio com transporte injetável e habilitação que falha fechada, webhook com leitura completa da notificação, plano de testes e critérios de aceite. Não cobre a B7. Nenhum código nesta subetapa.
+
 ---
 
 ## Componentes concluídos
